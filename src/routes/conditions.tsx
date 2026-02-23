@@ -166,69 +166,6 @@ export function ConditionsRoute() {
         ))}
       </div>
 
-      <section className="grid gap-4 xl:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Wave + Swell</CardTitle>
-          </CardHeader>
-          <CardContent className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={hourly}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.2)" />
-                <XAxis
-                  dataKey="ts"
-                  tickFormatter={(value) => new Date(value).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-                  tick={{ fontSize: 12 }}
-                />
-                <YAxis yAxisId="left" />
-                <YAxis yAxisId="right" orientation="right" domain={[0, 360]} />
-                <Tooltip
-                  labelFormatter={(value) => new Date(value as string).toLocaleString()}
-                  formatter={(value) =>
-                    typeof value === "number" ? formatNumber(value) : "N/A"
-                  }
-                />
-                <Legend />
-                <Line yAxisId="left" type="monotone" dataKey="wave_display" stroke="#0ea5e9" dot={false} name={`Wave (${settings.waveUnit})`} />
-                <Line yAxisId="left" type="monotone" dataKey="swell_display" stroke="#10b981" dot={false} name={`Swell (${settings.waveUnit})`} />
-                <Line yAxisId="left" type="monotone" dataKey="swell_wave_period_s" stroke="#f59e0b" dot={false} name="Swell period (s)" />
-                <Line yAxisId="right" type="monotone" dataKey="swell_wave_direction_deg" stroke="#a855f7" dot={false} name="Swell dir (deg)" />
-              </LineChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Current + SST</CardTitle>
-          </CardHeader>
-          <CardContent className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={hourly}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.2)" />
-                <XAxis
-                  dataKey="ts"
-                  tickFormatter={(value) => new Date(value).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-                  tick={{ fontSize: 12 }}
-                />
-                <YAxis yAxisId="left" />
-                <YAxis yAxisId="right" orientation="right" domain={[0, 360]} />
-                <Tooltip
-                  labelFormatter={(value) => new Date(value as string).toLocaleString()}
-                  formatter={(value) =>
-                    typeof value === "number" ? formatNumber(value) : "N/A"
-                  }
-                />
-                <Legend />
-                <Line yAxisId="left" type="monotone" dataKey="current_display" stroke="#f97316" dot={false} name={`Current (${settings.speedUnit === "mps" ? "m/s" : "kn"})`} />
-                <Line yAxisId="left" type="monotone" dataKey="sst_display" stroke="#ef4444" dot={false} name={`SST (${settings.temperatureUnit.toUpperCase()})`} />
-                <Line yAxisId="right" type="monotone" dataKey="ocean_current_direction_deg" stroke="#8b5cf6" dot={false} name="Current dir (deg)" />
-              </LineChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      </section>
-
       <Card>
         <CardHeader>
           <CardTitle className="text-base">Base Coordinates + Estimated Bite Propensity Heat Overlay</CardTitle>
@@ -297,6 +234,107 @@ export function ConditionsRoute() {
           {bite.error ? <p className="mt-2 text-xs text-destructive">Bite overlay warning: {bite.error}</p> : null}
         </CardContent>
       </Card>
+
+      <section className="grid gap-4 xl:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Late-March Cabo Marlin Read (Operational)</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm text-muted-foreground">
+            <p>
+              Late March in Cabo is typically shoulder-season for striped marlin consistency. You can still have good days, but reliability improves when
+              bluewater edges are reachable and sea state lets boats comfortably work 15-35nm bands.
+            </p>
+            <p>
+              Practical expectation: prioritize fishability and travel comfort first, then treat bite momentum as a tiebreaker for charter decisions.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 text-xs">
+              <li>Better setup: cleaner swell period, manageable combined wave height, and moderate current.</li>
+              <li>Risk setup: short-period swell + elevated current + high wave p90 can quickly reduce quality hours offshore.</li>
+              <li>Use the heat rings to choose offshore distance targets, not exact GPS spots.</li>
+            </ul>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">How to Interpret Wave Data</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm text-muted-foreground">
+            <p>
+              Read this in order: <strong>wave p90</strong>, <strong>swell period</strong>, then <strong>current speed</strong>.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 text-xs">
+              <li><strong>Wave p90:</strong> your rough-water guardrail for comfort and fishability windows.</li>
+              <li><strong>Swell period:</strong> shorter period means steeper/choppier motion at same height.</li>
+              <li><strong>Current velocity:</strong> stronger current can make spread control and drifts harder.</li>
+              <li><strong>SST:</strong> use as context, not a standalone go/no-go trigger.</li>
+            </ul>
+            <p className="text-xs">
+              Heuristic: if wave p90 and current are both elevated, downgrade confidence even if a single metric looks acceptable.
+            </p>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="grid gap-4 xl:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Wave + Swell</CardTitle>
+          </CardHeader>
+          <CardContent className="h-80">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={hourly}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.2)" />
+                <XAxis
+                  dataKey="ts"
+                  tickFormatter={(value) => new Date(value).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                  tick={{ fontSize: 12 }}
+                />
+                <YAxis yAxisId="left" />
+                <YAxis yAxisId="right" orientation="right" domain={[0, 360]} />
+                <Tooltip
+                  labelFormatter={(value) => new Date(value as string).toLocaleString()}
+                  formatter={(value) => (typeof value === "number" ? formatNumber(value) : "N/A")}
+                />
+                <Legend />
+                <Line yAxisId="left" type="monotone" dataKey="wave_display" stroke="#0ea5e9" dot={false} name={`Wave (${settings.waveUnit})`} />
+                <Line yAxisId="left" type="monotone" dataKey="swell_display" stroke="#10b981" dot={false} name={`Swell (${settings.waveUnit})`} />
+                <Line yAxisId="left" type="monotone" dataKey="swell_wave_period_s" stroke="#f59e0b" dot={false} name="Swell period (s)" />
+                <Line yAxisId="right" type="monotone" dataKey="swell_wave_direction_deg" stroke="#a855f7" dot={false} name="Swell dir (deg)" />
+              </LineChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Current + SST</CardTitle>
+          </CardHeader>
+          <CardContent className="h-80">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={hourly}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.2)" />
+                <XAxis
+                  dataKey="ts"
+                  tickFormatter={(value) => new Date(value).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                  tick={{ fontSize: 12 }}
+                />
+                <YAxis yAxisId="left" />
+                <YAxis yAxisId="right" orientation="right" domain={[0, 360]} />
+                <Tooltip
+                  labelFormatter={(value) => new Date(value as string).toLocaleString()}
+                  formatter={(value) => (typeof value === "number" ? formatNumber(value) : "N/A")}
+                />
+                <Legend />
+                <Line yAxisId="left" type="monotone" dataKey="current_display" stroke="#f97316" dot={false} name={`Current (${settings.speedUnit === "mps" ? "m/s" : "kn"})`} />
+                <Line yAxisId="left" type="monotone" dataKey="sst_display" stroke="#ef4444" dot={false} name={`SST (${settings.temperatureUnit.toUpperCase()})`} />
+                <Line yAxisId="right" type="monotone" dataKey="ocean_current_direction_deg" stroke="#8b5cf6" dot={false} name="Current dir (deg)" />
+              </LineChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      </section>
     </div>
   );
 }
