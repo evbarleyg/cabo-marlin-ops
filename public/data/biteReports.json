@@ -1,0 +1,135 @@
+{
+  "generated_at": "2026-02-23T01:04:00.095Z",
+  "sources": [
+    {
+      "name": "El Budster",
+      "url": "https://www.elbudster.com/report",
+      "fetched_at": "2026-02-23T01:04:01.149Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker Cabo page 1",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1",
+      "fetched_at": "2026-02-23T01:04:02.280Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker Cabo page 2",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=2",
+      "fetched_at": "2026-02-23T01:04:04.474Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker Cabo page 3",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=3",
+      "fetched_at": "2026-02-23T01:04:06.431Z",
+      "ok": true
+    }
+  ],
+  "data": {
+    "reports": [
+      {
+        "source": "FishingBooker",
+        "date": "2026-02-20",
+        "species": [
+          "wahoo"
+        ],
+        "notes": "Big Wahoo time ! February 20, 2026 ?? Wahoo Action in Cabo! ?? Today we hooked into a fast and powerful Wahoo — one of the most exciting fish you can catch in Los Cabos! ⚡? Blazing speed, strong runs, and incredible table fare. This one gave us a great fight and made the day unfo",
+        "link": "https://fishingbooker.com/reports/view/113355"
+      },
+      {
+        "source": "FishingBooker",
+        "date": "2026-02-19",
+        "species": [
+          "dorado",
+          "wahoo"
+        ],
+        "notes": "Big Bull dorado February 19, 2026 ? Exciting Morning on the Water! ?? Before this fish hit the deck, we had two Wahoo slice our bait clean in half. You almost never see them. They move like lightning — just a flash… and your bait is gone. ⚡? Too many hooks? They won’t touch it. T",
+        "link": "https://fishingbooker.com/reports/view/113356"
+      },
+      {
+        "source": "FishingBooker",
+        "date": "2026-02-19",
+        "species": [],
+        "notes": "Half day (5hrs) February 19, 2026 Fun day wiht the kid's Continue reading",
+        "link": "https://fishingbooker.com/reports/view/113248"
+      },
+      {
+        "source": "FishingBooker",
+        "date": "2026-02-18",
+        "species": [
+          "striped marlin",
+          "marlin",
+          "dorado"
+        ],
+        "notes": "Marlin dorado February 18, 2026 Great day adapting to changing conditions on the water. The colder water has shifted the fishing grounds, so we adjusted our strategy using live bait and ballyhoo, which worked well. We landed two nice dorado and later hooked a striped marlin that ",
+        "link": "https://fishingbooker.com/reports/view/113260"
+      },
+      {
+        "source": "FishingBooker",
+        "date": "2026-02-16",
+        "species": [
+          "striped marlin",
+          "marlin",
+          "tuna",
+          "dorado"
+        ],
+        "notes": "Dorado to Start, Marlin to Finish February 16, 2026 The day kicked off with dorado on the first pull, tuna followed shortly after, and we wrapped it up the right way with a striped marlin. Steady action from start to finish and good movement offshore. Continue reading",
+        "link": "https://fishingbooker.com/reports/view/113166"
+      },
+      {
+        "source": "FishingBooker",
+        "date": "2026-02-16",
+        "species": [
+          "striped marlin",
+          "marlin",
+          "dorado"
+        ],
+        "notes": "EL BUDSTER FISHING REPORT February 16, 2026 Fishing on the EL BUDSTER. The KURT WILEY´S party, CAUGHT AND RELEASED ONE 140 LB. STRIPED MARLIN. They also caught ONE 25 LB. DORADO. The fish was caught 14 to 16 miles from the coast of Cabo San Lucas. The water temperature was 72-74 ",
+        "distance_offshore_miles": 15,
+        "link": "https://fishingbooker.com/reports/view/113140"
+      }
+    ],
+    "parse_failures": [
+      {
+        "source": "El Budster",
+        "link": "https://www.elbudster.com/report",
+        "error": "No reports matched parser rules",
+        "snippet": "<iframe src=\"//www.googletagmanager.com/ns.html?id=GTM-MWTR84\" height=\"0\" width=\"0\" style=\"display:none;visibility:hidden\"></iframe> (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElemen"
+      }
+    ],
+    "metrics": {
+      "marlin_mentions_last_72h": 3,
+      "trend_last_72h": [
+        {
+          "bucket_ts": "2026-02-20T01:00:00.000Z",
+          "mentions": 1
+        },
+        {
+          "bucket_ts": "2026-02-20T13:00:00.000Z",
+          "mentions": 0
+        },
+        {
+          "bucket_ts": "2026-02-21T01:00:00.000Z",
+          "mentions": 0
+        },
+        {
+          "bucket_ts": "2026-02-21T13:00:00.000Z",
+          "mentions": 0
+        },
+        {
+          "bucket_ts": "2026-02-22T01:00:00.000Z",
+          "mentions": 0
+        },
+        {
+          "bucket_ts": "2026-02-22T13:00:00.000Z",
+          "mentions": 0
+        },
+        {
+          "bucket_ts": "2026-02-23T01:00:00.000Z",
+          "mentions": 0
+        }
+      ]
+    }
+  }
+}

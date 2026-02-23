@@ -1,0 +1,116 @@
+{
+  "entries": [
+    {
+      "id": "blue-water-34",
+      "name": "Blue Water 34",
+      "boat_length_ft": 34,
+      "max_people": 6,
+      "typical_trip_hours": 8,
+      "starting_price_usd": 1200,
+      "link": "https://fishingbooker.com/charters/view/blue-water-34-cabo",
+      "book_direct_link": "https://bluewater34.example.com/book"
+    },
+    {
+      "id": "marina-strike-28",
+      "name": "Marina Strike 28",
+      "boat_length_ft": 28,
+      "max_people": 4,
+      "typical_trip_hours": 6,
+      "starting_price_usd": 750,
+      "link": "https://fishingbooker.com/charters/view/marina-strike-28-cabo"
+    },
+    {
+      "id": "pacifico-dream-42",
+      "name": "Pacifico Dream 42",
+      "boat_length_ft": 42,
+      "max_people": 8,
+      "typical_trip_hours": 8,
+      "starting_price_usd": 2100,
+      "link": "https://fishingbooker.com/charters/view/pacifico-dream-42-cabo",
+      "book_direct_link": "https://pacificodream.example.com/reserve"
+    },
+    {
+      "id": "tailwalker-31",
+      "name": "Tailwalker 31",
+      "boat_length_ft": 31,
+      "max_people": 5,
+      "typical_trip_hours": 8,
+      "starting_price_usd": 980,
+      "link": "https://fishingbooker.com/charters/view/tailwalker-31-cabo"
+    },
+    {
+      "id": "cortez-elite-38",
+      "name": "Cortez Elite 38",
+      "boat_length_ft": 38,
+      "max_people": 7,
+      "typical_trip_hours": 10,
+      "starting_price_usd": 1950,
+      "link": "https://fishingbooker.com/charters/view/cortez-elite-38-cabo"
+    },
+    {
+      "id": "sunrise-marlin-26",
+      "name": "Sunrise Marlin 26",
+      "boat_length_ft": 26,
+      "max_people": 4,
+      "typical_trip_hours": 5,
+      "starting_price_usd": 620,
+      "link": "https://fishingbooker.com/charters/view/sunrise-marlin-26-cabo"
+    },
+    {
+      "id": "pelagic-force-33",
+      "name": "Pelagic Force 33",
+      "boat_length_ft": 33,
+      "max_people": 6,
+      "typical_trip_hours": 8,
+      "starting_price_usd": 1350,
+      "link": "https://fishingbooker.com/charters/view/pelagic-force-33-cabo",
+      "book_direct_link": "https://pelagicforce.example.com"
+    },
+    {
+      "id": "line-dancer-30",
+      "name": "Line Dancer 30",
+      "boat_length_ft": 30,
+      "max_people": 5,
+      "typical_trip_hours": 7,
+      "starting_price_usd": 870,
+      "link": "https://fishingbooker.com/charters/view/line-dancer-30-cabo"
+    },
+    {
+      "id": "striped-legend-36",
+      "name": "Striped Legend 36",
+      "boat_length_ft": 36,
+      "max_people": 6,
+      "typical_trip_hours": 9,
+      "starting_price_usd": 1650,
+      "link": "https://fishingbooker.com/charters/view/striped-legend-36-cabo"
+    },
+    {
+      "id": "marlin-momentum-29",
+      "name": "Marlin Momentum 29",
+      "boat_length_ft": 29,
+      "max_people": 4,
+      "typical_trip_hours": 8,
+      "starting_price_usd": 920,
+      "link": "https://fishingbooker.com/charters/view/marlin-momentum-29-cabo"
+    },
+    {
+      "id": "offshore-command-44",
+      "name": "Offshore Command 44",
+      "boat_length_ft": 44,
+      "max_people": 10,
+      "typical_trip_hours": 10,
+      "starting_price_usd": 2600,
+      "link": "https://fishingbooker.com/charters/view/offshore-command-44-cabo",
+      "book_direct_link": "https://offshorecommand.example.com/book"
+    },
+    {
+      "id": "dockside-runner-27",
+      "name": "Dockside Runner 27",
+      "boat_length_ft": 27,
+      "max_people": 4,
+      "typical_trip_hours": 6,
+      "starting_price_usd": 700,
+      "link": "https://fishingbooker.com/charters/view/dockside-runner-27-cabo"
+    }
+  ]
+}

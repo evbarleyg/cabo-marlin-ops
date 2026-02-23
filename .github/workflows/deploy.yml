@@ -1,0 +1,59 @@
+name: Build and Deploy
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */3 * * *"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch and normalize data
+        run: npm run fetch:data
+
+      - name: Run parser tests
+        run: npm run test:parsers
+
+      - name: Build app
+        run: npm run build
+
+      - name: Print source status summary
+        run: |
+          node -e "const fs=require('fs'); const files=['public/data/conditions.json','public/data/biteReports.json','public/data/charters.json']; for (const f of files){const j=JSON.parse(fs.readFileSync(f,'utf8')); console.log('--- '+f); for (const s of j.sources){console.log(`${s.ok?'ok':'error'} | ${s.name} | ${s.url}${s.error?` | ${s.error}`:''}`);} }"
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
