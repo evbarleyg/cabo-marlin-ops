@@ -15,12 +15,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-app-pattern text-foreground">
       <header className="sticky top-0 z-20 border-b border-border/60 bg-background/85 backdrop-blur-lg">
-        <div className="container flex items-center justify-between py-3">
-          <Link to="/" className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-cyan-400 to-emerald-500" aria-hidden />
-            <div>
-              <p className="text-lg font-semibold tracking-tight">Cabo Marlin Ops</p>
-              <p className="text-xs text-muted-foreground">Trip window: Mar 20-23, 2026</p>
+        <div className="container flex items-center justify-between py-2.5 sm:py-3">
+          <Link to="/" className="flex min-w-0 items-center gap-3">
+            <div className="h-9 w-9 shrink-0 rounded-full bg-gradient-to-br from-cyan-400 to-emerald-500 sm:h-10 sm:w-10" aria-hidden />
+            <div className="min-w-0">
+              <p className="truncate text-base font-semibold tracking-tight sm:text-lg">Cabo Marlin Ops</p>
+              <p className="hidden text-xs text-muted-foreground sm:block">Trip window: Mar 20-23, 2026</p>
             </div>
           </Link>
 
@@ -44,9 +44,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </header>
 
-      <main className="container py-6">{children}</main>
+      <main className="container py-4 pb-28 sm:py-6 sm:pb-6">{children}</main>
 
-      <nav className="fixed bottom-4 left-1/2 z-20 flex w-[95%] max-w-lg -translate-x-1/2 items-center justify-around rounded-2xl border border-border/70 bg-background/90 p-2 shadow-xl backdrop-blur md:hidden">
+      <nav className="fixed bottom-3 left-1/2 z-20 flex w-[96%] max-w-xl -translate-x-1/2 items-center justify-between rounded-2xl border border-border/70 bg-background/95 px-1.5 py-1.5 shadow-xl backdrop-blur md:hidden" style={{ paddingBottom: "max(0.375rem, env(safe-area-inset-bottom))" }}>
         {navItems.filter((item) => !item.hideOnMobile).map((item) => (
           <NavLink
             key={item.to}
@@ -54,13 +54,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             end={item.end}
             className={({ isActive }) =>
               cn(
-                "flex flex-col items-center rounded-lg px-2 py-1 text-[11px] text-muted-foreground",
+                "flex min-h-12 min-w-0 flex-1 flex-col items-center justify-center rounded-lg px-1 py-1 text-[10px] leading-tight text-muted-foreground",
                 isActive && "bg-primary/15 text-primary",
               )
             }
           >
             <item.icon className="h-4 w-4" aria-hidden />
-            <span>{item.label}</span>
+            <span className="mt-0.5 truncate">{item.label}</span>
           </NavLink>
         ))}
       </nav>

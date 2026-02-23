@@ -80,7 +80,7 @@ export function ChartersRoute() {
   }
 
   return (
-    <div className="space-y-4 pb-20 md:pb-6">
+    <div className="space-y-4 pb-4">
       <header className="space-y-2">
         <h1 className="text-2xl font-semibold">Charters</h1>
         <p className="text-sm text-muted-foreground">Sort by normalized pricing and keep a personal shortlist in local storage.</p>
