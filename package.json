@@ -14,9 +14,9 @@
     "typecheck": "tsc --noEmit",
     "lint": "echo 'Lint command not configured for this repo yet.'",
     "fetch:data": "tsx scripts/fetchData.ts",
-    "test": "vitest run",
+    "test": "npm run test:ui && npm run test:parsers",
     "test:watch": "vitest",
-    "test:parsers": "vitest run scripts/parsers/__tests__",
+    "test:parsers": "vitest run scripts/parsers/__tests__ --environment node",
     "test:ui": "vitest run src/test"
   },
   "dependencies": {

@@ -9,8 +9,12 @@ export default defineConfig({
   },
   test: {
     environment: "jsdom",
+    environmentMatchGlobs: [["scripts/parsers/**", "node"]],
     setupFiles: "./src/test/setup.ts",
     globals: true,
+    env: {
+      NODE_ENV: "test",
+    },
     coverage: {
       provider: "v8",
       reporter: ["text", "html"],
