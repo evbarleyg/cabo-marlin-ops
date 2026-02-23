@@ -49,7 +49,20 @@ jobs:
 
       - name: Print source status summary
         run: |
-          node -e "const fs=require('fs'); const files=['public/data/conditions.json','public/data/biteReports.json','public/data/charters.json']; for (const f of files){const j=JSON.parse(fs.readFileSync(f,'utf8')); console.log('--- '+f); for (const s of j.sources){console.log(`${s.ok?'ok':'error'} | ${s.name} | ${s.url}${s.error?` | ${s.error}`:''}`);} }"
+          node <<'NODE'
+          const fs = require('fs');
+          const files = ['public/data/conditions.json', 'public/data/biteReports.json', 'public/data/charters.json'];
+
+          for (const f of files) {
+            const j = JSON.parse(fs.readFileSync(f, 'utf8'));
+            console.log(`--- ${f}`);
+            for (const s of j.sources) {
+              const status = s.ok ? 'ok' : 'error';
+              const err = s.error ? ` | ${s.error}` : '';
+              console.log(`${status} | ${s.name} | ${s.url}${err}`);
+            }
+          }
+          NODE
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
