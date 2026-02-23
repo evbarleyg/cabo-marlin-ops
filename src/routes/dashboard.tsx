@@ -70,7 +70,7 @@ export function DashboardRoute() {
   const hasError = conditions.error || bite.error || charters.error;
 
   return (
-    <div className="space-y-4 pb-20 md:pb-6">
+    <div className="space-y-4 pb-4">
       <section className="space-y-3">
         <h1 className="text-2xl font-semibold">Trip Dashboard</h1>
         <p className="text-sm text-muted-foreground">Fast snapshot for sea state, bite signal, seasonal context, and shortlist readiness.</p>

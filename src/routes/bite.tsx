@@ -62,7 +62,7 @@ export function BiteRoute() {
   }
 
   return (
-    <div className="space-y-4 pb-20 md:pb-6">
+    <div className="space-y-4 pb-4">
       <header className="space-y-2">
         <h1 className="text-2xl font-semibold">Bite Reports</h1>
         <p className="text-sm text-muted-foreground">Normalized report timeline, season-relative marlin signal, and conditions interplay.</p>

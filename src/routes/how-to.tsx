@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export function HowToRoute() {
   return (
-    <div className="space-y-5 pb-20 md:pb-6">
+    <div className="space-y-5 pb-4">
       <header className="space-y-2">
         <h1 className="text-3xl font-semibold tracking-tight">How To Use Cabo Marlin Ops</h1>
         <p className="max-w-2xl text-sm text-muted-foreground">

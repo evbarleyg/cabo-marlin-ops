@@ -122,7 +122,7 @@ export function ConditionsRoute() {
   });
 
   return (
-    <div className="space-y-4 pb-20 md:pb-6">
+    <div className="space-y-4 pb-4">
       <header className="space-y-2">
         <h1 className="text-2xl font-semibold">Conditions</h1>
         <p className="text-sm text-muted-foreground">Trip-focused marine forecast with a transparent go/no-go heuristic.</p>
@@ -158,6 +158,8 @@ export function ConditionsRoute() {
         {focusedDates.map((date) => (
           <Button
             key={date}
+            size="sm"
+            className="text-xs sm:text-sm"
             variant={date === (selectedSummary?.date ?? focusedDates[0]) ? "default" : "outline"}
             onClick={() => setActiveDate(date)}
           >
@@ -177,7 +179,7 @@ export function ConditionsRoute() {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="h-80 overflow-hidden rounded-lg border border-border/50">
+          <div className="h-[18rem] overflow-hidden rounded-lg border border-border/50 sm:h-80">
             <MapContainer center={[settings.latitude, settings.longitude]} zoom={10} className="h-full w-full">
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -282,7 +284,7 @@ export function ConditionsRoute() {
           <CardHeader>
             <CardTitle className="text-base">Wave + Swell</CardTitle>
           </CardHeader>
-          <CardContent className="h-80">
+          <CardContent className="h-64 sm:h-80">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={hourly}>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.2)" />
@@ -311,7 +313,7 @@ export function ConditionsRoute() {
           <CardHeader>
             <CardTitle className="text-base">Current + SST</CardTitle>
           </CardHeader>
-          <CardContent className="h-80">
+          <CardContent className="h-64 sm:h-80">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={hourly}>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.2)" />
