@@ -10,7 +10,7 @@ import { useOpsShortlist } from "@/lib/app-context";
 import { chartersEnvelopeSchema } from "@/lib/schemas";
 import { formatNumber } from "@/lib/utils";
 
-type SortMode = "price_hour" | "price_angler" | "name";
+type SortMode = "price_hour" | "price_angler" | "name" | "max_people" | "boat_length";
 
 type BandFilter = "all" | "low" | "typical" | "high" | "unknown";
 
@@ -27,14 +27,21 @@ export function ChartersRoute() {
 
   const [sortMode, setSortMode] = useState<SortMode>("price_hour");
   const [bandFilter, setBandFilter] = useState<BandFilter>("all");
+  const [minPeople, setMinPeople] = useState(0);
+  const [minBoatLength, setMinBoatLength] = useState(0);
   const [copied, setCopied] = useState(false);
 
   const sortedEntries = useMemo(() => {
     const entries = charters.data?.data.entries ?? [];
-    const filtered = entries.filter((entry) => (bandFilter === "all" ? true : entry.price_band === bandFilter));
+    const filtered = entries
+      .filter((entry) => (bandFilter === "all" ? true : entry.price_band === bandFilter))
+      .filter((entry) => (minPeople > 0 ? (entry.max_people ?? 0) >= minPeople : true))
+      .filter((entry) => (minBoatLength > 0 ? (entry.boat_length_ft ?? 0) >= minBoatLength : true));
 
     return [...filtered].sort((a, b) => {
       if (sortMode === "name") return a.name.localeCompare(b.name);
+      if (sortMode === "max_people") return (b.max_people ?? 0) - (a.max_people ?? 0);
+      if (sortMode === "boat_length") return (b.boat_length_ft ?? 0) - (a.boat_length_ft ?? 0);
       if (sortMode === "price_hour") {
         const av = a.normalized.price_per_hour_usd ?? Number.POSITIVE_INFINITY;
         const bv = b.normalized.price_per_hour_usd ?? Number.POSITIVE_INFINITY;
@@ -44,7 +51,7 @@ export function ChartersRoute() {
       const bv = b.normalized.price_per_angler_usd ?? Number.POSITIVE_INFINITY;
       return av - bv;
     });
-  }, [charters.data, sortMode, bandFilter]);
+  }, [charters.data, sortMode, bandFilter, minPeople, minBoatLength]);
 
   const selectedForTemplate = sortedEntries.find((entry) => shortlistSet.has(entry.id)) ?? sortedEntries[0];
 
@@ -81,7 +88,7 @@ export function ChartersRoute() {
 
       <ScreenGuide text="Sort by $/hour or $/angler to compare value consistently. Use price bands as rough guides, shortlist likely options, then copy the quote template to standardize outreach." />
 
-      <section className="grid gap-3 rounded-lg border border-border/60 bg-card/70 p-4 md:grid-cols-2">
+      <section className="grid gap-3 rounded-lg border border-border/60 bg-card/70 p-4 md:grid-cols-2 xl:grid-cols-4">
         <label className="space-y-1 text-sm">
           <span className="text-muted-foreground">Sort</span>
           <select
@@ -91,6 +98,8 @@ export function ChartersRoute() {
           >
             <option value="price_hour">Price / hour</option>
             <option value="price_angler">Price / angler</option>
+            <option value="max_people">Max people</option>
+            <option value="boat_length">Boat length</option>
             <option value="name">Name</option>
           </select>
         </label>
@@ -107,6 +116,35 @@ export function ChartersRoute() {
             <option value="typical">Typical</option>
             <option value="high">High</option>
             <option value="unknown">Unknown</option>
+          </select>
+        </label>
+
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">Min anglers</span>
+          <select
+            className="h-10 w-full rounded-md border border-input bg-background px-3"
+            value={minPeople}
+            onChange={(event) => setMinPeople(Number(event.target.value))}
+          >
+            <option value={0}>Any</option>
+            <option value={4}>4+</option>
+            <option value={6}>6+</option>
+            <option value={8}>8+</option>
+          </select>
+        </label>
+
+        <label className="space-y-1 text-sm">
+          <span className="text-muted-foreground">Min boat length (ft)</span>
+          <select
+            className="h-10 w-full rounded-md border border-input bg-background px-3"
+            value={minBoatLength}
+            onChange={(event) => setMinBoatLength(Number(event.target.value))}
+          >
+            <option value={0}>Any</option>
+            <option value={28}>28+</option>
+            <option value={32}>32+</option>
+            <option value={36}>36+</option>
+            <option value={40}>40+</option>
           </select>
         </label>
       </section>
@@ -129,6 +167,8 @@ export function ChartersRoute() {
                 <div className="mt-3 flex flex-wrap gap-2 text-sm">
                   <Badge variant="outline">$ / hour: {formatNumber(entry.normalized.price_per_hour_usd, 0)}</Badge>
                   <Badge variant="outline">$ / angler: {formatNumber(entry.normalized.price_per_angler_usd, 0)}</Badge>
+                  <Badge variant="outline">Max people: {entry.max_people ?? "N/A"}</Badge>
+                  <Badge variant="outline">Boat: {entry.boat_length_ft ? `${entry.boat_length_ft} ft` : "N/A"}</Badge>
                 </div>
 
                 <div className="mt-4 flex flex-wrap gap-2">

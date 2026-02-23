@@ -14,6 +14,8 @@ export function BiteRoute() {
   const bite = useDataFile("biteReports.json", biteReportsEnvelopeSchema);
   const conditions = useDataFile("conditions.json", conditionsEnvelopeSchema);
   const [historyWindow, setHistoryWindow] = useState<"30" | "90" | "180" | "season">("90");
+  const season = bite.data?.data.metrics.season_context;
+  const dailyCounts = bite.data?.data.metrics.daily_marlin_counts ?? [];
 
   const biteScore = useMemo(() => {
     if (!bite.data || !conditions.data) return null;
@@ -29,6 +31,17 @@ export function BiteRoute() {
     });
   }, [bite.data, conditions.data]);
 
+  const historySeries = useMemo(() => {
+    if (!season) return [];
+
+    if (historyWindow === "season") {
+      return dailyCounts.filter((point) => point.date >= season.sample_start && point.date <= season.sample_end);
+    }
+    const days = Number(historyWindow);
+    const cutoff = new Date(Date.now() - (days - 1) * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+    return dailyCounts.filter((point) => point.date >= cutoff);
+  }, [dailyCounts, historyWindow, season]);
+
   if (bite.loading || conditions.loading) {
     return (
       <div className="space-y-4">
@@ -43,16 +56,9 @@ export function BiteRoute() {
     return <p className="text-sm text-destructive">Unable to load bite report data. {bite.error}</p>;
   }
 
-  const season = bite.data.data.metrics.season_context;
-  const dailyCounts = bite.data.data.metrics.daily_marlin_counts;
-  const historySeries = useMemo(() => {
-    if (historyWindow === "season") {
-      return dailyCounts.filter((point) => point.date >= season.sample_start && point.date <= season.sample_end);
-    }
-    const days = Number(historyWindow);
-    const cutoff = new Date(Date.now() - (days - 1) * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
-    return dailyCounts.filter((point) => point.date >= cutoff);
-  }, [dailyCounts, historyWindow, season.sample_end, season.sample_start]);
+  if (!season) {
+    return <p className="text-sm text-destructive">Bite metrics are missing season context. Run data refresh and reload.</p>;
+  }
 
   return (
     <div className="space-y-4 pb-20 md:pb-6">
