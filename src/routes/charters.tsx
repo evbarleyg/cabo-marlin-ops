@@ -3,6 +3,7 @@ import { Copy } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ScreenGuide } from "@/components/screen-guide";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDataFile } from "@/hooks/useDataFile";
 import { useOpsShortlist } from "@/lib/app-context";
@@ -77,6 +78,8 @@ export function ChartersRoute() {
         <h1 className="text-2xl font-semibold">Charters</h1>
         <p className="text-sm text-muted-foreground">Sort by normalized pricing and keep a personal shortlist in local storage.</p>
       </header>
+
+      <ScreenGuide text="Sort by $/hour or $/angler to compare value consistently. Use price bands as rough guides, shortlist likely options, then copy the quote template to standardize outreach." />
 
       <section className="grid gap-3 rounded-lg border border-border/60 bg-card/70 p-4 md:grid-cols-2">
         <label className="space-y-1 text-sm">

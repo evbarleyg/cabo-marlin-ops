@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ScreenGuide } from "@/components/screen-guide";
 import { DEFAULT_COORDINATES } from "@/lib/constants";
 import { useOpsSettings } from "@/lib/app-context";
 
@@ -32,6 +33,8 @@ export function SettingsRoute() {
         <h1 className="text-2xl font-semibold">Settings</h1>
         <p className="text-sm text-muted-foreground">Customize base coordinates, units, and theme preferences saved in your browser.</p>
       </header>
+
+      <ScreenGuide text="These settings change how values are displayed in the UI (not the raw source data). Update coordinates if your launch point shifts, then adjust units/theme for faster daily reading." />
 
       <Card>
         <CardHeader>

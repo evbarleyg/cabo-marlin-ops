@@ -6,6 +6,15 @@ The browser only reads local JSON files under `public/data`. All scraping and ex
 
 [Review app](https://evbarleyg.github.io/cabo-marlin-ops/)
 
+## In-App Navigation
+
+- `/` how-to front page (workflow + interpretation guide)
+- `/dashboard` operational snapshot
+- `/conditions` forecast charts + estimated bite propensity heat overlay
+- `/bite` timeline + season-relative bite context
+- `/charters` shortlist and quote templates
+- `/settings` units/theme/base coordinates
+
 ## Stack
 
 - Vite + React + TypeScript
@@ -81,7 +90,10 @@ Every generated data file has:
 
 2. Bite report HTML parsing
 - El Budster report page
-- FishingBooker Cabo report listings (pages 1-3)
+- FishingBooker regional report listings:
+  - Cabo San Lucas (pages 1-10)
+  - San Jose del Cabo (pages 1-6)
+  - La Paz (pages 1-6)
 - Polite fetch behavior:
   - explicit `User-Agent`
   - max 1 concurrent request per domain
@@ -157,6 +169,7 @@ npm run build
 
 - Heuristic outputs (Go/No-Go, Bite Score) are advisory and not navigational safety guidance.
 - Scraped HTML sources can change markup, which may reduce parsing quality until parser updates are made.
+- Bite propensity heat overlay is an estimated distance-band visualization from report text, not a true GPS catch heatmap.
 - GitHub Pages hosts static artifacts only; there is no runtime server compute.
 
 ## Favicon

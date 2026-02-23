@@ -37,6 +37,13 @@ const DEFAULT_LOCATION = {
 };
 
 const USER_AGENT = "CaboMarlinOpsBot/1.0 (+https://github.com/evbarleyg/cabo-marlin-ops; data refresh bot)";
+const BITE_HISTORY_WINDOW_DAYS = 365;
+const BITE_TIMESERIES_WINDOW_DAYS = 180;
+const FISHING_BOOKER_DESTINATIONS = [
+  { label: "Cabo San Lucas", slug: "cabo-san-lucas", pages: 14 },
+  { label: "San Jose del Cabo", slug: "san-jose-del-cabo", pages: 10 },
+  { label: "La Paz", slug: "la-paz", pages: 8 },
+];
 
 const openMeteoSchema = z.object({
   timezone: z.string(),
@@ -233,12 +240,14 @@ async function fetchConditions(generatedAt: string) {
   }
 }
 
+function isMarlinSignal(report: BiteReport): boolean {
+  const speciesMention = report.species.some((species) => species.toLowerCase().includes("marlin"));
+  const notesMention = report.notes.toLowerCase().includes("marlin");
+  return speciesMention || notesMention;
+}
+
 function extractMarlinMentions(reports: BiteReport[]): number {
-  return reports.filter((report) => {
-    const speciesMention = report.species.some((species) => species.toLowerCase().includes("marlin"));
-    const notesMention = report.notes.toLowerCase().includes("marlin");
-    return speciesMention || notesMention;
-  }).length;
+  return reports.filter(isMarlinSignal).length;
 }
 
 function buildTrend(reports: BiteReport[]): Array<{ bucket_ts: string; mentions: number }> {
@@ -246,14 +255,15 @@ function buildTrend(reports: BiteReport[]): Array<{ bucket_ts: string; mentions:
   const windowStart = now - 72 * 60 * 60 * 1000;
   const bucketSizeMs = 12 * 60 * 60 * 1000;
 
-  const reportDates = reports
+  const marlinReportDates = reports
+    .filter(isMarlinSignal)
     .map((report) => new Date(`${report.date}T12:00:00Z`).getTime())
     .filter((time) => Number.isFinite(time));
 
   const buckets: Array<{ bucket_ts: string; mentions: number }> = [];
   for (let current = windowStart; current <= now; current += bucketSizeMs) {
     const next = current + bucketSizeMs;
-    const mentions = reportDates.filter((time) => time >= current && time < next).length;
+    const mentions = marlinReportDates.filter((time) => time >= current && time < next).length;
     buckets.push({
       bucket_ts: bucketIsoHour(new Date(current)),
       mentions,
@@ -262,31 +272,104 @@ function buildTrend(reports: BiteReport[]): Array<{ bucket_ts: string; mentions:
   return buckets;
 }
 
+function formatIsoDateFromMs(ms: number): string {
+  return new Date(ms).toISOString().slice(0, 10);
+}
+
+function buildDailyMarlinCounts(reports: BiteReport[]) {
+  const grouped = new Map<string, { total_reports: number; marlin_mentions: number }>();
+
+  for (const report of reports) {
+    const bucket = grouped.get(report.date) ?? { total_reports: 0, marlin_mentions: 0 };
+    bucket.total_reports += 1;
+    if (isMarlinSignal(report)) {
+      bucket.marlin_mentions += 1;
+    }
+    grouped.set(report.date, bucket);
+  }
+
+  const now = new Date();
+  const endDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  const startDate = new Date(endDate.getTime() - (BITE_TIMESERIES_WINDOW_DAYS - 1) * 24 * 60 * 60 * 1000);
+
+  const denseSeries: Array<{ date: string; total_reports: number; marlin_mentions: number }> = [];
+  for (let cursor = startDate.getTime(); cursor <= endDate.getTime(); cursor += 24 * 60 * 60 * 1000) {
+    const date = formatIsoDateFromMs(cursor);
+    const values = grouped.get(date) ?? { total_reports: 0, marlin_mentions: 0 };
+    denseSeries.push({
+      date,
+      total_reports: values.total_reports,
+      marlin_mentions: values.marlin_mentions,
+    });
+  }
+
+  return denseSeries;
+}
+
+function percentileRank(values: number[], target: number): number {
+  if (values.length === 0) return 0;
+  const lessOrEqual = values.filter((value) => value <= target).length;
+  return Number(((lessOrEqual / values.length) * 100).toFixed(1));
+}
+
+function buildSeasonContext(dailyMarlinCounts: Array<{ date: string; total_reports: number; marlin_mentions: number }>) {
+  const today = new Date().toISOString().slice(0, 10);
+  const activeDays = dailyMarlinCounts.filter((item) => item.total_reports > 0);
+  if (activeDays.length === 0) {
+    return {
+      sample_days: 0,
+      sample_start: today,
+      sample_end: today,
+      latest_report_date: today,
+      latest_day_total_reports: 0,
+      latest_day_marlin_mentions: 0,
+      latest_day_percentile: 0,
+      average_daily_marlin_mentions: 0,
+      p90_daily_marlin_mentions: 0,
+      latest_vs_average_ratio: 0,
+    };
+  }
+
+  const marlinValues = activeDays.map((item) => item.marlin_mentions);
+  const latest = activeDays[activeDays.length - 1];
+  const avg = marlinValues.reduce((sum, value) => sum + value, 0) / marlinValues.length;
+  const latestVsAverage = avg > 0 ? latest.marlin_mentions / avg : latest.marlin_mentions > 0 ? latest.marlin_mentions : 0;
+
+  return {
+    sample_days: activeDays.length,
+    sample_start: activeDays[0].date,
+    sample_end: latest.date,
+    latest_report_date: latest.date,
+    latest_day_total_reports: latest.total_reports,
+    latest_day_marlin_mentions: latest.marlin_mentions,
+    latest_day_percentile: percentileRank(marlinValues, latest.marlin_mentions),
+    average_daily_marlin_mentions: Number(avg.toFixed(2)),
+    p90_daily_marlin_mentions: Number(percentile(marlinValues, 90).toFixed(2)),
+    latest_vs_average_ratio: Number(latestVsAverage.toFixed(2)),
+  };
+}
+
 async function fetchBiteReports(generatedAt: string) {
   const previous = await readJsonIfExists(BITE_FILE, biteReportsEnvelopeSchema);
   const client = new PoliteHttpClient({ userAgent: USER_AGENT, minDelayMs: 500, maxDelayMs: 1000 });
 
+  const fishingBookerTargets = FISHING_BOOKER_DESTINATIONS.flatMap((destination) =>
+    Array.from({ length: destination.pages }, (_, index) => ({
+      sourceName: `FishingBooker ${destination.label} page ${index + 1}`,
+      sourceLabel: `FishingBooker ${destination.label}`,
+      url: `https://fishingbooker.com/reports/destination/mx/BS/${destination.slug}?page=${index + 1}`,
+      parse: parseFishingBookerReports,
+    })),
+  );
+
   const targets = [
     {
       sourceName: "El Budster",
+      sourceLabel: "El Budster",
       url: "https://www.elbudster.com/report",
       parse: parseElBudsterReport,
     },
-    {
-      sourceName: "FishingBooker Cabo page 1",
-      url: "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1",
-      parse: parseFishingBookerReports,
-    },
-    {
-      sourceName: "FishingBooker Cabo page 2",
-      url: "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=2",
-      parse: parseFishingBookerReports,
-    },
-    {
-      sourceName: "FishingBooker Cabo page 3",
-      url: "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=3",
-      parse: parseFishingBookerReports,
-    },
+    ...fishingBookerTargets,
   ];
 
   const reports: BiteReport[] = [];
@@ -316,7 +399,10 @@ async function fetchBiteReports(generatedAt: string) {
 
     const parsed = target.parse(response.text, target.url);
     for (const report of parsed.reports) {
-      const check = biteReportSchema.safeParse(report);
+      const check = biteReportSchema.safeParse({
+        ...report,
+        source: target.sourceLabel,
+      });
       if (check.success) {
         reports.push(check.data);
       }
@@ -324,10 +410,15 @@ async function fetchBiteReports(generatedAt: string) {
     failures.push(...parsed.failures);
   }
 
-  const dedupedReports = dedupeBiteReports(reports).sort((a, b) => b.date.localeCompare(a.date));
+  const cutoffDate = new Date(Date.now() - BITE_HISTORY_WINDOW_DAYS * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
 
-  const effectiveReports =
-    dedupedReports.length === 0 && previous?.data.reports.length ? previous.data.reports : dedupedReports;
+  const mergedReports = dedupeBiteReports([...(previous?.data.reports ?? []), ...reports])
+    .filter((report) => report.date >= cutoffDate)
+    .sort((a, b) => b.date.localeCompare(a.date));
+
+  const effectiveReports = mergedReports.length > 0 ? mergedReports : previous?.data.reports ?? [];
+  const dailyMarlinCounts = buildDailyMarlinCounts([...effectiveReports].sort((a, b) => a.date.localeCompare(b.date)));
+  const seasonContext = buildSeasonContext(dailyMarlinCounts);
 
   const envelope = {
     generated_at: generatedAt,
@@ -338,6 +429,8 @@ async function fetchBiteReports(generatedAt: string) {
       metrics: {
         marlin_mentions_last_72h: extractMarlinMentions(effectiveReports),
         trend_last_72h: buildTrend(effectiveReports),
+        daily_marlin_counts: dailyMarlinCounts,
+        season_context: seasonContext,
       },
     },
   };

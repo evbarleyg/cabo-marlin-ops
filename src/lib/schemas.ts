@@ -92,6 +92,25 @@ export const biteReportsDataSchema = z.object({
         mentions: z.number().int().min(0),
       }),
     ),
+    daily_marlin_counts: z.array(
+      z.object({
+        date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+        total_reports: z.number().int().min(0),
+        marlin_mentions: z.number().int().min(0),
+      }),
+    ),
+    season_context: z.object({
+      sample_days: z.number().int().min(0),
+      sample_start: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+      sample_end: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+      latest_report_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+      latest_day_total_reports: z.number().int().min(0),
+      latest_day_marlin_mentions: z.number().int().min(0),
+      latest_day_percentile: z.number().min(0).max(100),
+      average_daily_marlin_mentions: z.number().min(0),
+      p90_daily_marlin_mentions: z.number().min(0),
+      latest_vs_average_ratio: z.number().min(0),
+    }),
   }),
 });
 

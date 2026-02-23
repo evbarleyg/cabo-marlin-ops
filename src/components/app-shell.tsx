@@ -1,9 +1,10 @@
 import { Link, NavLink } from "react-router-dom";
-import { Waves, Fish, ShipWheel, Settings as SettingsIcon, Compass } from "lucide-react";
+import { Waves, Fish, ShipWheel, Settings as SettingsIcon, Compass, MapPinned } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { to: "/", label: "Dashboard", icon: Compass },
+  { to: "/", label: "How To", icon: MapPinned, end: true, hideOnMobile: true },
+  { to: "/dashboard", label: "Dashboard", icon: Compass, end: true },
   { to: "/conditions", label: "Conditions", icon: Waves },
   { to: "/bite", label: "Bite", icon: Fish },
   { to: "/charters", label: "Charters", icon: ShipWheel },
@@ -28,7 +29,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <NavLink
                 key={item.to}
                 to={item.to}
-                end={item.to === "/"}
+                end={item.end}
                 className={({ isActive }) =>
                   cn(
                     "rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors",
@@ -46,11 +47,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <main className="container py-6">{children}</main>
 
       <nav className="fixed bottom-4 left-1/2 z-20 flex w-[95%] max-w-lg -translate-x-1/2 items-center justify-around rounded-2xl border border-border/70 bg-background/90 p-2 shadow-xl backdrop-blur md:hidden">
-        {navItems.map((item) => (
+        {navItems.filter((item) => !item.hideOnMobile).map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
-            end={item.to === "/"}
+            end={item.end}
             className={({ isActive }) =>
               cn(
                 "flex flex-col items-center rounded-lg px-2 py-1 text-[11px] text-muted-foreground",

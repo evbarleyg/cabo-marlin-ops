@@ -1,35 +1,216 @@
 {
-  "generated_at": "2026-02-23T01:04:00.095Z",
+  "generated_at": "2026-02-23T01:38:41.514Z",
   "sources": [
     {
       "name": "El Budster",
       "url": "https://www.elbudster.com/report",
-      "fetched_at": "2026-02-23T01:04:01.149Z",
+      "fetched_at": "2026-02-23T01:38:42.518Z",
       "ok": true
     },
     {
-      "name": "FishingBooker Cabo page 1",
+      "name": "FishingBooker Cabo San Lucas page 1",
       "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1",
-      "fetched_at": "2026-02-23T01:04:02.280Z",
+      "fetched_at": "2026-02-23T01:38:43.491Z",
       "ok": true
     },
     {
-      "name": "FishingBooker Cabo page 2",
+      "name": "FishingBooker Cabo San Lucas page 2",
       "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=2",
-      "fetched_at": "2026-02-23T01:04:04.474Z",
+      "fetched_at": "2026-02-23T01:38:45.380Z",
       "ok": true
     },
     {
-      "name": "FishingBooker Cabo page 3",
+      "name": "FishingBooker Cabo San Lucas page 3",
       "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=3",
-      "fetched_at": "2026-02-23T01:04:06.431Z",
+      "fetched_at": "2026-02-23T01:38:47.423Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker Cabo San Lucas page 4",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=4",
+      "fetched_at": "2026-02-23T01:38:49.440Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker Cabo San Lucas page 5",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=5",
+      "fetched_at": "2026-02-23T01:38:51.118Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker Cabo San Lucas page 6",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=6",
+      "fetched_at": "2026-02-23T01:38:53.210Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker Cabo San Lucas page 7",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=7",
+      "fetched_at": "2026-02-23T01:38:55.397Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker Cabo San Lucas page 8",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=8",
+      "fetched_at": "2026-02-23T01:38:57.215Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker Cabo San Lucas page 9",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=9",
+      "fetched_at": "2026-02-23T01:38:58.960Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker Cabo San Lucas page 10",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=10",
+      "fetched_at": "2026-02-23T01:39:00.556Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker Cabo San Lucas page 11",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=11",
+      "fetched_at": "2026-02-23T01:39:02.525Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker Cabo San Lucas page 12",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=12",
+      "fetched_at": "2026-02-23T01:39:04.410Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker Cabo San Lucas page 13",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=13",
+      "fetched_at": "2026-02-23T01:39:06.082Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker Cabo San Lucas page 14",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=14",
+      "fetched_at": "2026-02-23T01:39:08.024Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker San Jose del Cabo page 1",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1",
+      "fetched_at": "2026-02-23T01:39:09.829Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker San Jose del Cabo page 2",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=2",
+      "fetched_at": "2026-02-23T01:39:11.800Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker San Jose del Cabo page 3",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=3",
+      "fetched_at": "2026-02-23T01:39:13.310Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker San Jose del Cabo page 4",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=4",
+      "fetched_at": "2026-02-23T01:39:14.963Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker San Jose del Cabo page 5",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=5",
+      "fetched_at": "2026-02-23T01:39:16.495Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker San Jose del Cabo page 6",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=6",
+      "fetched_at": "2026-02-23T01:39:18.082Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker San Jose del Cabo page 7",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=7",
+      "fetched_at": "2026-02-23T01:39:19.928Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker San Jose del Cabo page 8",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=8",
+      "fetched_at": "2026-02-23T01:39:21.863Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker San Jose del Cabo page 9",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=9",
+      "fetched_at": "2026-02-23T01:39:23.671Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker San Jose del Cabo page 10",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=10",
+      "fetched_at": "2026-02-23T01:39:25.315Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker La Paz page 1",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/la-paz?page=1",
+      "fetched_at": "2026-02-23T01:39:27.356Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker La Paz page 2",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/la-paz?page=2",
+      "fetched_at": "2026-02-23T01:39:28.622Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker La Paz page 3",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/la-paz?page=3",
+      "fetched_at": "2026-02-23T01:39:30.135Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker La Paz page 4",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/la-paz?page=4",
+      "fetched_at": "2026-02-23T01:39:31.550Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker La Paz page 5",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/la-paz?page=5",
+      "fetched_at": "2026-02-23T01:39:33.027Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker La Paz page 6",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/la-paz?page=6",
+      "fetched_at": "2026-02-23T01:39:34.790Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker La Paz page 7",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/la-paz?page=7",
+      "fetched_at": "2026-02-23T01:39:36.172Z",
+      "ok": true
+    },
+    {
+      "name": "FishingBooker La Paz page 8",
+      "url": "https://fishingbooker.com/reports/destination/mx/BS/la-paz?page=8",
+      "fetched_at": "2026-02-23T01:39:37.599Z",
       "ok": true
     }
   ],
   "data": {
     "reports": [
       {
-        "source": "FishingBooker",
+        "source": "FishingBooker San Jose del Cabo",
+        "date": "2026-02-21",
+        "species": [],
+        "notes": "DALIKEN SPORTFISHING BOOK NOW! February 21, 2026 Inshore fishing Continue reading",
+        "link": "https://fishingbooker.com/reports/view/113317"
+      },
+      {
+        "source": "FishingBooker Cabo San Lucas",
         "date": "2026-02-20",
         "species": [
           "wahoo"
@@ -38,7 +219,17 @@
         "link": "https://fishingbooker.com/reports/view/113355"
       },
       {
-        "source": "FishingBooker",
+        "source": "FishingBooker San Jose del Cabo",
+        "date": "2026-02-20",
+        "species": [
+          "yellowfin tuna",
+          "tuna"
+        ],
+        "notes": "Yellowfin Tuna Day February 20, 2026 Nice day of tuna fishing. Continue reading",
+        "link": "https://fishingbooker.com/reports/view/113321"
+      },
+      {
+        "source": "FishingBooker Cabo San Lucas",
         "date": "2026-02-19",
         "species": [
           "dorado",
@@ -48,14 +239,30 @@
         "link": "https://fishingbooker.com/reports/view/113356"
       },
       {
-        "source": "FishingBooker",
+        "source": "FishingBooker Cabo San Lucas",
         "date": "2026-02-19",
         "species": [],
         "notes": "Half day (5hrs) February 19, 2026 Fun day wiht the kid's Continue reading",
         "link": "https://fishingbooker.com/reports/view/113248"
       },
       {
-        "source": "FishingBooker",
+        "source": "FishingBooker San Jose del Cabo",
+        "date": "2026-02-19",
+        "species": [
+          "mahi mahi"
+        ],
+        "notes": "Great day catching mahi mahi February 19, 2026 Nuestro cliente al inicio del viaje pregunto por accion nosotros elegimos ir a gordo banks espesamos por algo de actividad atrapando bonita dientona como 15 luego decidimos trollear y con un gran señuelo atrapamos un mahi mahi en el ",
+        "link": "https://fishingbooker.com/reports/view/113251"
+      },
+      {
+        "source": "FishingBooker San Jose del Cabo",
+        "date": "2026-02-19",
+        "species": [],
+        "notes": "DALIKEN SPORTFISHING BOOK! February 19, 2026 Inshore fishing Continue reading",
+        "link": "https://fishingbooker.com/reports/view/113229"
+      },
+      {
+        "source": "FishingBooker Cabo San Lucas",
         "date": "2026-02-18",
         "species": [
           "striped marlin",
@@ -66,7 +273,7 @@
         "link": "https://fishingbooker.com/reports/view/113260"
       },
       {
-        "source": "FishingBooker",
+        "source": "FishingBooker Cabo San Lucas",
         "date": "2026-02-16",
         "species": [
           "striped marlin",
@@ -78,7 +285,7 @@
         "link": "https://fishingbooker.com/reports/view/113166"
       },
       {
-        "source": "FishingBooker",
+        "source": "FishingBooker Cabo San Lucas",
         "date": "2026-02-16",
         "species": [
           "striped marlin",
@@ -88,6 +295,83 @@
         "notes": "EL BUDSTER FISHING REPORT February 16, 2026 Fishing on the EL BUDSTER. The KURT WILEY´S party, CAUGHT AND RELEASED ONE 140 LB. STRIPED MARLIN. They also caught ONE 25 LB. DORADO. The fish was caught 14 to 16 miles from the coast of Cabo San Lucas. The water temperature was 72-74 ",
         "distance_offshore_miles": 15,
         "link": "https://fishingbooker.com/reports/view/113140"
+      },
+      {
+        "source": "FishingBooker San Jose del Cabo",
+        "date": "2026-02-16",
+        "species": [
+          "mahi mahi"
+        ],
+        "notes": "Bigs mahi mahi February 16, 2026 La pesca de hoy empezamos pescando de fondo y atrapa algunos grouper de tamaño promedio luego proseguimos a trollear y ala hora nos jala un tremendo big mahi mahi Continue reading",
+        "link": "https://fishingbooker.com/reports/view/113083"
+      },
+      {
+        "source": "FishingBooker San Jose del Cabo",
+        "date": "2026-02-15",
+        "species": [
+          "marlin",
+          "tuna",
+          "dorado"
+        ],
+        "notes": "Hooked on the Action in San Jose! February 15, 2026 Today’s 6-hour private trip on the Marlin Hunter V was one for the books. Our group of experienced anglers reeled in a solid 20lb Dorado and spent 40 heart-pumping minutes fighting a stubborn Tuna that ultimately got away. In fi",
+        "link": "https://fishingbooker.com/reports/view/113053"
+      },
+      {
+        "source": "FishingBooker La Paz",
+        "date": "2026-01-16",
+        "species": [],
+        "notes": "The first yellowtail of the season January 16, 2026 We had a great yellowtail fish Continue reading",
+        "link": "https://fishingbooker.com/reports/view/112027"
+      },
+      {
+        "source": "FishingBooker La Paz",
+        "date": "2026-01-05",
+        "species": [],
+        "notes": "Hard effort on fire January 5, 2026 This day we were very lucky to have action, the objective was set in the spotlight and it was reached, finding one of the most emblematic fish for its way of fighting and especially its physical aesthetics similar to roosters, so the roosters i",
+        "link": "https://fishingbooker.com/reports/view/111572"
+      },
+      {
+        "source": "FishingBooker La Paz",
+        "date": "2025-12-10",
+        "species": [
+          "mahi mahi",
+          "snapper"
+        ],
+        "notes": "Snapper Day December 10, 2025 We had a bit of fun this morning with the Three Roosters. We went outside, the weather seemed great, but we couldn't find the mahi-mahi. But we came across three very good snappers Continue reading",
+        "link": "https://fishingbooker.com/reports/view/110488"
+      },
+      {
+        "source": "FishingBooker La Paz",
+        "date": "2025-11-26",
+        "species": [
+          "mahi mahi"
+        ],
+        "notes": "We had a great day with 3 large mahi-mah November 26, 2025 It was a great day of fishing. We were expecting the big ones. They just arrived with these north winds. A lot of bait came in, and also some big fish. Let's hope tomorrow is better than today. That's my report. Continue ",
+        "link": "https://fishingbooker.com/reports/view/109992"
+      },
+      {
+        "source": "FishingBooker La Paz",
+        "date": "2025-10-11",
+        "species": [
+          "blue marlin",
+          "marlin",
+          "dorado"
+        ],
+        "notes": "Blue marlin seaso is on fire October 11, 2025 Tuvimos un gran dia de pesca,esta vez fue 1-2 marlin azul y un dorado para la cena,el marlin azul desgraciadamente llego muy lastimado,tratamos de revivirlo pero no lo logro,tomamos la decicion de subirlo para donarlo a las familia de",
+        "link": "https://fishingbooker.com/reports/view/107944"
+      },
+      {
+        "source": "FishingBooker La Paz",
+        "date": "2025-08-30",
+        "species": [
+          "striped marlin",
+          "blue marlin",
+          "marlin",
+          "dorado",
+          "mahi mahi"
+        ],
+        "notes": "Fishing in la paz mx August 30, 2025 We had a great day, a lot of action, 1 of 3 striped marlin and 0 of 1 blue marlin (+350lbs) this last one giving a show a good fight, it was a pity that the short hook where he was fighting and left, but the emotion of seeing all our fish attr",
+        "link": "https://fishingbooker.com/reports/view/106020"
       }
     ],
     "parse_failures": [
@@ -99,11 +383,11 @@
       }
     ],
     "metrics": {
-      "marlin_mentions_last_72h": 3,
+      "marlin_mentions_last_72h": 6,
       "trend_last_72h": [
         {
           "bucket_ts": "2026-02-20T01:00:00.000Z",
-          "mentions": 1
+          "mentions": 0
         },
         {
           "bucket_ts": "2026-02-20T13:00:00.000Z",
@@ -129,7 +413,921 @@
           "bucket_ts": "2026-02-23T01:00:00.000Z",
           "mentions": 0
         }
-      ]
+      ],
+      "daily_marlin_counts": [
+        {
+          "date": "2025-08-28",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-08-29",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-08-30",
+          "total_reports": 1,
+          "marlin_mentions": 1
+        },
+        {
+          "date": "2025-08-31",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-01",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-02",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-03",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-04",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-05",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-06",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-07",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-08",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-09",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-10",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-11",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-12",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-13",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-14",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-15",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-16",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-17",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-18",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-19",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-20",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-21",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-22",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-23",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-24",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-25",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-26",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-27",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-28",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-29",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-09-30",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-01",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-02",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-03",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-04",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-05",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-06",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-07",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-08",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-09",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-10",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-11",
+          "total_reports": 1,
+          "marlin_mentions": 1
+        },
+        {
+          "date": "2025-10-12",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-13",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-14",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-15",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-16",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-17",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-18",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-19",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-20",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-21",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-22",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-23",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-24",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-25",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-26",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-27",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-28",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-29",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-30",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-10-31",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-01",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-02",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-03",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-04",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-05",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-06",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-07",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-08",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-09",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-10",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-11",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-12",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-13",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-14",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-15",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-16",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-17",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-18",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-19",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-20",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-21",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-22",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-23",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-24",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-25",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-26",
+          "total_reports": 1,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-27",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-28",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-29",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-11-30",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-01",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-02",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-03",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-04",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-05",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-06",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-07",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-08",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-09",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-10",
+          "total_reports": 1,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-11",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-12",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-13",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-14",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-15",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-16",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-17",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-18",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-19",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-20",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-21",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-22",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-23",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-24",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-25",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-26",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-27",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-28",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-29",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-30",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2025-12-31",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-01",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-02",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-03",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-04",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-05",
+          "total_reports": 1,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-06",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-07",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-08",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-09",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-10",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-11",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-12",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-13",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-14",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-15",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-16",
+          "total_reports": 1,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-17",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-18",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-19",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-20",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-21",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-22",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-23",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-24",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-25",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-26",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-27",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-28",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-29",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-30",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-01-31",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-02-01",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-02-02",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-02-03",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-02-04",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-02-05",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-02-06",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-02-07",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-02-08",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-02-09",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-02-10",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-02-11",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-02-12",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-02-13",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-02-14",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-02-15",
+          "total_reports": 1,
+          "marlin_mentions": 1
+        },
+        {
+          "date": "2026-02-16",
+          "total_reports": 3,
+          "marlin_mentions": 2
+        },
+        {
+          "date": "2026-02-17",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-02-18",
+          "total_reports": 1,
+          "marlin_mentions": 1
+        },
+        {
+          "date": "2026-02-19",
+          "total_reports": 4,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-02-20",
+          "total_reports": 2,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-02-21",
+          "total_reports": 1,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-02-22",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        },
+        {
+          "date": "2026-02-23",
+          "total_reports": 0,
+          "marlin_mentions": 0
+        }
+      ],
+      "season_context": {
+        "sample_days": 12,
+        "sample_start": "2025-08-30",
+        "sample_end": "2026-02-21",
+        "latest_report_date": "2026-02-21",
+        "latest_day_total_reports": 1,
+        "latest_day_marlin_mentions": 0,
+        "latest_day_percentile": 58.3,
+        "average_daily_marlin_mentions": 0.5,
+        "p90_daily_marlin_mentions": 1,
+        "latest_vs_average_ratio": 0
+      }
     }
   }
 }

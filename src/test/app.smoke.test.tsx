@@ -47,6 +47,19 @@ const biteFixture = {
     metrics: {
       marlin_mentions_last_72h: 0,
       trend_last_72h: [],
+      daily_marlin_counts: [],
+      season_context: {
+        sample_days: 0,
+        sample_start: "2026-02-23",
+        sample_end: "2026-02-23",
+        latest_report_date: "2026-02-23",
+        latest_day_total_reports: 0,
+        latest_day_marlin_mentions: 0,
+        latest_day_percentile: 0,
+        average_daily_marlin_mentions: 0,
+        p90_daily_marlin_mentions: 0,
+        latest_vs_average_ratio: 0,
+      },
     },
   },
 };
@@ -83,7 +96,7 @@ describe("app smoke", () => {
 
   it("renders dashboard route with loaded data", async () => {
     render(
-      <MemoryRouter initialEntries={["/"]}>
+      <MemoryRouter initialEntries={["/dashboard"]}>
         <AppProvider>
           <App />
         </AppProvider>
@@ -94,5 +107,19 @@ describe("app smoke", () => {
       expect(screen.getByText("Trip Dashboard")).toBeInTheDocument();
     });
     expect(screen.getByText("My Shortlist")).toBeInTheDocument();
+  });
+
+  it("renders how-to front page", async () => {
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <AppProvider>
+          <App />
+        </AppProvider>
+      </MemoryRouter>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText("How To Use Cabo Marlin Ops")).toBeInTheDocument();
+    });
   });
 });

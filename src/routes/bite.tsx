@@ -1,16 +1,19 @@
-import { useMemo } from "react";
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { useMemo, useState } from "react";
+import { Bar, BarChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ScreenGuide } from "@/components/screen-guide";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDataFile } from "@/hooks/useDataFile";
 import { computeBiteScore } from "@/lib/heuristics";
 import { biteReportsEnvelopeSchema, conditionsEnvelopeSchema } from "@/lib/schemas";
-import { formatDate } from "@/lib/utils";
+import { formatDate, formatNumber } from "@/lib/utils";
 
 export function BiteRoute() {
   const bite = useDataFile("biteReports.json", biteReportsEnvelopeSchema);
   const conditions = useDataFile("conditions.json", conditionsEnvelopeSchema);
+  const [historyWindow, setHistoryWindow] = useState<"30" | "90" | "180" | "season">("90");
 
   const biteScore = useMemo(() => {
     if (!bite.data || !conditions.data) return null;
@@ -40,12 +43,25 @@ export function BiteRoute() {
     return <p className="text-sm text-destructive">Unable to load bite report data. {bite.error}</p>;
   }
 
+  const season = bite.data.data.metrics.season_context;
+  const dailyCounts = bite.data.data.metrics.daily_marlin_counts;
+  const historySeries = useMemo(() => {
+    if (historyWindow === "season") {
+      return dailyCounts.filter((point) => point.date >= season.sample_start && point.date <= season.sample_end);
+    }
+    const days = Number(historyWindow);
+    const cutoff = new Date(Date.now() - (days - 1) * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+    return dailyCounts.filter((point) => point.date >= cutoff);
+  }, [dailyCounts, historyWindow, season.sample_end, season.sample_start]);
+
   return (
     <div className="space-y-4 pb-20 md:pb-6">
       <header className="space-y-2">
         <h1 className="text-2xl font-semibold">Bite Reports</h1>
-        <p className="text-sm text-muted-foreground">Normalized report timeline and marlin-weighted bite heuristic.</p>
+        <p className="text-sm text-muted-foreground">Normalized report timeline, season-relative marlin signal, and conditions interplay.</p>
       </header>
+
+      <ScreenGuide text="Read this screen in order: 72h signal for immediate momentum, Bite Score for blended conditions fit, then historical chart (30/90/180/season) to see where current bite sits versus the broader pattern." />
 
       <section className="grid gap-4 xl:grid-cols-[1.4fr_1fr]">
         <Card>
@@ -85,6 +101,77 @@ export function BiteRoute() {
             ) : (
               <p className="text-sm text-muted-foreground">Not enough data to calculate score.</p>
             )}
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="grid gap-4 xl:grid-cols-[1.25fr_1fr]">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Season Context (Daily Marlin Mentions)</CardTitle>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <Button variant={historyWindow === "30" ? "default" : "outline"} size="sm" onClick={() => setHistoryWindow("30")}>
+                30D
+              </Button>
+              <Button variant={historyWindow === "90" ? "default" : "outline"} size="sm" onClick={() => setHistoryWindow("90")}>
+                90D
+              </Button>
+              <Button variant={historyWindow === "180" ? "default" : "outline"} size="sm" onClick={() => setHistoryWindow("180")}>
+                180D
+              </Button>
+              <Button
+                variant={historyWindow === "season" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setHistoryWindow("season")}
+              >
+                Season
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent className="h-72">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={historySeries}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.2)" />
+                <XAxis
+                  dataKey="date"
+                  tickFormatter={(value) => new Date(value).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                  tick={{ fontSize: 12 }}
+                />
+                <YAxis allowDecimals={false} />
+                <Tooltip />
+                <Line type="monotone" dataKey="marlin_mentions" stroke="#06b6d4" dot={false} name="Marlin mentions/day" />
+                <Line type="monotone" dataKey="total_reports" stroke="#94a3b8" dot={false} name="Total reports/day" />
+              </LineChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Latest Day vs Season</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm">
+            <p>
+              Latest report date: <strong>{formatDate(season.latest_report_date)}</strong>
+            </p>
+            <p>
+              Percentile rank: <strong>{Math.round(season.latest_day_percentile)}th</strong>
+            </p>
+            <p>
+              Latest day marlin mentions: <strong>{season.latest_day_marlin_mentions}</strong>
+            </p>
+            <p>
+              Seasonal average/day: <strong>{formatNumber(season.average_daily_marlin_mentions, 2)}</strong>
+            </p>
+            <p>
+              Latest vs average ratio: <strong>{formatNumber(season.latest_vs_average_ratio, 2)}x</strong>
+            </p>
+            <p className="pt-1 text-xs text-muted-foreground">
+              Sample window: {season.sample_start} to {season.sample_end} ({season.sample_days} days with reports).
+            </p>
+            <p className="text-xs text-muted-foreground">
+              In the chart, `0` means no parsed reports were captured for that day.
+            </p>
           </CardContent>
         </Card>
       </section>
