@@ -9,19 +9,27 @@ export function parseElBudsterReport(html: string, sourceUrl: string): ParseResu
   const reports: ParseResult["reports"] = [];
   const failures: ParseResult["failures"] = [];
 
-  const candidates = $("article p, .entry-content p, .post p, main p, li")
+  const candidates = $("article p, article li, .entry-content p, .post p, main p, .report p, .report li")
     .map((_, element) => {
+      const parentText = $(element).closest("article, section, div").first().find("h1, h2, h3").first().text().trim();
       const text = $(element).text().replace(/\s+/g, " ").trim();
-      const link = $(element).find("a[href]").first().attr("href");
-      return { text, link };
+      const link =
+        $(element).find("a[href]").first().attr("href") ??
+        $(element).closest("article, section, div").first().find("a[href]").first().attr("href");
+      return {
+        text: [parentText, text].filter(Boolean).join(" ").trim(),
+        link,
+      };
     })
     .get()
-    .filter((item) => item.text.length > 55);
+    .filter((item) => item.text.length > 45);
 
   for (const candidate of candidates) {
     const date = extractIsoDate(candidate.text);
     const species = extractSpecies(candidate.text);
-    if (!date && species.length === 0) continue;
+    const hasSignal = date !== null || species.length > 0;
+    const hasLanguage = /(report|offshore|trip|bite|release|landed|caught)\b/i.test(candidate.text);
+    if (!hasSignal && !hasLanguage) continue;
 
     const link = normalizeLink(candidate.link, sourceUrl);
     reports.push({

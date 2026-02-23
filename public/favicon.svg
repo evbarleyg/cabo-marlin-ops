@@ -1,11 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Cabo Marlin Ops">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Cabo Marlin Ops favicon">
   <defs>
-    <linearGradient id="ocean" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#06b6d4" />
-      <stop offset="100%" stop-color="#10b981" />
+    <linearGradient id="marlinGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5eead4" />
+      <stop offset="55%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0ea5e9" />
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="14" fill="#0f172a" />
-  <path d="M10 42c7-1 16-8 22-16 7-9 13-12 22-12-8 4-12 8-16 13 6 0 10 1 14 5-4 0-8 1-11 3-4 3-8 7-14 9-6 2-12 1-17-2z" fill="url(#ocean)" />
-  <circle cx="48" cy="21" r="2" fill="#e2e8f0" />
+  <path
+    fill="url(#marlinGradient)"
+    d="M12 85c13 2 27-2 40-13 11-9 19-22 35-31 11-6 23-8 34-6-10 4-17 9-22 15 8 0 15 2 22 7-6 1-11 3-15 6-5 4-9 10-15 15-9 8-20 14-31 16-16 3-33-1-48-9z"
+  />
+  <path
+    fill="#e2f6ff"
+    d="M99 49c2 0 4 2 4 4s-2 4-4 4-4-2-4-4 2-4 4-4z"
+  />
+  <path
+    fill="#0f172a"
+    opacity="0.24"
+    d="M23 86c13 0 25-3 35-10 9-6 15-15 23-23-1 9-5 17-12 23-8 8-18 13-30 15-6 1-11 0-16-1z"
+  />
 </svg>

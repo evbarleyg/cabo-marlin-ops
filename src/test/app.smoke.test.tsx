@@ -46,6 +46,7 @@ const biteFixture = {
     parse_failures: [],
     metrics: {
       marlin_mentions_last_72h: 0,
+      weighted_marlin_signal_last_72h: 0,
       trend_last_72h: [],
       daily_marlin_counts: [],
       season_context: {
@@ -59,7 +60,10 @@ const biteFixture = {
         average_daily_marlin_mentions: 0,
         p90_daily_marlin_mentions: 0,
         latest_vs_average_ratio: 0,
+        latest_day_weighted_signal: 0,
+        average_daily_weighted_signal: 0,
       },
+      source_quality: [],
     },
   },
 };

@@ -18,6 +18,8 @@ import {
 import { bucketIsoHour, median, percentile } from "../src/lib/utils";
 import { parseElBudsterReport } from "./parsers/elBudster";
 import { parseFishingBookerReports } from "./parsers/fishingBooker";
+import { parsePiscesReports } from "./parsers/pisces";
+import { parseCaboSportfishingReports } from "./parsers/caboSportfishing";
 import { PoliteHttpClient } from "./parsers/http";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -39,11 +41,19 @@ const DEFAULT_LOCATION = {
 const USER_AGENT = "CaboMarlinOpsBot/1.0 (+https://github.com/evbarleyg/cabo-marlin-ops; data refresh bot)";
 const BITE_HISTORY_WINDOW_DAYS = 365;
 const BITE_TIMESERIES_WINDOW_DAYS = 180;
+const MARLIN_SIGNAL_WINDOW_HOURS = 72;
 const FISHING_BOOKER_DESTINATIONS = [
   { label: "Cabo San Lucas", slug: "cabo-san-lucas", pages: 14 },
   { label: "San Jose del Cabo", slug: "san-jose-del-cabo", pages: 10 },
   { label: "La Paz", slug: "la-paz", pages: 8 },
 ];
+
+const SOURCE_CONFIDENCE = {
+  "El Budster": 0.95,
+  FishingBooker: 0.75,
+  Pisces: 0.9,
+  "Cabo Sportfishing Reports": 0.7,
+} as const;
 
 const openMeteoSchema = z.object({
   timezone: z.string(),
@@ -246,18 +256,37 @@ function isMarlinSignal(report: BiteReport): boolean {
   return speciesMention || notesMention;
 }
 
-function extractMarlinMentions(reports: BiteReport[]): number {
-  return reports.filter(isMarlinSignal).length;
+function reportDateMs(report: BiteReport): number {
+  return new Date(`${report.date}T12:00:00Z`).getTime();
+}
+
+function getSourceConfidence(source: string): number {
+  return SOURCE_CONFIDENCE[source as keyof typeof SOURCE_CONFIDENCE] ?? 0.65;
+}
+
+function extractMarlinMentionsLastHours(reports: BiteReport[], hours: number): number {
+  const now = Date.now();
+  const cutoff = now - hours * 60 * 60 * 1000;
+  return reports.filter((report) => isMarlinSignal(report) && reportDateMs(report) >= cutoff).length;
+}
+
+function extractWeightedMarlinSignalLastHours(reports: BiteReport[], hours: number): number {
+  const now = Date.now();
+  const cutoff = now - hours * 60 * 60 * 1000;
+  const weighted = reports
+    .filter((report) => isMarlinSignal(report) && reportDateMs(report) >= cutoff)
+    .reduce((sum, report) => sum + getSourceConfidence(report.source), 0);
+  return Number(weighted.toFixed(2));
 }
 
 function buildTrend(reports: BiteReport[]): Array<{ bucket_ts: string; mentions: number }> {
   const now = Date.now();
-  const windowStart = now - 72 * 60 * 60 * 1000;
+  const windowStart = now - MARLIN_SIGNAL_WINDOW_HOURS * 60 * 60 * 1000;
   const bucketSizeMs = 12 * 60 * 60 * 1000;
 
   const marlinReportDates = reports
     .filter(isMarlinSignal)
-    .map((report) => new Date(`${report.date}T12:00:00Z`).getTime())
+    .map((report) => reportDateMs(report))
     .filter((time) => Number.isFinite(time));
 
   const buckets: Array<{ bucket_ts: string; mentions: number }> = [];
@@ -277,13 +306,14 @@ function formatIsoDateFromMs(ms: number): string {
 }
 
 function buildDailyMarlinCounts(reports: BiteReport[]) {
-  const grouped = new Map<string, { total_reports: number; marlin_mentions: number }>();
+  const grouped = new Map<string, { total_reports: number; marlin_mentions: number; weighted_marlin_signal: number }>();
 
   for (const report of reports) {
-    const bucket = grouped.get(report.date) ?? { total_reports: 0, marlin_mentions: 0 };
+    const bucket = grouped.get(report.date) ?? { total_reports: 0, marlin_mentions: 0, weighted_marlin_signal: 0 };
     bucket.total_reports += 1;
     if (isMarlinSignal(report)) {
       bucket.marlin_mentions += 1;
+      bucket.weighted_marlin_signal = Number((bucket.weighted_marlin_signal + getSourceConfidence(report.source)).toFixed(2));
     }
     grouped.set(report.date, bucket);
   }
@@ -292,14 +322,15 @@ function buildDailyMarlinCounts(reports: BiteReport[]) {
   const endDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
   const startDate = new Date(endDate.getTime() - (BITE_TIMESERIES_WINDOW_DAYS - 1) * 24 * 60 * 60 * 1000);
 
-  const denseSeries: Array<{ date: string; total_reports: number; marlin_mentions: number }> = [];
+  const denseSeries: Array<{ date: string; total_reports: number; marlin_mentions: number; weighted_marlin_signal: number }> = [];
   for (let cursor = startDate.getTime(); cursor <= endDate.getTime(); cursor += 24 * 60 * 60 * 1000) {
     const date = formatIsoDateFromMs(cursor);
-    const values = grouped.get(date) ?? { total_reports: 0, marlin_mentions: 0 };
+    const values = grouped.get(date) ?? { total_reports: 0, marlin_mentions: 0, weighted_marlin_signal: 0 };
     denseSeries.push({
       date,
       total_reports: values.total_reports,
       marlin_mentions: values.marlin_mentions,
+      weighted_marlin_signal: values.weighted_marlin_signal,
     });
   }
 
@@ -312,7 +343,9 @@ function percentileRank(values: number[], target: number): number {
   return Number(((lessOrEqual / values.length) * 100).toFixed(1));
 }
 
-function buildSeasonContext(dailyMarlinCounts: Array<{ date: string; total_reports: number; marlin_mentions: number }>) {
+function buildSeasonContext(
+  dailyMarlinCounts: Array<{ date: string; total_reports: number; marlin_mentions: number; weighted_marlin_signal: number }>,
+) {
   const today = new Date().toISOString().slice(0, 10);
   const activeDays = dailyMarlinCounts.filter((item) => item.total_reports > 0);
   if (activeDays.length === 0) {
@@ -327,6 +360,8 @@ function buildSeasonContext(dailyMarlinCounts: Array<{ date: string; total_repor
       average_daily_marlin_mentions: 0,
       p90_daily_marlin_mentions: 0,
       latest_vs_average_ratio: 0,
+      latest_day_weighted_signal: 0,
+      average_daily_weighted_signal: 0,
     };
   }
 
@@ -346,7 +381,38 @@ function buildSeasonContext(dailyMarlinCounts: Array<{ date: string; total_repor
     average_daily_marlin_mentions: Number(avg.toFixed(2)),
     p90_daily_marlin_mentions: Number(percentile(marlinValues, 90).toFixed(2)),
     latest_vs_average_ratio: Number(latestVsAverage.toFixed(2)),
+    latest_day_weighted_signal: Number(latest.weighted_marlin_signal.toFixed(2)),
+    average_daily_weighted_signal: Number(
+      (activeDays.reduce((sum, item) => sum + item.weighted_marlin_signal, 0) / activeDays.length).toFixed(2),
+    ),
   };
+}
+
+function buildSourceQualitySummary(reports: BiteReport[]) {
+  const grouped = new Map<
+    string,
+    { source: string; confidence: number; total_reports: number; marlin_reports: number; weighted_marlin_signal: number }
+  >();
+
+  for (const report of reports) {
+    const source = report.source;
+    const confidence = getSourceConfidence(source);
+    const bucket = grouped.get(source) ?? {
+      source,
+      confidence,
+      total_reports: 0,
+      marlin_reports: 0,
+      weighted_marlin_signal: 0,
+    };
+    bucket.total_reports += 1;
+    if (isMarlinSignal(report)) {
+      bucket.marlin_reports += 1;
+      bucket.weighted_marlin_signal = Number((bucket.weighted_marlin_signal + confidence).toFixed(2));
+    }
+    grouped.set(source, bucket);
+  }
+
+  return [...grouped.values()].sort((a, b) => b.weighted_marlin_signal - a.weighted_marlin_signal);
 }
 
 async function fetchBiteReports(generatedAt: string) {
@@ -356,7 +422,7 @@ async function fetchBiteReports(generatedAt: string) {
   const fishingBookerTargets = FISHING_BOOKER_DESTINATIONS.flatMap((destination) =>
     Array.from({ length: destination.pages }, (_, index) => ({
       sourceName: `FishingBooker ${destination.label} page ${index + 1}`,
-      sourceLabel: `FishingBooker ${destination.label}`,
+      sourceLabel: "FishingBooker",
       url: `https://fishingbooker.com/reports/destination/mx/BS/${destination.slug}?page=${index + 1}`,
       parse: parseFishingBookerReports,
     })),
@@ -369,6 +435,24 @@ async function fetchBiteReports(generatedAt: string) {
       url: "https://www.elbudster.com/report",
       parse: parseElBudsterReport,
     },
+    {
+      sourceName: "Pisces Weekly Reports",
+      sourceLabel: "Pisces",
+      url: "https://www.piscessportfishing.com/fishing-reports/",
+      parse: parsePiscesReports,
+    },
+    {
+      sourceName: "Pisces Marlin Reports",
+      sourceLabel: "Pisces",
+      url: "https://www.piscessportfishing.com/tag/marlin/",
+      parse: parsePiscesReports,
+    },
+    {
+      sourceName: "Cabo Sportfishing Reports",
+      sourceLabel: "Cabo Sportfishing Reports",
+      url: "https://cabosportfishingcrew.com/cabo-fishing-reports/",
+      parse: parseCaboSportfishingReports,
+    },
     ...fishingBookerTargets,
   ];
 
@@ -378,16 +462,8 @@ async function fetchBiteReports(generatedAt: string) {
 
   for (const target of targets) {
     const response = await client.get(target.url);
-    const sourceStatus = buildSourceStatus(
-      target.sourceName,
-      target.url,
-      response.fetchedAt,
-      response.ok,
-      response.error,
-    );
-    sources.push(sourceStatus);
-
     if (!response.ok) {
+      sources.push(buildSourceStatus(target.sourceName, target.url, response.fetchedAt, false, response.error));
       failures.push({
         source: target.sourceName,
         link: target.url,
@@ -398,6 +474,9 @@ async function fetchBiteReports(generatedAt: string) {
     }
 
     const parsed = target.parse(response.text, target.url);
+    const parseError = parsed.reports.length === 0 && parsed.failures.length > 0 ? parsed.failures[0].error : undefined;
+    sources.push(buildSourceStatus(target.sourceName, target.url, response.fetchedAt, !parseError, parseError));
+
     for (const report of parsed.reports) {
       const check = biteReportSchema.safeParse({
         ...report,
@@ -417,8 +496,16 @@ async function fetchBiteReports(generatedAt: string) {
     .sort((a, b) => b.date.localeCompare(a.date));
 
   const effectiveReports = mergedReports.length > 0 ? mergedReports : previous?.data.reports ?? [];
+  if (effectiveReports.length === 0 && (previous?.data.reports.length ?? 0) === 0) {
+    const atLeastOneSuccess = sources.some((source) => source.ok);
+    if (!atLeastOneSuccess) {
+      throw new Error("Unable to produce biteReports.json: all sources failed and no prior snapshot exists");
+    }
+  }
+
   const dailyMarlinCounts = buildDailyMarlinCounts([...effectiveReports].sort((a, b) => a.date.localeCompare(b.date)));
   const seasonContext = buildSeasonContext(dailyMarlinCounts);
+  const sourceQuality = buildSourceQualitySummary(effectiveReports);
 
   const envelope = {
     generated_at: generatedAt,
@@ -427,10 +514,12 @@ async function fetchBiteReports(generatedAt: string) {
       reports: effectiveReports,
       parse_failures: failures.slice(0, 50),
       metrics: {
-        marlin_mentions_last_72h: extractMarlinMentions(effectiveReports),
+        marlin_mentions_last_72h: extractMarlinMentionsLastHours(effectiveReports, MARLIN_SIGNAL_WINDOW_HOURS),
+        weighted_marlin_signal_last_72h: extractWeightedMarlinSignalLastHours(effectiveReports, MARLIN_SIGNAL_WINDOW_HOURS),
         trend_last_72h: buildTrend(effectiveReports),
         daily_marlin_counts: dailyMarlinCounts,
         season_context: seasonContext,
+        source_quality: sourceQuality,
       },
     },
   };
@@ -441,11 +530,41 @@ async function fetchBiteReports(generatedAt: string) {
 function dedupeBiteReports(reports: BiteReport[]): BiteReport[] {
   const seen = new Set<string>();
   return reports.filter((report) => {
-    const key = `${report.source}|${report.date}|${report.link}|${report.notes}`;
-    if (seen.has(key)) return false;
-    seen.add(key);
+    const linkKey = canonicalizeLinkForKey(report.link);
+    const noteKey = normalizeNotesForKey(report.notes);
+    const strictKey = `${report.date}|${linkKey}|${noteKey}`;
+    const looseKey = `${report.date}|${noteKey}`;
+    if (seen.has(strictKey) || seen.has(looseKey)) return false;
+    seen.add(strictKey);
+    seen.add(looseKey);
     return true;
   });
+}
+
+function canonicalizeLinkForKey(link: string): string {
+  try {
+    const url = new URL(link);
+    url.search = "";
+    url.hash = "";
+    if (url.pathname.endsWith("/")) {
+      url.pathname = url.pathname.slice(0, -1);
+    }
+    return url.toString().toLowerCase();
+  } catch {
+    return link.trim().toLowerCase();
+  }
+}
+
+function normalizeNotesForKey(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/https?:\/\/\S+/g, " ")
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .split(" ")
+    .slice(0, 18)
+    .join(" ");
 }
 
 async function buildChartersData(generatedAt: string) {

@@ -6,6 +6,10 @@ The browser only reads local JSON files under `public/data`. All scraping and ex
 
 [Review app](https://evbarleyg.github.io/cabo-marlin-ops/)
 
+## Preview Card
+
+![Cabo Marlin Ops preview card](./public/preview-text-card.svg)
+
 ## In-App Navigation
 
 - `/` how-to front page (workflow + interpretation guide)
@@ -91,15 +95,18 @@ Every generated data file has:
 2. Bite report HTML parsing
 - El Budster report page
 - FishingBooker regional report listings:
-  - Cabo San Lucas (pages 1-10)
-  - San Jose del Cabo (pages 1-6)
-  - La Paz (pages 1-6)
+  - Cabo San Lucas (pages 1-14)
+  - San Jose del Cabo (pages 1-10)
+  - La Paz (pages 1-8)
+- Pisces report pages (weekly + marlin tag pages)
+- Cabo Sportfishing report feed pages
 - Polite fetch behavior:
   - explicit `User-Agent`
   - max 1 concurrent request per domain
   - request delay between calls
   - in-run URL cache
   - parser failures stored in output with snippet/link (non-fatal)
+  - weighted source-confidence metrics in bite output (`source_quality`, `weighted_marlin_signal_last_72h`)
 
 ## Adding New Bite Sources
 
@@ -178,6 +185,7 @@ Assets:
 
 - `/Users/evanbarley-greenfield/Cabo FIshing Trip Marlin Analysis/public/favicon.ico`
 - `/Users/evanbarley-greenfield/Cabo FIshing Trip Marlin Analysis/public/favicon.svg`
+- `/Users/evanbarley-greenfield/Cabo FIshing Trip Marlin Analysis/public/preview-text-card.svg`
 
 HTML head snippet:
 

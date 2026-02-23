@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-02-23T01:38:41.514Z",
+  "generated_at": "2026-02-23T02:07:58.458Z",
   "sources": [
     {
       "name": "Open-Meteo Marine",
       "url": "https://marine-api.open-meteo.com/v1/marine?latitude=22.879&longitude=-109.892&timezone=auto&forecast_days=10&cell_selection=sea&hourly=wave_height%2Cswell_wave_height%2Cswell_wave_direction%2Cswell_wave_period%2Cocean_current_velocity%2Cocean_current_direction%2Csea_surface_temperature%2Csea_level_height_msl",
-      "fetched_at": "2026-02-23T01:38:42.260Z",
+      "fetched_at": "2026-02-23T02:07:59.491Z",
       "ok": true
     }
   ],

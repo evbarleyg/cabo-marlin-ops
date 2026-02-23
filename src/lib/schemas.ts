@@ -86,6 +86,7 @@ export const biteReportsDataSchema = z.object({
   parse_failures: z.array(parseFailureSchema),
   metrics: z.object({
     marlin_mentions_last_72h: z.number().int().min(0),
+    weighted_marlin_signal_last_72h: z.number().min(0).default(0),
     trend_last_72h: z.array(
       z.object({
         bucket_ts: z.string().datetime(),
@@ -97,6 +98,7 @@ export const biteReportsDataSchema = z.object({
         date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
         total_reports: z.number().int().min(0),
         marlin_mentions: z.number().int().min(0),
+        weighted_marlin_signal: z.number().min(0).default(0),
       }),
     ),
     season_context: z.object({
@@ -110,7 +112,18 @@ export const biteReportsDataSchema = z.object({
       average_daily_marlin_mentions: z.number().min(0),
       p90_daily_marlin_mentions: z.number().min(0),
       latest_vs_average_ratio: z.number().min(0),
+      latest_day_weighted_signal: z.number().min(0).default(0),
+      average_daily_weighted_signal: z.number().min(0).default(0),
     }),
+    source_quality: z.array(
+      z.object({
+        source: z.string(),
+        confidence: z.number().min(0).max(1),
+        total_reports: z.number().int().min(0),
+        marlin_reports: z.number().int().min(0),
+        weighted_marlin_signal: z.number().min(0),
+      }),
+    ).default([]),
   }),
 });
 

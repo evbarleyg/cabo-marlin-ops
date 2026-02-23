@@ -25,4 +25,26 @@ describe("parseFishingBookerReports", () => {
     expect(result.reports[0].date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     expect(result.failures).toHaveLength(0);
   });
+
+  it("parses report feed cards with heading metadata", () => {
+    const html = readFileSync(resolve("scripts/parsers/fixtures/fishingbooker-report-feed.html"), "utf8");
+    const result = parseFishingBookerReports(
+      html,
+      "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=2",
+    );
+
+    expect(result.reports.length).toBeGreaterThanOrEqual(2);
+    expect(result.reports.some((report) => report.date === "2026-02-21")).toBe(true);
+    expect(result.reports.some((report) => report.species.includes("striped marlin"))).toBe(true);
+  });
+
+  it("falls back to JSON-LD entries when cards are unavailable", () => {
+    const html = readFileSync(resolve("scripts/parsers/fixtures/fishingbooker-jsonld.html"), "utf8");
+    const result = parseFishingBookerReports(html, "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1");
+
+    expect(result.failures).toHaveLength(0);
+    expect(result.reports).toHaveLength(1);
+    expect(result.reports[0].date).toBe("2026-02-20");
+    expect(result.reports[0].link).toContain("/reports/trips/marlin-and-dorado");
+  });
 });

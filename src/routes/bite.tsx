@@ -16,6 +16,7 @@ export function BiteRoute() {
   const [historyWindow, setHistoryWindow] = useState<"30" | "90" | "180" | "season">("90");
   const season = bite.data?.data.metrics.season_context;
   const dailyCounts = bite.data?.data.metrics.daily_marlin_counts ?? [];
+  const sourceQuality = bite.data?.data.metrics.source_quality ?? [];
 
   const biteScore = useMemo(() => {
     if (!bite.data || !conditions.data) return null;
@@ -74,7 +75,10 @@ export function BiteRoute() {
           <CardHeader>
             <CardTitle className="text-base">Marlin Mentions Last 72h</CardTitle>
           </CardHeader>
-          <CardContent className="h-72">
+          <CardContent className="h-72 space-y-2">
+            <p className="text-xs text-muted-foreground">
+              Weighted signal: <strong>{formatNumber(bite.data.data.metrics.weighted_marlin_signal_last_72h, 2)}</strong> (source-confidence adjusted)
+            </p>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={bite.data.data.metrics.trend_last_72h}>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.2)" />
@@ -170,6 +174,9 @@ export function BiteRoute() {
               Seasonal average/day: <strong>{formatNumber(season.average_daily_marlin_mentions, 2)}</strong>
             </p>
             <p>
+              Latest day weighted signal: <strong>{formatNumber(season.latest_day_weighted_signal, 2)}</strong>
+            </p>
+            <p>
               Latest vs average ratio: <strong>{formatNumber(season.latest_vs_average_ratio, 2)}x</strong>
             </p>
             <p className="pt-1 text-xs text-muted-foreground">
@@ -181,6 +188,27 @@ export function BiteRoute() {
           </CardContent>
         </Card>
       </section>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">Source Confidence Mix</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-2 text-sm">
+          {sourceQuality.length === 0 ? (
+            <p className="text-muted-foreground">No source-quality data available.</p>
+          ) : (
+            sourceQuality.map((source) => (
+              <div key={source.source} className="rounded-md border border-border/50 p-2">
+                <p className="font-medium">{source.source}</p>
+                <p className="text-xs text-muted-foreground">
+                  confidence {formatNumber(source.confidence, 2)} • reports {source.total_reports} • marlin reports {source.marlin_reports} • weighted signal{" "}
+                  {formatNumber(source.weighted_marlin_signal, 2)}
+                </p>
+              </div>
+            ))
+          )}
+        </CardContent>
+      </Card>
 
       <Card>
         <CardHeader>
