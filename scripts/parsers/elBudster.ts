@@ -1,5 +1,13 @@
 import { load } from "cheerio";
-import { buildFailure, compactSnippet, extractDistanceMiles, extractIsoDate, extractSpecies, extractWaterTempF } from "./shared";
+import {
+  buildFailure,
+  compactSnippet,
+  extractDistanceMiles,
+  extractIsoDate,
+  extractIsoDateFromUrl,
+  extractSpecies,
+  extractWaterTempF,
+} from "./shared";
 import type { ParseResult } from "./types";
 
 const SOURCE_NAME = "El Budster";
@@ -25,13 +33,12 @@ export function parseElBudsterReport(html: string, sourceUrl: string): ParseResu
     .filter((item) => item.text.length > 45);
 
   for (const candidate of candidates) {
-    const date = extractIsoDate(candidate.text);
+    const link = normalizeLink(candidate.link, sourceUrl);
+    const date = extractIsoDate(candidate.text) ?? extractIsoDateFromUrl(link);
     const species = extractSpecies(candidate.text);
     const hasSignal = date !== null || species.length > 0;
     const hasLanguage = /(report|offshore|trip|bite|release|landed|caught)\b/i.test(candidate.text);
     if (!hasSignal && !hasLanguage) continue;
-
-    const link = normalizeLink(candidate.link, sourceUrl);
     reports.push({
       source: SOURCE_NAME,
       date: date ?? new Date().toISOString().slice(0, 10),

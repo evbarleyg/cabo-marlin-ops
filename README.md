@@ -94,16 +94,17 @@ Every generated data file has:
 
 2. Bite report HTML parsing
 - El Budster report page
-- FishingBooker regional report listings:
-  - Cabo San Lucas (pages 1-14)
-  - San Jose del Cabo (pages 1-10)
-  - La Paz (pages 1-8)
+- FishingBooker regional report listings (paginated archive crawl):
+  - Cabo San Lucas
+  - San Jose del Cabo
+  - La Paz
 - Pisces report pages (weekly + marlin tag pages)
 - Cabo Sportfishing report feed pages
 - Polite fetch behavior:
   - explicit `User-Agent`
   - max 1 concurrent request per domain
   - request delay between calls
+  - bounded archive crawl with stale/empty stop logic for deeper historical coverage
   - in-run URL cache
   - parser failures stored in output with snippet/link (non-fatal)
   - weighted source-confidence metrics in bite output (`source_quality`, `weighted_marlin_signal_last_72h`)
@@ -176,7 +177,7 @@ npm run build
 
 - Heuristic outputs (Go/No-Go, Bite Score) are advisory and not navigational safety guidance.
 - Scraped HTML sources can change markup, which may reduce parsing quality until parser updates are made.
-- Bite propensity heat overlay is an estimated distance-band visualization from report text, not a true GPS catch heatmap.
+- Bite propensity heat overlay is an estimated seasonal/species visualization from report text by shoreline-distance bands, not a true GPS catch heatmap.
 - GitHub Pages hosts static artifacts only; there is no runtime server compute.
 
 ## Favicon

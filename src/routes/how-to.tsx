@@ -24,7 +24,7 @@ export function HowToRoute() {
           </CardHeader>
           <CardContent className="space-y-2 text-sm text-muted-foreground">
             <p>Review Go/Caution/No-Go label, wave p90, swell period, and current speed.</p>
-            <p>The map heat overlay shows estimated marlin propensity by offshore distance bands around Cabo Marina.</p>
+            <p>The map heat overlay shows seasonal species propensity by shoreline-distance bands with layer toggles.</p>
             <Link to="/conditions" className={cn(buttonVariants({ variant: "outline", size: "sm" }), "mt-1")}>Open Conditions</Link>
           </CardContent>
         </Card>

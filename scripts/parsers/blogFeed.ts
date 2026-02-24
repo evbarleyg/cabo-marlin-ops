@@ -1,5 +1,13 @@
 import { load } from "cheerio";
-import { buildFailure, compactSnippet, extractDistanceMiles, extractIsoDate, extractSpecies, extractWaterTempF } from "./shared";
+import {
+  buildFailure,
+  compactSnippet,
+  extractDistanceMiles,
+  extractIsoDate,
+  extractIsoDateFromUrl,
+  extractSpecies,
+  extractWaterTempF,
+} from "./shared";
 import type { ParseResult } from "./types";
 
 export function parseBlogStyleReports(html: string, sourceName: string, sourceUrl: string): ParseResult {
@@ -33,7 +41,8 @@ export function parseBlogStyleReports(html: string, sourceName: string, sourceUr
       if (seen.has(key)) return;
       seen.add(key);
 
-      const date = parseDateHint(datetime) ?? extractIsoDate(text);
+      const normalizedLink = normalizeLink(href, sourceUrl);
+      const date = parseDateHint(datetime) ?? extractIsoDate(text) ?? extractIsoDateFromUrl(normalizedLink);
       const species = extractSpecies(text);
       const hasSignal = species.length > 0 || date !== null;
       const hasFishingLanguage = /(report|trip|offshore|bite|release|landed|caught|charter)\b/i.test(text);
@@ -46,7 +55,7 @@ export function parseBlogStyleReports(html: string, sourceName: string, sourceUr
         notes: compactSnippet(text),
         distance_offshore_miles: extractDistanceMiles(text),
         water_temp_f: extractWaterTempF(text),
-        link: normalizeLink(href, sourceUrl),
+        link: normalizedLink,
       });
     });
   }

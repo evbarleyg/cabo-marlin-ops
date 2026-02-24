@@ -1,5 +1,13 @@
 import { load } from "cheerio";
-import { buildFailure, compactSnippet, extractDistanceMiles, extractIsoDate, extractSpecies, extractWaterTempF } from "./shared";
+import {
+  buildFailure,
+  compactSnippet,
+  extractDistanceMiles,
+  extractIsoDate,
+  extractIsoDateFromUrl,
+  extractSpecies,
+  extractWaterTempF,
+} from "./shared";
 import type { ParseResult } from "./types";
 
 const SOURCE_NAME = "FishingBooker";
@@ -17,8 +25,8 @@ export function parseFishingBookerReports(html: string, sourceUrl: string): Pars
     if (notes.length < 35) continue;
 
     const species = extractSpecies(combinedText);
-    const date = parseDateHint(card.timeAttr) ?? extractIsoDate(combinedText);
     const link = normalizeLink(card.href, sourceUrl);
+    const date = parseDateHint(card.timeAttr) ?? extractIsoDate(combinedText) ?? extractIsoDateFromUrl(link);
     const hasReportLink = /\/reports?\//i.test(link);
     const hasReportLanguage = /(report|trip|offshore|bite|release|landed|catch)\b/i.test(combinedText);
 
@@ -55,6 +63,8 @@ interface FishingBookerCard {
 
 function collectFeedCards($: ReturnType<typeof load>, sourceUrl: string): FishingBookerCard[] {
   const selectors = [
+    ".report-card-item",
+    ".report-card",
     ".reportFeed-item .panel",
     ".reportFeed-item",
     "article.report-card",
@@ -67,14 +77,17 @@ function collectFeedCards($: ReturnType<typeof load>, sourceUrl: string): Fishin
   for (const selector of selectors) {
     $(selector).each((_, element) => {
       const root = $(element);
-      const title = root.find(".title, [itemprop='headline'], h1, h2, h3").first().text().trim();
-      const excerpt = root.find(".excerpt, [itemprop='description'], p").first().text().trim();
-      const postMeta = root.find(".post, .meta, .date").first().text().trim();
+      const title = root.find(".report-card-title, .title, [itemprop='headline'], h1, h2, h3").first().text().trim();
+      const excerpt = root.find(".report-card-trip-summary, .excerpt, [itemprop='description'], p").first().text().trim();
+      const postMeta = root.find(".report-card-date-and-location, .post, .meta, .date").first().text().trim();
       const bodyText = root.text().replace(/\s+/g, " ").trim();
 
       const text = [excerpt, postMeta, bodyText].filter(Boolean).join(" ").trim();
+      const parentHref = root.closest("a[href]").attr("href");
       const href =
-        root.find(".content[href], a[href*='/reports/'], a[href*='report'], a[href]").first().attr("href") ?? sourceUrl;
+        parentHref ??
+        root.find(".content[href], a[href*='/reports/'], a[href*='report'], a[href]").first().attr("href") ??
+        sourceUrl;
       const timeAttr =
         root.find("time[datetime]").first().attr("datetime") ??
         root.find("[itemprop='datePublished']").first().attr("content") ??

@@ -21,6 +21,7 @@ import { parseFishingBookerReports } from "./parsers/fishingBooker";
 import { parsePiscesReports } from "./parsers/pisces";
 import { parseCaboSportfishingReports } from "./parsers/caboSportfishing";
 import { PoliteHttpClient } from "./parsers/http";
+import type { ParseResult } from "./parsers/types";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, "..");
@@ -38,14 +39,22 @@ const DEFAULT_LOCATION = {
   longitude: -109.892,
 };
 
+function envPositiveInt(name: string, fallback: number): number {
+  const value = Number(process.env[name]);
+  if (!Number.isFinite(value) || value <= 0) return fallback;
+  return Math.floor(value);
+}
+
 const USER_AGENT = "CaboMarlinOpsBot/1.0 (+https://github.com/evbarleyg/cabo-marlin-ops; data refresh bot)";
-const BITE_HISTORY_WINDOW_DAYS = 365;
-const BITE_TIMESERIES_WINDOW_DAYS = 180;
 const MARLIN_SIGNAL_WINDOW_HOURS = 72;
+const FISHING_BOOKER_MAX_PAGES = envPositiveInt("CMO_FISHINGBOOKER_MAX_PAGES", 80);
+const WORDPRESS_ARCHIVE_MAX_PAGES = envPositiveInt("CMO_WORDPRESS_ARCHIVE_MAX_PAGES", 48);
+const PAGINATION_EMPTY_STOP_STREAK = envPositiveInt("CMO_PAGINATION_EMPTY_STOP_STREAK", 2);
+const PAGINATION_STALE_STOP_STREAK = envPositiveInt("CMO_PAGINATION_STALE_STOP_STREAK", 4);
 const FISHING_BOOKER_DESTINATIONS = [
-  { label: "Cabo San Lucas", slug: "cabo-san-lucas", pages: 14 },
-  { label: "San Jose del Cabo", slug: "san-jose-del-cabo", pages: 10 },
-  { label: "La Paz", slug: "la-paz", pages: 8 },
+  { label: "Cabo San Lucas", slug: "cabo-san-lucas" },
+  { label: "San Jose del Cabo", slug: "san-jose-del-cabo" },
+  { label: "La Paz", slug: "la-paz" },
 ];
 
 const SOURCE_CONFIDENCE = {
@@ -320,7 +329,8 @@ function buildDailyMarlinCounts(reports: BiteReport[]) {
 
   const now = new Date();
   const endDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
-  const startDate = new Date(endDate.getTime() - (BITE_TIMESERIES_WINDOW_DAYS - 1) * 24 * 60 * 60 * 1000);
+  const earliestDate = [...grouped.keys()].sort((a, b) => a.localeCompare(b))[0];
+  const startDate = earliestDate ? new Date(`${earliestDate}T00:00:00Z`) : endDate;
 
   const denseSeries: Array<{ date: string; total_reports: number; marlin_mentions: number; weighted_marlin_signal: number }> = [];
   for (let cursor = startDate.getTime(); cursor <= endDate.getTime(); cursor += 24 * 60 * 60 * 1000) {
@@ -415,45 +425,106 @@ function buildSourceQualitySummary(reports: BiteReport[]) {
   return [...grouped.values()].sort((a, b) => b.weighted_marlin_signal - a.weighted_marlin_signal);
 }
 
+type ParseFn = (html: string, sourceUrl: string) => ParseResult;
+
+interface SingleSourceTarget {
+  kind: "single";
+  sourceName: string;
+  sourceLabel: string;
+  url: string;
+  parse: ParseFn;
+}
+
+interface PaginatedSourceTarget {
+  kind: "paginated";
+  sourceName: string;
+  sourceLabel: string;
+  maxPages: number;
+  buildUrl: (page: number) => string;
+  parse: ParseFn;
+}
+
+type SourceTarget = SingleSourceTarget | PaginatedSourceTarget;
+
+function wordpressArchiveUrl(baseUrl: string, page: number): string {
+  const normalized = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
+  return page === 1 ? `${normalized}/` : `${normalized}/page/${page}/`;
+}
+
+function reportIdentityKey(report: BiteReport): string {
+  const linkKey = canonicalizeLinkForKey(report.link);
+  const noteKey = normalizeNotesForKey(report.notes);
+  return `${report.date}|${linkKey}|${noteKey}`;
+}
+
+function ingestParsedReports(
+  parsed: ParseResult,
+  sourceLabel: string,
+  targetSeenKeys: Set<string>,
+  targetReports: BiteReport[],
+): number {
+  let accepted = 0;
+  for (const report of parsed.reports) {
+    const check = biteReportSchema.safeParse({
+      ...report,
+      source: sourceLabel,
+    });
+    if (!check.success) continue;
+
+    const key = reportIdentityKey(check.data);
+    if (targetSeenKeys.has(key)) continue;
+    targetSeenKeys.add(key);
+    targetReports.push(check.data);
+    accepted += 1;
+  }
+  return accepted;
+}
+
 async function fetchBiteReports(generatedAt: string) {
   const previous = await readJsonIfExists(BITE_FILE, biteReportsEnvelopeSchema);
   const client = new PoliteHttpClient({ userAgent: USER_AGENT, minDelayMs: 500, maxDelayMs: 1000 });
 
-  const fishingBookerTargets = FISHING_BOOKER_DESTINATIONS.flatMap((destination) =>
-    Array.from({ length: destination.pages }, (_, index) => ({
-      sourceName: `FishingBooker ${destination.label} page ${index + 1}`,
-      sourceLabel: "FishingBooker",
-      url: `https://fishingbooker.com/reports/destination/mx/BS/${destination.slug}?page=${index + 1}`,
-      parse: parseFishingBookerReports,
-    })),
-  );
-
-  const targets = [
+  const targets: SourceTarget[] = [
     {
+      kind: "single",
       sourceName: "El Budster",
       sourceLabel: "El Budster",
       url: "https://www.elbudster.com/report",
       parse: parseElBudsterReport,
     },
     {
+      kind: "paginated",
       sourceName: "Pisces Weekly Reports",
       sourceLabel: "Pisces",
-      url: "https://www.piscessportfishing.com/fishing-reports/",
+      maxPages: WORDPRESS_ARCHIVE_MAX_PAGES,
+      buildUrl: (page) => wordpressArchiveUrl("https://www.piscessportfishing.com/fishing-reports/", page),
       parse: parsePiscesReports,
     },
     {
+      kind: "paginated",
       sourceName: "Pisces Marlin Reports",
       sourceLabel: "Pisces",
-      url: "https://www.piscessportfishing.com/tag/marlin/",
+      maxPages: WORDPRESS_ARCHIVE_MAX_PAGES,
+      buildUrl: (page) => wordpressArchiveUrl("https://www.piscessportfishing.com/tag/marlin/", page),
       parse: parsePiscesReports,
     },
     {
+      kind: "paginated",
       sourceName: "Cabo Sportfishing Reports",
       sourceLabel: "Cabo Sportfishing Reports",
-      url: "https://cabosportfishingcrew.com/cabo-fishing-reports/",
+      maxPages: WORDPRESS_ARCHIVE_MAX_PAGES,
+      buildUrl: (page) => wordpressArchiveUrl("https://cabosportfishingcrew.com/cabo-fishing-reports/", page),
       parse: parseCaboSportfishingReports,
     },
-    ...fishingBookerTargets,
+    ...FISHING_BOOKER_DESTINATIONS.map<PaginatedSourceTarget>((destination) => ({
+      kind: "paginated",
+      sourceName: `FishingBooker ${destination.label}`,
+      sourceLabel: "FishingBooker",
+      maxPages: FISHING_BOOKER_MAX_PAGES,
+      buildUrl: (page) =>
+        `https://fishingbooker.com/reports/destination/mx/BS/${destination.slug}?page=1&limit=6&offset=${page}`,
+      parse: parseFishingBookerReports,
+    })),
   ];
 
   const reports: BiteReport[] = [];
@@ -461,38 +532,73 @@ async function fetchBiteReports(generatedAt: string) {
   const sources: SourceStatus[] = [];
 
   for (const target of targets) {
-    const response = await client.get(target.url);
-    if (!response.ok) {
-      sources.push(buildSourceStatus(target.sourceName, target.url, response.fetchedAt, false, response.error));
-      failures.push({
-        source: target.sourceName,
-        link: target.url,
-        error: response.error ?? "Fetch failed",
-        snippet: "",
-      });
+    const targetSeenKeys = new Set<string>();
+
+    if (target.kind === "single") {
+      const response = await client.get(target.url);
+      if (!response.ok) {
+        sources.push(buildSourceStatus(target.sourceName, target.url, response.fetchedAt, false, response.error));
+        failures.push({
+          source: target.sourceName,
+          link: target.url,
+          error: response.error ?? "Fetch failed",
+          snippet: "",
+        });
+        continue;
+      }
+
+      const parsed = target.parse(response.text, target.url);
+      const parseError = parsed.reports.length === 0 && parsed.failures.length > 0 ? parsed.failures[0].error : undefined;
+      sources.push(buildSourceStatus(target.sourceName, target.url, response.fetchedAt, !parseError, parseError));
+      ingestParsedReports(parsed, target.sourceLabel, targetSeenKeys, reports);
+      failures.push(...parsed.failures);
       continue;
     }
 
-    const parsed = target.parse(response.text, target.url);
-    const parseError = parsed.reports.length === 0 && parsed.failures.length > 0 ? parsed.failures[0].error : undefined;
-    sources.push(buildSourceStatus(target.sourceName, target.url, response.fetchedAt, !parseError, parseError));
+    let emptyStreak = 0;
+    let staleStreak = 0;
+    for (let page = 1; page <= target.maxPages; page += 1) {
+      const pageUrl = target.buildUrl(page);
+      const pageSourceName = `${target.sourceName} page ${page}`;
+      const response = await client.get(pageUrl);
 
-    for (const report of parsed.reports) {
-      const check = biteReportSchema.safeParse({
-        ...report,
-        source: target.sourceLabel,
-      });
-      if (check.success) {
-        reports.push(check.data);
+      if (!response.ok) {
+        sources.push(buildSourceStatus(pageSourceName, pageUrl, response.fetchedAt, false, response.error));
+        failures.push({
+          source: pageSourceName,
+          link: pageUrl,
+          error: response.error ?? "Fetch failed",
+          snippet: "",
+        });
+        break;
+      }
+
+      const parsed = target.parse(response.text, pageUrl);
+      const parseError = parsed.reports.length === 0 && parsed.failures.length > 0 ? parsed.failures[0].error : undefined;
+      sources.push(buildSourceStatus(pageSourceName, pageUrl, response.fetchedAt, !parseError, parseError));
+
+      const acceptedCount = ingestParsedReports(parsed, target.sourceLabel, targetSeenKeys, reports);
+      failures.push(...parsed.failures);
+
+      if (parsed.reports.length === 0) {
+        emptyStreak += 1;
+      } else {
+        emptyStreak = 0;
+      }
+
+      if (acceptedCount === 0) {
+        staleStreak += 1;
+      } else {
+        staleStreak = 0;
+      }
+
+      if (emptyStreak >= PAGINATION_EMPTY_STOP_STREAK || staleStreak >= PAGINATION_STALE_STOP_STREAK) {
+        break;
       }
     }
-    failures.push(...parsed.failures);
   }
 
-  const cutoffDate = new Date(Date.now() - BITE_HISTORY_WINDOW_DAYS * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
-
   const mergedReports = dedupeBiteReports([...(previous?.data.reports ?? []), ...reports])
-    .filter((report) => report.date >= cutoffDate)
     .sort((a, b) => b.date.localeCompare(a.date));
 
   const effectiveReports = mergedReports.length > 0 ? mergedReports : previous?.data.reports ?? [];

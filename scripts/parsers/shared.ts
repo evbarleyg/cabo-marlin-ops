@@ -163,6 +163,33 @@ export function extractIsoDate(text: string): string | null {
   return null;
 }
 
+export function extractIsoDateFromUrl(url: string): string | null {
+  try {
+    const parsed = new URL(url);
+    const queryDate =
+      parsed.searchParams.get("date") ??
+      parsed.searchParams.get("published") ??
+      parsed.searchParams.get("published_at") ??
+      parsed.searchParams.get("post_date");
+    if (queryDate) {
+      const queryParsed = extractIsoDate(queryDate);
+      if (queryParsed) return queryParsed;
+    }
+
+    const path = decodeURIComponent(parsed.pathname);
+    const ymd = path.match(/(?:^|\/)(\d{4})[/-](\d{1,2})[/-](\d{1,2})(?:\/|$)/);
+    if (ymd) {
+      const iso = toIsoDate(Number(ymd[1]), Number(ymd[2]), Number(ymd[3]));
+      if (iso) return iso;
+    }
+
+    const normalizedPath = path.replace(/[/_-]+/g, " ");
+    return extractIsoDate(normalizedPath);
+  } catch {
+    return null;
+  }
+}
+
 export function extractDistanceMiles(text: string): number | undefined {
   const match = text.match(/(\d{1,3})(?:\s*(?:-|to)\s*(\d{1,3}))?\s*(?:nautical\s*)?(?:miles?|mi|nm|nmi)\b/i);
   if (!match) return undefined;
