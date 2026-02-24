@@ -60,13 +60,26 @@ export function ConditionsRoute() {
       const existing = current.filter((species) => speciesOptions.some((option) => option.species === species));
       if (existing.length > 0) return existing;
 
-      const marlinDefaults = speciesOptions
-        .filter((option) => option.species.includes("marlin"))
-        .slice(0, 3)
-        .map((option) => option.species);
+      const defaults: string[] = [];
+      const primaryMarlin = speciesOptions.find((option) => option.species.includes("marlin"));
+      if (primaryMarlin) defaults.push(primaryMarlin.species);
 
-      if (marlinDefaults.length > 0) {
-        return marlinDefaults;
+      for (const option of speciesOptions) {
+        if (defaults.includes(option.species) || option.species.includes("marlin")) continue;
+        defaults.push(option.species);
+        if (defaults.length >= 3) break;
+      }
+
+      if (defaults.length < 3) {
+        for (const option of speciesOptions) {
+          if (defaults.includes(option.species)) continue;
+          defaults.push(option.species);
+          if (defaults.length >= 3) break;
+        }
+      }
+
+      if (defaults.length > 0) {
+        return defaults;
       }
 
       return speciesOptions.slice(0, 3).map((option) => option.species);

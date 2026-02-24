@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Copy } from "lucide-react";
+import { Copy, Mail } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,12 +7,20 @@ import { ScreenGuide } from "@/components/screen-guide";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDataFile } from "@/hooks/useDataFile";
 import { useOpsShortlist } from "@/lib/app-context";
-import { chartersEnvelopeSchema } from "@/lib/schemas";
-import { formatNumber } from "@/lib/utils";
+import { biteReportsEnvelopeSchema, chartersEnvelopeSchema, type BiteReport } from "@/lib/schemas";
+import { formatNumber, toTitleCase } from "@/lib/utils";
 
 type SortMode = "price_hour" | "price_angler" | "name" | "max_people" | "boat_length";
 
 type BandFilter = "all" | "low" | "typical" | "high" | "unknown";
+
+interface OutreachContact {
+  name: string;
+  totalReports: number;
+  marlinReports: number;
+  latestDate: string;
+  sampleLink: string;
+}
 
 function bandVariant(band: string): "success" | "warning" | "destructive" | "outline" {
   if (band === "low") return "success";
@@ -21,8 +29,81 @@ function bandVariant(band: string): "success" | "warning" | "destructive" | "out
   return "outline";
 }
 
+function isMarlinSignal(report: BiteReport): boolean {
+  return report.species.some((species) => species.toLowerCase().includes("marlin")) || report.notes.toLowerCase().includes("marlin");
+}
+
+function extractOutreachName(report: BiteReport): string | null {
+  const note = report.notes;
+  const patterns = [
+    /fishing on the\s+([^,.]+?)(?:\.|,|\s{2,}|$)/i,
+    /^\s*([^\n.!?]{3,60}?)\s+fishing report\b/i,
+    /^\s*([^\n.!?]{3,60}?)\s+sportfishing\b/i,
+    /^\s*([^\n.!?]{3,60}?)\s+book now\b/i,
+  ];
+
+  for (const pattern of patterns) {
+    const match = note.match(pattern);
+    if (!match?.[1]) continue;
+    const normalized = normalizeOutreachName(match[1]);
+    if (normalized.length >= 3) return normalized;
+  }
+
+  return null;
+}
+
+function normalizeOutreachName(raw: string): string {
+  return raw
+    .replace(/[“”"'`´]+/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/^the\s+/i, "")
+    .split(" ")
+    .map((token) => {
+      if (token.length <= 3 && token === token.toUpperCase()) return token;
+      return token.charAt(0).toUpperCase() + token.slice(1).toLowerCase();
+    })
+    .join(" ");
+}
+
+function buildTopOutreachContacts(reports: BiteReport[], limit: number): OutreachContact[] {
+  const grouped = new Map<string, OutreachContact>();
+
+  for (const report of reports) {
+    const name = extractOutreachName(report);
+    if (!name) continue;
+
+    const existing = grouped.get(name) ?? {
+      name,
+      totalReports: 0,
+      marlinReports: 0,
+      latestDate: report.date,
+      sampleLink: report.link,
+    };
+
+    existing.totalReports += 1;
+    if (isMarlinSignal(report)) existing.marlinReports += 1;
+
+    if (report.date >= existing.latestDate) {
+      existing.latestDate = report.date;
+      existing.sampleLink = report.link;
+    }
+
+    grouped.set(name, existing);
+  }
+
+  return [...grouped.values()]
+    .sort((a, b) => {
+      if (b.marlinReports !== a.marlinReports) return b.marlinReports - a.marlinReports;
+      if (b.totalReports !== a.totalReports) return b.totalReports - a.totalReports;
+      return b.latestDate.localeCompare(a.latestDate);
+    })
+    .slice(0, limit);
+}
+
 export function ChartersRoute() {
   const charters = useDataFile("charters.json", chartersEnvelopeSchema);
+  const bite = useDataFile("biteReports.json", biteReportsEnvelopeSchema);
   const { shortlistSet, toggleShortlist } = useOpsShortlist();
 
   const [sortMode, setSortMode] = useState<SortMode>("price_hour");
@@ -30,6 +111,7 @@ export function ChartersRoute() {
   const [minPeople, setMinPeople] = useState(0);
   const [minBoatLength, setMinBoatLength] = useState(0);
   const [copied, setCopied] = useState(false);
+  const [copiedTop40, setCopiedTop40] = useState(false);
 
   const sortedEntries = useMemo(() => {
     const entries = charters.data?.data.entries ?? [];
@@ -59,11 +141,51 @@ export function ChartersRoute() {
     ? `Hi ${selectedForTemplate.name} team,\n\nI'm planning a marlin-focused trip in Cabo for March 21-22, 2026 (${selectedForTemplate.typical_trip_hours}-hour trip target). Please share availability, all-in pricing, what's included (licenses, bait, tackle), and your recent marlin results.\n\nCrew size: up to ${selectedForTemplate.max_people ?? "TBD"}\nPreferred launch: Cabo Marina\n\nThanks!`
     : "Select a charter to generate a template.";
 
+  const topOutreachContacts = useMemo(() => buildTopOutreachContacts(bite.data?.data.reports ?? [], 40), [bite.data]);
+
+  const top40OutreachText = useMemo(() => {
+    if (topOutreachContacts.length === 0) {
+      return "No outreach contacts available from parsed reports yet.";
+    }
+
+    const header =
+      "Subject: Cabo Marlin Trip Inquiry (March 21-22, 2026)\n\n" +
+      "Hi team,\n\n" +
+      "I am planning a marlin-focused trip in Cabo for March 21-22, 2026. Please share availability, all-in pricing, what is included, and your recent marlin results.\n\n" +
+      "Top 40 outreach targets (ranked by marlin-report activity):\n";
+
+    const rows = topOutreachContacts
+      .map(
+        (contact, index) =>
+          `${index + 1}. ${contact.name} | marlin reports: ${contact.marlinReports} | total reports: ${contact.totalReports} | latest: ${contact.latestDate} | ${contact.sampleLink}`,
+      )
+      .join("\n");
+
+    const footer =
+      "\n\nNote: Parsed report sources do not expose email addresses directly, so this list is outreach-ready context + links for manual/contact-form follow-up.";
+
+    return `${header}${rows}${footer}`;
+  }, [topOutreachContacts]);
+
   async function copyTemplate() {
     if (!selectedForTemplate) return;
     await navigator.clipboard.writeText(quoteTemplate);
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1800);
+  }
+
+  async function copyTop40Outreach() {
+    if (topOutreachContacts.length === 0) return;
+    await navigator.clipboard.writeText(top40OutreachText);
+    setCopiedTop40(true);
+    window.setTimeout(() => setCopiedTop40(false), 1800);
+  }
+
+  function composeTop40Draft() {
+    if (topOutreachContacts.length === 0) return;
+    const subject = encodeURIComponent("Cabo Marlin Trip Inquiry (March 21-22, 2026)");
+    const body = encodeURIComponent(top40OutreachText);
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
   }
 
   if (charters.loading) {
@@ -189,19 +311,56 @@ export function ChartersRoute() {
           ))}
         </div>
 
-        <Card className="h-fit">
-          <CardHeader>
-            <CardTitle className="text-base">Quote Request Template</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <p className="text-xs text-muted-foreground">Prefills with the first shortlisted charter when available.</p>
-            <textarea className="h-64 w-full rounded-md border border-input bg-background p-3 text-xs" value={quoteTemplate} readOnly />
-            <Button onClick={copyTemplate} className="w-full" disabled={!selectedForTemplate}>
-              <Copy className="h-4 w-4" aria-hidden />
-              {copied ? "Copied" : "Copy Template"}
-            </Button>
-          </CardContent>
-        </Card>
+        <div className="space-y-4">
+          <Card className="h-fit">
+            <CardHeader>
+              <CardTitle className="text-base">Quote Request Template</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <p className="text-xs text-muted-foreground">Prefills with the first shortlisted charter when available.</p>
+              <textarea className="h-64 w-full rounded-md border border-input bg-background p-3 text-xs" value={quoteTemplate} readOnly />
+              <Button onClick={copyTemplate} className="w-full" disabled={!selectedForTemplate}>
+                <Copy className="h-4 w-4" aria-hidden />
+                {copied ? "Copied" : "Copy Template"}
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="h-fit">
+            <CardHeader>
+              <CardTitle className="text-base">Top 40 Outreach</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <p className="text-xs text-muted-foreground">
+                Ranked from bite-report history using marlin activity first, then total report activity. Showing {topOutreachContacts.length} contacts.
+              </p>
+              <textarea className="h-56 w-full rounded-md border border-input bg-background p-3 text-xs" value={top40OutreachText} readOnly />
+              <div className="grid gap-2 sm:grid-cols-2">
+                <Button onClick={copyTop40Outreach} variant="outline" disabled={topOutreachContacts.length === 0}>
+                  <Copy className="h-4 w-4" aria-hidden />
+                  {copiedTop40 ? "Copied" : "Copy Top 40"}
+                </Button>
+                <Button onClick={composeTop40Draft} disabled={topOutreachContacts.length === 0}>
+                  <Mail className="h-4 w-4" aria-hidden />
+                  Compose Email
+                </Button>
+              </div>
+              {topOutreachContacts.length > 0 ? (
+                <div className="rounded-md border border-border/50 p-2 text-xs">
+                  <p className="font-medium">Top contacts preview</p>
+                  {topOutreachContacts.slice(0, 8).map((contact, index) => (
+                    <p key={contact.name} className="text-muted-foreground">
+                      {index + 1}. {toTitleCase(contact.name)} • marlin {contact.marlinReports} • total {contact.totalReports}
+                    </p>
+                  ))}
+                </div>
+              ) : null}
+              <p className="text-xs text-muted-foreground">
+                Parsed sources do not expose direct email addresses, so this generates outreach-ready ranked contacts and a draft for manual send or mail-merge.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
       </section>
     </div>
   );

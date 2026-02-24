@@ -1,1055 +1,91 @@
 {
-  "generated_at": "2026-02-24T07:36:02.208Z",
+  "generated_at": "2026-02-24T08:38:58.072Z",
   "sources": [
     {
       "name": "El Budster",
       "url": "https://www.elbudster.com/report",
-      "fetched_at": "2026-02-24T07:36:03.201Z",
+      "fetched_at": "2026-02-24T08:38:58.936Z",
       "ok": false,
       "error": "No reports matched parser rules"
     },
     {
-      "name": "Pisces Weekly Reports page 1",
-      "url": "https://www.piscessportfishing.com/fishing-reports/",
-      "fetched_at": "2026-02-24T07:36:04.597Z",
-      "ok": false,
-      "error": "HTTP 404"
+      "name": "Pisces JSON Feed page 1",
+      "url": "https://blog.piscessportfishing.com/feed/json/?paged=1",
+      "fetched_at": "2026-02-24T08:39:00.078Z",
+      "ok": true
     },
     {
-      "name": "Pisces Marlin Reports page 1",
-      "url": "https://www.piscessportfishing.com/tag/marlin/",
-      "fetched_at": "2026-02-24T07:36:05.685Z",
-      "ok": false,
-      "error": "HTTP 404"
+      "name": "Pisces JSON Feed page 2",
+      "url": "https://blog.piscessportfishing.com/feed/json/?paged=2",
+      "fetched_at": "2026-02-24T08:39:01.313Z",
+      "ok": true
+    },
+    {
+      "name": "Pisces JSON Feed page 3",
+      "url": "https://blog.piscessportfishing.com/feed/json/?paged=3",
+      "fetched_at": "2026-02-24T08:39:02.895Z",
+      "ok": true
     },
     {
       "name": "Cabo Sportfishing Reports page 1",
       "url": "https://cabosportfishingcrew.com/cabo-fishing-reports/",
-      "fetched_at": "2026-02-24T07:36:06.377Z",
+      "fetched_at": "2026-02-24T08:39:03.948Z",
       "ok": false,
       "error": "HTTP 404"
     },
     {
       "name": "FishingBooker Cabo San Lucas page 1",
       "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=1",
-      "fetched_at": "2026-02-24T07:36:09.856Z",
+      "fetched_at": "2026-02-24T08:39:07.138Z",
       "ok": true
     },
     {
       "name": "FishingBooker Cabo San Lucas page 2",
       "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=2",
-      "fetched_at": "2026-02-24T07:36:12.063Z",
+      "fetched_at": "2026-02-24T08:39:09.464Z",
       "ok": true
     },
     {
       "name": "FishingBooker Cabo San Lucas page 3",
       "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=3",
-      "fetched_at": "2026-02-24T07:36:14.040Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 4",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=4",
-      "fetched_at": "2026-02-24T07:36:15.710Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 5",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=5",
-      "fetched_at": "2026-02-24T07:36:17.298Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 6",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=6",
-      "fetched_at": "2026-02-24T07:36:19.108Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 7",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=7",
-      "fetched_at": "2026-02-24T07:36:20.912Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 8",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=8",
-      "fetched_at": "2026-02-24T07:36:22.680Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 9",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=9",
-      "fetched_at": "2026-02-24T07:36:24.178Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 10",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=10",
-      "fetched_at": "2026-02-24T07:36:25.831Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 11",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=11",
-      "fetched_at": "2026-02-24T07:36:27.343Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 12",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=12",
-      "fetched_at": "2026-02-24T07:36:28.826Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 13",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=13",
-      "fetched_at": "2026-02-24T07:36:30.512Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 14",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=14",
-      "fetched_at": "2026-02-24T07:36:32.515Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 15",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=15",
-      "fetched_at": "2026-02-24T07:36:34.074Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 16",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=16",
-      "fetched_at": "2026-02-24T07:36:35.526Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 17",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=17",
-      "fetched_at": "2026-02-24T07:36:37.002Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 18",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=18",
-      "fetched_at": "2026-02-24T07:36:38.503Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 19",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=19",
-      "fetched_at": "2026-02-24T07:36:39.993Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 20",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=20",
-      "fetched_at": "2026-02-24T07:36:41.541Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 21",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=21",
-      "fetched_at": "2026-02-24T07:36:43.158Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 22",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=22",
-      "fetched_at": "2026-02-24T07:36:45.109Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 23",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=23",
-      "fetched_at": "2026-02-24T07:36:46.616Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 24",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=24",
-      "fetched_at": "2026-02-24T07:36:48.421Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 25",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=25",
-      "fetched_at": "2026-02-24T07:36:50.215Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 26",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=26",
-      "fetched_at": "2026-02-24T07:36:51.994Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 27",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=27",
-      "fetched_at": "2026-02-24T07:36:53.736Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 28",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=28",
-      "fetched_at": "2026-02-24T07:36:55.558Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 29",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=29",
-      "fetched_at": "2026-02-24T07:36:57.266Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 30",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=30",
-      "fetched_at": "2026-02-24T07:36:59.204Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 31",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=31",
-      "fetched_at": "2026-02-24T07:37:00.844Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 32",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=32",
-      "fetched_at": "2026-02-24T07:37:02.345Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 33",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=33",
-      "fetched_at": "2026-02-24T07:37:04.181Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 34",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=34",
-      "fetched_at": "2026-02-24T07:37:06.028Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 35",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=35",
-      "fetched_at": "2026-02-24T07:37:07.621Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 36",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=36",
-      "fetched_at": "2026-02-24T07:37:09.315Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 37",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=37",
-      "fetched_at": "2026-02-24T07:37:11.134Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 38",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=38",
-      "fetched_at": "2026-02-24T07:37:12.663Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 39",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=39",
-      "fetched_at": "2026-02-24T07:37:14.379Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 40",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=40",
-      "fetched_at": "2026-02-24T07:37:16.050Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 41",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=41",
-      "fetched_at": "2026-02-24T07:37:17.939Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 42",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=42",
-      "fetched_at": "2026-02-24T07:37:19.818Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 43",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=43",
-      "fetched_at": "2026-02-24T07:37:21.728Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 44",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=44",
-      "fetched_at": "2026-02-24T07:37:23.437Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 45",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=45",
-      "fetched_at": "2026-02-24T07:37:25.229Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 46",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=46",
-      "fetched_at": "2026-02-24T07:37:26.825Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 47",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=47",
-      "fetched_at": "2026-02-24T07:37:28.360Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 48",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=48",
-      "fetched_at": "2026-02-24T07:37:30.118Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 49",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=49",
-      "fetched_at": "2026-02-24T07:37:32.028Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 50",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=50",
-      "fetched_at": "2026-02-24T07:37:33.648Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 51",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=51",
-      "fetched_at": "2026-02-24T07:37:35.360Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 52",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=52",
-      "fetched_at": "2026-02-24T07:37:37.266Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 53",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=53",
-      "fetched_at": "2026-02-24T07:37:38.752Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 54",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=54",
-      "fetched_at": "2026-02-24T07:37:40.264Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 55",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=55",
-      "fetched_at": "2026-02-24T07:37:41.859Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 56",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=56",
-      "fetched_at": "2026-02-24T07:37:43.713Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 57",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=57",
-      "fetched_at": "2026-02-24T07:37:45.525Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 58",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=58",
-      "fetched_at": "2026-02-24T07:37:47.355Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 59",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=59",
-      "fetched_at": "2026-02-24T07:37:49.218Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 60",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=60",
-      "fetched_at": "2026-02-24T07:37:50.903Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 61",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=61",
-      "fetched_at": "2026-02-24T07:37:52.830Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 62",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=62",
-      "fetched_at": "2026-02-24T07:37:54.562Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 63",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=63",
-      "fetched_at": "2026-02-24T07:37:56.090Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 64",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=64",
-      "fetched_at": "2026-02-24T07:37:57.680Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 65",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=65",
-      "fetched_at": "2026-02-24T07:37:59.608Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 66",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=66",
-      "fetched_at": "2026-02-24T07:38:01.452Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 67",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=67",
-      "fetched_at": "2026-02-24T07:38:03.749Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 68",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=68",
-      "fetched_at": "2026-02-24T07:38:05.494Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 69",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=69",
-      "fetched_at": "2026-02-24T07:38:07.018Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 70",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=70",
-      "fetched_at": "2026-02-24T07:38:08.602Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 71",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=71",
-      "fetched_at": "2026-02-24T07:38:10.084Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 72",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=72",
-      "fetched_at": "2026-02-24T07:38:11.998Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 73",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=73",
-      "fetched_at": "2026-02-24T07:38:13.523Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 74",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=74",
-      "fetched_at": "2026-02-24T07:38:15.154Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 75",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=75",
-      "fetched_at": "2026-02-24T07:38:16.809Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 76",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=76",
-      "fetched_at": "2026-02-24T07:38:18.563Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 77",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=77",
-      "fetched_at": "2026-02-24T07:38:20.345Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 78",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=78",
-      "fetched_at": "2026-02-24T07:38:21.869Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 79",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=79",
-      "fetched_at": "2026-02-24T07:38:23.662Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker Cabo San Lucas page 80",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/cabo-san-lucas?page=1&limit=6&offset=80",
-      "fetched_at": "2026-02-24T07:38:25.168Z",
+      "fetched_at": "2026-02-24T08:39:11.232Z",
       "ok": true
     },
     {
       "name": "FishingBooker San Jose del Cabo page 1",
       "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=1",
-      "fetched_at": "2026-02-24T07:38:26.754Z",
+      "fetched_at": "2026-02-24T08:39:13.253Z",
       "ok": true
     },
     {
       "name": "FishingBooker San Jose del Cabo page 2",
       "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=2",
-      "fetched_at": "2026-02-24T07:38:28.582Z",
+      "fetched_at": "2026-02-24T08:39:14.701Z",
       "ok": true
     },
     {
       "name": "FishingBooker San Jose del Cabo page 3",
       "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=3",
-      "fetched_at": "2026-02-24T07:38:30.438Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 4",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=4",
-      "fetched_at": "2026-02-24T07:38:32.350Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 5",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=5",
-      "fetched_at": "2026-02-24T07:38:33.895Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 6",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=6",
-      "fetched_at": "2026-02-24T07:38:35.580Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 7",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=7",
-      "fetched_at": "2026-02-24T07:38:37.211Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 8",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=8",
-      "fetched_at": "2026-02-24T07:38:38.863Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 9",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=9",
-      "fetched_at": "2026-02-24T07:38:40.308Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 10",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=10",
-      "fetched_at": "2026-02-24T07:38:42.112Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 11",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=11",
-      "fetched_at": "2026-02-24T07:38:43.953Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 12",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=12",
-      "fetched_at": "2026-02-24T07:38:45.432Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 13",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=13",
-      "fetched_at": "2026-02-24T07:38:47.211Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 14",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=14",
-      "fetched_at": "2026-02-24T07:38:48.789Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 15",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=15",
-      "fetched_at": "2026-02-24T07:38:50.570Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 16",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=16",
-      "fetched_at": "2026-02-24T07:38:52.178Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 17",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=17",
-      "fetched_at": "2026-02-24T07:38:53.817Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 18",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=18",
-      "fetched_at": "2026-02-24T07:38:55.724Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 19",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=19",
-      "fetched_at": "2026-02-24T07:38:57.198Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 20",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=20",
-      "fetched_at": "2026-02-24T07:38:59.059Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 21",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=21",
-      "fetched_at": "2026-02-24T07:39:00.883Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 22",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=22",
-      "fetched_at": "2026-02-24T07:39:02.406Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 23",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=23",
-      "fetched_at": "2026-02-24T07:39:04.019Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 24",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=24",
-      "fetched_at": "2026-02-24T07:39:05.795Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 25",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=25",
-      "fetched_at": "2026-02-24T07:39:07.385Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 26",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=26",
-      "fetched_at": "2026-02-24T07:39:09.056Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 27",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=27",
-      "fetched_at": "2026-02-24T07:39:10.555Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 28",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=28",
-      "fetched_at": "2026-02-24T07:39:12.302Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 29",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=29",
-      "fetched_at": "2026-02-24T07:39:14.091Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 30",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=30",
-      "fetched_at": "2026-02-24T07:39:15.811Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 31",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=31",
-      "fetched_at": "2026-02-24T07:39:17.504Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 32",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=32",
-      "fetched_at": "2026-02-24T07:39:19.422Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 33",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=33",
-      "fetched_at": "2026-02-24T07:39:21.080Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 34",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=34",
-      "fetched_at": "2026-02-24T07:39:22.557Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 35",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=35",
-      "fetched_at": "2026-02-24T07:39:24.322Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 36",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=36",
-      "fetched_at": "2026-02-24T07:39:25.967Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 37",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=37",
-      "fetched_at": "2026-02-24T07:39:27.860Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 38",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=38",
-      "fetched_at": "2026-02-24T07:39:29.591Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 39",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=39",
-      "fetched_at": "2026-02-24T07:39:31.142Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 40",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=40",
-      "fetched_at": "2026-02-24T07:39:32.763Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 41",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=41",
-      "fetched_at": "2026-02-24T07:39:34.378Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 42",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=42",
-      "fetched_at": "2026-02-24T07:39:35.999Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 43",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=43",
-      "fetched_at": "2026-02-24T07:39:37.762Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 44",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=44",
-      "fetched_at": "2026-02-24T07:39:39.643Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 45",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=45",
-      "fetched_at": "2026-02-24T07:39:41.131Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 46",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=46",
-      "fetched_at": "2026-02-24T07:39:42.689Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 47",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=47",
-      "fetched_at": "2026-02-24T07:39:44.330Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 48",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=48",
-      "fetched_at": "2026-02-24T07:39:45.823Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 49",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=49",
-      "fetched_at": "2026-02-24T07:39:47.545Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 50",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=50",
-      "fetched_at": "2026-02-24T07:39:49.423Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 51",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=51",
-      "fetched_at": "2026-02-24T07:39:51.194Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 52",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=52",
-      "fetched_at": "2026-02-24T07:39:52.602Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 53",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=53",
-      "fetched_at": "2026-02-24T07:39:54.294Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 54",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=54",
-      "fetched_at": "2026-02-24T07:39:55.777Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 55",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=55",
-      "fetched_at": "2026-02-24T07:39:57.415Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 56",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=56",
-      "fetched_at": "2026-02-24T07:39:58.879Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 57",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=57",
-      "fetched_at": "2026-02-24T07:40:00.368Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 58",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=58",
-      "fetched_at": "2026-02-24T07:40:02.156Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 59",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=59",
-      "fetched_at": "2026-02-24T07:40:03.995Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 60",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=60",
-      "fetched_at": "2026-02-24T07:40:05.566Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 61",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=61",
-      "fetched_at": "2026-02-24T07:40:07.604Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 62",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=62",
-      "fetched_at": "2026-02-24T07:40:09.553Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 63",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=63",
-      "fetched_at": "2026-02-24T07:40:11.050Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 64",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=64",
-      "fetched_at": "2026-02-24T07:40:12.734Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 65",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=65",
-      "fetched_at": "2026-02-24T07:40:14.455Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 66",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=66",
-      "fetched_at": "2026-02-24T07:40:16.197Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 67",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=67",
-      "fetched_at": "2026-02-24T07:40:17.742Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 68",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=68",
-      "fetched_at": "2026-02-24T07:40:19.493Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 69",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=69",
-      "fetched_at": "2026-02-24T07:40:20.945Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 70",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=70",
-      "fetched_at": "2026-02-24T07:40:22.571Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 71",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=71",
-      "fetched_at": "2026-02-24T07:40:23.969Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 72",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=72",
-      "fetched_at": "2026-02-24T07:40:25.770Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 73",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=73",
-      "fetched_at": "2026-02-24T07:40:27.538Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 74",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=74",
-      "fetched_at": "2026-02-24T07:40:28.967Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 75",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=75",
-      "fetched_at": "2026-02-24T07:40:30.584Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 76",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=76",
-      "fetched_at": "2026-02-24T07:40:32.097Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 77",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=77",
-      "fetched_at": "2026-02-24T07:40:33.904Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 78",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=78",
-      "fetched_at": "2026-02-24T07:40:35.681Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 79",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=79",
-      "fetched_at": "2026-02-24T07:40:37.497Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker San Jose del Cabo page 80",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/san-jose-del-cabo?page=1&limit=6&offset=80",
-      "fetched_at": "2026-02-24T07:40:39.212Z",
+      "fetched_at": "2026-02-24T08:39:16.256Z",
       "ok": true
     },
     {
       "name": "FishingBooker La Paz page 1",
       "url": "https://fishingbooker.com/reports/destination/mx/BS/la-paz?page=1&limit=6&offset=1",
-      "fetched_at": "2026-02-24T07:40:41.154Z",
+      "fetched_at": "2026-02-24T08:39:18.160Z",
       "ok": true
     },
     {
       "name": "FishingBooker La Paz page 2",
       "url": "https://fishingbooker.com/reports/destination/mx/BS/la-paz?page=1&limit=6&offset=2",
-      "fetched_at": "2026-02-24T07:40:42.491Z",
+      "fetched_at": "2026-02-24T08:39:19.264Z",
       "ok": true
     },
     {
       "name": "FishingBooker La Paz page 3",
       "url": "https://fishingbooker.com/reports/destination/mx/BS/la-paz?page=1&limit=6&offset=3",
-      "fetched_at": "2026-02-24T07:40:43.885Z",
+      "fetched_at": "2026-02-24T08:39:20.542Z",
       "ok": true
-    },
-    {
-      "name": "FishingBooker La Paz page 4",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/la-paz?page=1&limit=6&offset=4",
-      "fetched_at": "2026-02-24T07:40:45.368Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker La Paz page 5",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/la-paz?page=1&limit=6&offset=5",
-      "fetched_at": "2026-02-24T07:40:46.817Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker La Paz page 6",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/la-paz?page=1&limit=6&offset=6",
-      "fetched_at": "2026-02-24T07:40:48.020Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker La Paz page 7",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/la-paz?page=1&limit=6&offset=7",
-      "fetched_at": "2026-02-24T07:40:49.593Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker La Paz page 8",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/la-paz?page=1&limit=6&offset=8",
-      "fetched_at": "2026-02-24T07:40:50.946Z",
-      "ok": true
-    },
-    {
-      "name": "FishingBooker La Paz page 9",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/la-paz?page=1&limit=6&offset=9",
-      "fetched_at": "2026-02-24T07:40:52.287Z",
-      "ok": false,
-      "error": "No reports matched parser rules"
-    },
-    {
-      "name": "FishingBooker La Paz page 10",
-      "url": "https://fishingbooker.com/reports/destination/mx/BS/la-paz?page=1&limit=6&offset=10",
-      "fetched_at": "2026-02-24T07:40:53.561Z",
-      "ok": false,
-      "error": "No reports matched parser rules"
     }
   ],
   "data": {
@@ -1166,6 +202,20 @@
         ],
         "notes": "Yellowfin Tuna Day Nice day of tuna fishing. February 20, 2026 Yellowfin Tuna Day February 20, 2026 Nice day of tuna fishing. Continue reading",
         "link": "https://fishingbooker.com/reports/view/113321"
+      },
+      {
+        "source": "Pisces",
+        "date": "2026-02-20",
+        "species": [
+          "blue marlin",
+          "marlin",
+          "tuna",
+          "dorado",
+          "wahoo",
+          "roosterfish"
+        ],
+        "notes": "Blue Marlin Headlines a Stellar Week for the Pisces Fleet Pisces Sportfishing report February 13-19, 2026 Cabo San Lucas Catch successful Trips 86.90%, Billfish 41.67%, Dorado 32.14%. Other 20.24%. Roosterfish 11.90%, Tuna 34.52%, Wahoo 03.57% The Pisces Fleet continues to take c",
+        "link": "https://blog.piscessportfishing.com/pisces-sportfishing-report/blue-marlin-headlines-a-stellar-week-for-the-pisces-fleet"
       },
       {
         "source": "FishingBooker Cabo San Lucas",
@@ -1467,6 +517,19 @@
         "link": "https://fishingbooker.com/reports/view/113024"
       },
       {
+        "source": "Pisces",
+        "date": "2026-02-13",
+        "species": [
+          "marlin",
+          "tuna",
+          "dorado",
+          "wahoo",
+          "roosterfish"
+        ],
+        "notes": "Roosters, Dorado, and Marlin Yields a February Frenzy in Cabo Pisces Sportfishing report February 6-12, 2026Cabo San Lucas Catch success rate 93.81%, Billfish 62.89%, Dorado 53.61%. Other 16.49%. Roosterfish 15.46%, Tuna 22.68%, Wahoo 02.06% Cabo San Lucas, B.C.S., Mexico The sec",
+        "link": "https://blog.piscessportfishing.com/pisces-sportfishing-report/news/roosters-dorado-and-marlin-yields-a-february-frenzy-in-cabo"
+      },
+      {
         "source": "FishingBooker",
         "date": "2026-02-12",
         "species": [
@@ -1628,6 +691,17 @@
         ],
         "notes": "Slow Day, Right Bite It was a slower half-day overall, but we got the right opportunity and made it count with a striped marlin. Some days are about patience and timing today luck met preparation. That’s fishing. February 6, 2026 Slow Day, Right Bite February 6, 2026 It was a slo",
         "link": "https://fishingbooker.com/reports/view/112729"
+      },
+      {
+        "source": "Pisces",
+        "date": "2026-02-06",
+        "species": [
+          "dorado",
+          "wahoo",
+          "roosterfish"
+        ],
+        "notes": "“Calm Seas, Hot Bite: Cabo’s Spectacular Start to February” Pisces Sportfishing report January 30-February 5, 2026 Cabo San Lucas Delivers Remarkable Catch success rate 91.17%, Billfish 53.40%, Dorado 28.16%. Other 11.65%. Roosterfish 27,18%, Tuna26.21%, Wahoo 04.85% Cabo San Luc",
+        "link": "https://blog.piscessportfishing.com/pisces-sportfishing-report/calm-seas-hot-bite-cabos-spectacular-start-to-february"
       },
       {
         "source": "FishingBooker",
@@ -1807,6 +881,19 @@
         "link": "https://fishingbooker.com/reports/view/112503"
       },
       {
+        "source": "Pisces",
+        "date": "2026-01-31",
+        "species": [
+          "marlin",
+          "tuna",
+          "dorado",
+          "wahoo",
+          "roosterfish"
+        ],
+        "notes": "“Cabo Heats Up: Fifty-Marlin Day and Trophy Tuna” January 23-29, 2026Cabo San Lucas, B.C.S., Mexico Cabo San Lucas Delivers Outstanding: Catch success rate 89.04%, Billfish 46.58%, Dorado 42.47%. Other 15.07%. Roosterfish 06.85%, Tuna 28.77%, Wahoo 05.48% This week brought excell",
+        "link": "https://blog.piscessportfishing.com/pisces-sportfishing-weekly-report/cabo-heats-up-fifty-marlin-day-and-trophy-tuna"
+      },
+      {
         "source": "FishingBooker",
         "date": "2026-01-29",
         "species": [],
@@ -1926,6 +1013,18 @@
         ],
         "notes": "Great boue marlin what a day! What an amazing day on the water! ? This wonderful couple had catching a marlin on their bucket list, and they made it happen in an unforgettable way. They landed a beautiful blue marlin after an intense and exciting fight. It was a great day for bot",
         "link": "https://fishingbooker.com/reports/view/112298"
+      },
+      {
+        "source": "Pisces",
+        "date": "2026-01-23",
+        "species": [
+          "marlin",
+          "tuna",
+          "dorado",
+          "roosterfish"
+        ],
+        "notes": "Cabo Ignites: Marlin Streak, Tuna Stack, and Roosterfish Strut on the Beaches Pisces Sportfishing Weekly ReportJanuary 16-22, 2026Cabo San Lucas, B.C.S., MexicoCabo San Lucas Delivers Outstanding: Catch success rate 94.17, Billfish 53.40%, Dorado 28.16%. Other 11.65%. Roosterfish",
+        "link": "https://blog.piscessportfishing.com/pisces-sportfishing-report/cabo-ignites-marlin-streak-tuna-stack-and-roosterfish-strut-on-the-beaches"
       },
       {
         "source": "FishingBooker",
@@ -2152,6 +1251,18 @@
         ],
         "notes": "DALIKEN SPORTFISHING BOOK NOW!! Tuna fishing!! January 16, 2026 DALIKEN SPORTFISHING BOOK NOW!! January 16, 2026 Tuna fishing!! Continue reading",
         "link": "https://fishingbooker.com/reports/view/112030"
+      },
+      {
+        "source": "Pisces",
+        "date": "2026-01-16",
+        "species": [
+          "marlin",
+          "tuna",
+          "dorado",
+          "roosterfish"
+        ],
+        "notes": "Pisces Fleet Scores Big: Tuna Runs, Marlin Encounters, and Perfect Weather Cabo San Lucas Delivers Outstanding: Catch success rate 98.10, Billfish 34.29%, Dorado 31.43%. Other 23.81%. Roosterfish 19L05 %, Tuna 48.57%. Pisces Sportfishing Weekly ReportJanuary 9-15, 2026Cabo San Lu",
+        "link": "https://blog.piscessportfishing.com/pisces-sportfishing-report/blue-marlin/pisces-fleet-scores-big-tuna-runs-marlin-encounters-and-perfect-weather"
       },
       {
         "source": "FishingBooker",
@@ -2383,6 +1494,18 @@
         ],
         "notes": "DALIKEN SPORTFISHING BOOK NOW! Tuna and mahi! January 9, 2026 DALIKEN SPORTFISHING BOOK NOW! January 9, 2026 Tuna and mahi! Continue reading",
         "link": "https://fishingbooker.com/reports/view/111730"
+      },
+      {
+        "source": "Pisces",
+        "date": "2026-01-09",
+        "species": [
+          "tuna",
+          "dorado",
+          "wahoo",
+          "roosterfish"
+        ],
+        "notes": "An Exciting Start to 2026 for PISCES FLEET at Cabo San Lucas Cabo San Lucas Delivers Outstanding: Catch success rate 98.25% Billfish 68.42% Dorado 41.23%. Other 14.04%. Roosterfish 10.53 %, Tuna 30.70%, Wahoo 7.89% Early in the year, on January 3rd, an angler from Paradise, Arizo",
+        "link": "https://blog.piscessportfishing.com/pisces-sportfishing-report/an-exciting-start-to-2026-for-pisces-fleet-at-cabo-san-lucas"
       },
       {
         "source": "FishingBooker",
@@ -2688,6 +1811,19 @@
         "link": "https://fishingbooker.com/reports/view/111400"
       },
       {
+        "source": "Pisces",
+        "date": "2026-01-02",
+        "species": [
+          "striped marlin",
+          "marlin",
+          "tuna",
+          "dorado",
+          "roosterfish"
+        ],
+        "notes": "Striped Marlin Led the Bite as Cabo Closes Out 2025 in Style Pisces Sportfishing Weekly ReportDecember 26, 2025 – January 1, 2026Cabo San Lucas, B.C.S., Mexico Successful Trips 129, Catch success rate 94.16% Billfish 60.58% Dorado 12,41%, Other 7.30, Roosterfish 0.73% Tuna 38.69%",
+        "link": "https://blog.piscessportfishing.com/pisces-sportfishing-report/blue-marlin/striped-marlin-led-the-bite-as-cabo-closes-out-2025-in-style"
+      },
+      {
         "source": "FishingBooker",
         "date": "2025-12-31",
         "species": [
@@ -2827,6 +1963,17 @@
         ],
         "notes": "DALIKEN SPORTFISHING BOOK NOW! Marlin and wahoo fishing! December 26, 2025 DALIKEN SPORTFISHING BOOK NOW! December 26, 2025 Marlin and wahoo fishing! Continue reading",
         "link": "https://fishingbooker.com/reports/view/111009"
+      },
+      {
+        "source": "Pisces",
+        "date": "2025-12-26",
+        "species": [
+          "marlin",
+          "tuna",
+          "dorado"
+        ],
+        "notes": "“Cabo’s Christmas Bite: Marlin Up Front, Tuna Out Back” PISCES SPORTFISHING — WEEKLY REPORT December 19–25, 2025 Catch success trips 95.51%, Billfish, 61.80% Dorado, 23.60% Tuna, 44.94% Other Species, 1.12% The holiday week delivered calm seas, clear skies, and warm water, creati",
+        "link": "https://blog.piscessportfishing.com/pisces-sportfishing-report/news/cabos-christmas-bite-marlin-up-front-tuna-out-back"
       },
       {
         "source": "FishingBooker",
@@ -3014,6 +2161,18 @@
         "species": [],
         "notes": "4 horas de pesca really good Esta familia rento 4 horas de pesca y bstonpar poder pescar pes gallo sierra y un bonito blanco todos muy felices December 20, 2025 4 horas de pesca really good December 20, 2025 Esta familia rento 4 horas de pesca y bstonpar poder pescar pes gallo si",
         "link": "https://fishingbooker.com/reports/view/110776"
+      },
+      {
+        "source": "Pisces",
+        "date": "2025-12-20",
+        "species": [
+          "striped marlin",
+          "marlin",
+          "tuna",
+          "dorado"
+        ],
+        "notes": "Pisces Fleet Enjoys a Remarkable Early December Striped Marlin & Tuna Bite Pisces Fleet Weekly Update –December 12-18, 2025 Catch success trips 97.80%, Billfish, 74.73% Dorado, 49.45% Tuna, 39.56% Other Species, 6.59% What a fantastic week of fishing! The weather was ideal throug",
+        "link": "https://blog.piscessportfishing.com/pisces-sportfishing-report/news/pisces-fleet-enjoys-a-remarkable-early-december-striped-marlin-tuna-bite"
       },
       {
         "source": "FishingBooker",
@@ -3233,6 +2392,20 @@
         "link": "https://fishingbooker.com/reports/view/110548"
       },
       {
+        "source": "Pisces",
+        "date": "2025-12-12",
+        "species": [
+          "striped marlin",
+          "blue marlin",
+          "marlin",
+          "tuna",
+          "dorado",
+          "wahoo"
+        ],
+        "notes": "Striped Marlin Surge & Winter Blue Marlin Surprises Pisces Fleet Weekly Update –December 5-11, 2025Catch success trips 94.19%, Billfish, 54.65% Dorado, 46.51% Tuna, 41.86% Wahoo, 5.93% Other Species, 5.81% Early December saw good conditions for Cabo boats, with calm seas and temp",
+        "link": "https://blog.piscessportfishing.com/pisces-sportfishing-report/blue-marlin/striped-marlin-surge-winter-blue-marlin-surprises"
+      },
+      {
         "source": "FishingBooker",
         "date": "2025-12-11",
         "species": [
@@ -3424,6 +2597,14 @@
         "link": "https://fishingbooker.com/reports/view/110320"
       },
       {
+        "source": "Pisces",
+        "date": "2025-12-05",
+        "species": [],
+        "notes": "“Pisces Fleet Anglers Reel in Glory Pisces Fleet Weekly Update – November 28–December 4, 2025 Throughout the week, the region saw predominantly clear skies and calm seas, with wave heights steady at 2–3 feet. Water temperatures fluctuated slightly, ranging from 75°F to 82°F, whil",
+        "water_temp_f": 75,
+        "link": "https://blog.piscessportfishing.com/pisces-sportfishing-report/pisces-fleet-anglers-reel-in-glory"
+      },
+      {
         "source": "FishingBooker",
         "date": "2025-12-04",
         "species": [],
@@ -3549,6 +2730,17 @@
         "species": [],
         "notes": "5hrs tour This was fun day for kids!? November 28, 2025 5hrs tour November 28, 2025 This was fun day for kids!? Continue reading",
         "link": "https://fishingbooker.com/reports/view/110053"
+      },
+      {
+        "source": "Pisces",
+        "date": "2025-11-28",
+        "species": [
+          "tuna",
+          "dorado",
+          "wahoo"
+        ],
+        "notes": "Pisces Report: Tales from the Deck and Beyond Pisces Fleet Weekly Update – November 21–27, 2025 catch success rate 94.81%, Billfish, 65.93% Dorado, 25.19% Tuna, 35.560% Wahoo, 5.93% Other Species, 6.67% With clear skies, calm seas, and water temperatures holding steady in the upp",
+        "link": "https://blog.piscessportfishing.com/pisces-sportfishing-report/news/pisces-report-tales-from-the-deck-and-beyond"
       },
       {
         "source": "FishingBooker",
@@ -3781,6 +2973,17 @@
         "link": "https://fishingbooker.com/reports/view/109765"
       },
       {
+        "source": "Pisces",
+        "date": "2025-11-21",
+        "species": [
+          "tuna",
+          "dorado",
+          "wahoo"
+        ],
+        "notes": "Premier Offshore Action with 93% Catch Success Pisces Sportfishing Update 11-14-25 to 11-20-25 catch success rate 93.44%, Billfish, 48.36% Dorado, 28.69% Tuna, 50.00% Wahoo, 4.10% Other Species, 11.48% This week&#8217;s offshore fishing trips delivered a range of impressive catch",
+        "link": "https://blog.piscessportfishing.com/pisces-sportfishing-report/news/premier-offshore-action-with-93-catch-success"
+      },
+      {
         "source": "FishingBooker",
         "date": "2025-11-20",
         "species": [
@@ -3919,6 +3122,19 @@
         "notes": "EL BUDSTER PRIDE FISHING REPORT (PM) Fishing on the EL BUDSTER PRIDE. The SCOTT OATMAN´S party, CAUGHT AND RELEASED ONE 120 LB. STRIPED MARLIN. The fish was caught 8 to 10 miles from the coast of Cabo San Lucas. The water temperature was 76-77 degrees. November 14, 2025 EL BUDSTE",
         "distance_offshore_miles": 9,
         "link": "https://fishingbooker.com/reports/view/109618"
+      },
+      {
+        "source": "Pisces",
+        "date": "2025-11-14",
+        "species": [
+          "marlin",
+          "tuna",
+          "dorado",
+          "wahoo",
+          "roosterfish"
+        ],
+        "notes": "Tuna Surge, Wahoo Wins & Marlin Moments: Pisces Fleet Highlights Pisces Weekly Fishing Report 11-7 to 11-13-25 Overall Catch Success Rate, All Species Combined 90.77% Success Trips, 92% Billfish, 37.33% Dorado, 38.67% Tuna, 38.67% Wahoo 6% Roosterfish 1.33% Other Species 8.67% Th",
+        "link": "https://blog.piscessportfishing.com/cabo-fishing-report/tuna-surge-wahoo-wins-marlin-moments-pisces-fleet-highlights"
       },
       {
         "source": "FishingBooker",
@@ -4103,6 +3319,17 @@
         "link": "https://fishingbooker.com/reports/view/109255"
       },
       {
+        "source": "Pisces",
+        "date": "2025-11-08",
+        "species": [
+          "tuna",
+          "dorado",
+          "wahoo"
+        ],
+        "notes": "November begins stronger than late October Pisces Weekly Fishing Report 10-31 to 11-06-25 Overall Catch Success Rate, All Species Combined 90.77% Billfish Catch Success Rate, Billfish, 53.08%% Dorado 27.69% Tuna 13.08% Wahoo 13,08% Other Species 8.46% This past week has been incr",
+        "link": "https://blog.piscessportfishing.com/pisces-sportfishing-weekly-report/november-begins-stronger-than-late-october"
+      },
+      {
         "source": "FishingBooker",
         "date": "2025-11-07",
         "species": [
@@ -4257,6 +3484,13 @@
         "notes": "EL BUDSTER FISHING REPORT (AM) Fishing on the EL BUDSTER. The CHRIS LYONS´S party, CAUGHT AND RELEASED **hidden content** LB. STRIPED MARLIN. The fish was caught 14 to 16 miles from the coast of Cabo San Lucas. The water temperature was 78-79 degrees. November 2, 2025 EL BUDSTER ",
         "distance_offshore_miles": 15,
         "link": "https://fishingbooker.com/reports/view/109201"
+      },
+      {
+        "source": "Pisces",
+        "date": "2025-11-01",
+        "species": [],
+        "notes": "October Finishes Fantastically, November… Promising! Pisces Weekly Fishing Report: October 25 –30, 2025: “Persistence meets perfection on the water.”The Pisces fleet continued its stellar run this week, with ocean conditions aligning beautifully to reward anglers with unforgettab",
+        "link": "https://blog.piscessportfishing.com/pisces-sportfishing-report/news/october-finishes-fantastically-november-promising"
       },
       {
         "source": "FishingBooker",
@@ -4551,6 +3785,17 @@
         "link": "https://fishingbooker.com/reports/view/108354"
       },
       {
+        "source": "Pisces",
+        "date": "2025-10-18",
+        "species": [
+          "tuna",
+          "dorado",
+          "wahoo"
+        ],
+        "notes": "Clear Skies, Big Bites: Cabo Fishing Week in Review” Pisces Fleet Weekly update from OCTOBER 10 &#8211; 16, 2025 Overall Catch Success Rate, All Species Combined 73.28% Billfish Catch Success Rate, Billfish, 31.03%% Dorado 47.41% Tuna 24.14% Wahoo 5.17% Other Species 36.90% Frida",
+        "link": "https://blog.piscessportfishing.com/cabo-fishing-report/clear-skies-big-bites-cabo-fishing-week-in-review"
+      },
+      {
         "source": "FishingBooker",
         "date": "2025-10-17",
         "species": [
@@ -4701,6 +3946,17 @@
         "link": "https://fishingbooker.com/reports/view/107952"
       },
       {
+        "source": "Pisces",
+        "date": "2025-10-10",
+        "species": [
+          "tuna",
+          "dorado",
+          "wahoo"
+        ],
+        "notes": "“Pisces Fleet Fires Back: Tuna, Dorado, and Billfish After the Storm” Pisces Fleet Weekly update from OCTOBER 3 &#8211; 9, 2025 Catch success rate 08.40% Billfish 31.08% Dorado 33.78%, Other 9.46%, Tuna 39.19%, Wahoo 6.75%. Many guests commented on the clear skies and calm waters",
+        "link": "https://blog.piscessportfishing.com/pisces-sportfishing-report/news/pisces-fleet-fires-back-tuna-dorado-and-billfish-after-the-storm"
+      },
+      {
         "source": "FishingBooker",
         "date": "2025-10-07",
         "species": [
@@ -4748,6 +4004,18 @@
         ],
         "notes": "DALIKEN SPORTFISHING BOOK NOW Sailfish October 3, 2025 DALIKEN SPORTFISHING BOOK NOW October 3, 2025 Sailfish Continue reading",
         "link": "https://fishingbooker.com/reports/view/107616"
+      },
+      {
+        "source": "Pisces",
+        "date": "2025-10-03",
+        "species": [
+          "marlin",
+          "tuna",
+          "dorado",
+          "wahoo"
+        ],
+        "notes": "Pisces Week of Marlin Dreams and Tuna Runs! Pisces Fishing Report September 26- October 2, 2025 Catch success rate 95.40% Billfish 47.13% Dorado 26.44%, Other 6.90%, Tuna 62.07%, Wahoo 2.39%. Overall, this week has been marked by consistent weather patterns, with calm seas and cl",
+        "link": "https://blog.piscessportfishing.com/pisces-sportfishing-report/news/pisces-week-of-marlin-dreams-and-tuna-runs"
       },
       {
         "source": "FishingBooker",
@@ -4947,6 +4215,18 @@
         "link": "https://fishingbooker.com/reports/view/106963"
       },
       {
+        "source": "Pisces",
+        "date": "2025-09-19",
+        "species": [
+          "blue marlin",
+          "marlin",
+          "tuna",
+          "wahoo"
+        ],
+        "notes": "“Clear Skies, Tight Lines: Cabo Delivers Big Tuna, Wahoo, and Blue Marlin Surprises” The excitement continued, as the \"LA CHINGONA 2,\" a sleek 64-foot Viking with Captain ToÃ±o and his Mates navigated to the 11-50. There, a swift strike yielded a formidable 120-pound Striped Marl",
+        "link": "https://blog.piscessportfishing.com/cabo-fishing-report/clear-skies-tight-lines-cabo-delivers-big-tuna-wahoo-a-blue-marlin-surprises"
+      },
+      {
         "source": "FishingBooker",
         "date": "2025-09-17",
         "species": [],
@@ -5016,6 +4296,17 @@
         ],
         "notes": "DALIKEN SPORTFISHING BOOK NOW Wahoo and bottom fishing September 12, 2025 DALIKEN SPORTFISHING BOOK NOW September 12, 2025 Wahoo and bottom fishing Continue reading",
         "link": "https://fishingbooker.com/reports/view/106642"
+      },
+      {
+        "source": "Pisces",
+        "date": "2025-09-12",
+        "species": [
+          "tuna",
+          "dorado",
+          "wahoo"
+        ],
+        "notes": "“Catch & Kin: Honoring the Past, Hooking the Future” September 5 to 11. Catch success rate 70.73% Billfish 51.28% Dorado 15.38%, Other 2.56%, Tuna 46.15%, Wahoo 5.13%. The joy of being a Pisces skipper is knowing that you are following the traditions of your father, his father, a",
+        "link": "https://blog.piscessportfishing.com/uncategorized/catch-kin-honoring-the-past-hooking-the-future"
       },
       {
         "source": "FishingBooker",
@@ -5139,6 +4430,17 @@
         "link": "https://fishingbooker.com/reports/view/106332"
       },
       {
+        "source": "Pisces",
+        "date": "2025-09-05",
+        "species": [
+          "tuna",
+          "dorado",
+          "wahoo"
+        ],
+        "notes": "Pisces had a Great Week until Along Came Lorena Pisces Weekly Report: August 29-September 4, 2025 August 29th to the 14th. Catch success rate 70.73% Billfish 51.22% Dorado 7.32%,Other 4.88%, Tuna 21.95%, Wahoo 4.88%. As the week unfolded, the Pisces Fleet danced with the rhythm o",
+        "link": "https://blog.piscessportfishing.com/uncategorized/pisces-had-a-great-week-until-along-came-lorena"
+      },
+      {
         "source": "FishingBooker La Paz",
         "date": "2025-08-30",
         "species": [
@@ -5172,6 +4474,18 @@
         ],
         "notes": "Time for the fight, man vs. Marlin. Today I release a blue Marlin of about 300 pounds. August 30, 2025 Time for the fight, man vs. Marlin. August 30, 2025 Today I release a blue Marlin of about 300 pounds. Continue reading",
         "link": "https://fishingbooker.com/reports/view/106013"
+      },
+      {
+        "source": "Pisces",
+        "date": "2025-08-29",
+        "species": [
+          "striped marlin",
+          "blue marlin",
+          "marlin",
+          "sailfish"
+        ],
+        "notes": "“Lines Tight, Spirits High: A Week with the Pisces Fleet” Pisces Fleet Weekly update from AUGUST 22-28, 2025 the Pisces Fleet delivered an impressive 88.24% catch success rate. Here’s a snapshot of the action: Billfish: 60.78% — including Blue Marlin, Striped Marlin, and Sailfish",
+        "link": "https://blog.piscessportfishing.com/uncategorized/lines-tight-spirits-high-a-week-with-the-pisces-fleet"
       },
       {
         "source": "FishingBooker",
@@ -5220,6 +4534,14 @@
         "notes": "EL BUDSTER PRIDE FISHING REPORT Fishing on the EL BUDSTER PRIDE. The VICTOR HELBLING´S party, CAUGHT AND RELEASED TWO STRIPED MARLIN OF 120 AND 130 LB. The fish was caught 14 to 16 miles from the coast of Cabo San Lucas. The water temperature was 80-82 degrees. August 22, 2025 EL",
         "distance_offshore_miles": 15,
         "link": "https://fishingbooker.com/reports/view/105893"
+      },
+      {
+        "source": "Pisces",
+        "date": "2025-08-22",
+        "species": [],
+        "notes": "Pisces Anglers Celebrate a Spectacular Week of Variety! Captain Abel and Mate Ninja, the fun-loving crew on the \"RIPPER,\" a 35-foot Cabo Flybridge, were happy to find Lourie and Stephen Farr were excited about fishing. They headed toward the 180 Spot and were 33 miles away when t",
+        "distance_offshore_miles": 33,
+        "link": "https://blog.piscessportfishing.com/uncategorized/pisces-anglers-celebrate-a-spectacular-week-of-variety"
       },
       {
         "source": "FishingBooker",
@@ -5358,6 +4680,17 @@
         "link": "https://fishingbooker.com/reports/view/105076"
       },
       {
+        "source": "Pisces",
+        "date": "2025-08-15",
+        "species": [
+          "tuna",
+          "dorado",
+          "wahoo"
+        ],
+        "notes": "A Slow Start with a Giant Finish! August 8th to the 14th. Catch success rate 88.89% Billfish 35.56% Dorado 15.56%, Other 13.33%, Tuna 62.22%, Wahoo 4.44%. Pisces Fleet Weekly&nbsp;from AUGUST 8—AUGUST 14, 2025 The Pisces Fleet hosts a wide variety of fishing enthusiasts each week",
+        "link": "https://blog.piscessportfishing.com/pisces-sportfishing-report/news/a-slow-start-with-a-giant-finish"
+      },
+      {
         "source": "FishingBooker",
         "date": "2025-08-13",
         "species": [
@@ -5416,6 +4749,19 @@
         "notes": "EL BUDSTER FISHING REPORT Fishing on the EL BUDSTER. The Scott Waidelich´s party, CAUGHT AND RELEASED ONE 120LB. STRIPED MARLIN. They also caught ONE 15LB. DORADO and TWO YELLOWFIN TUNA. The fish was caught 4 to 6 miles from the coast of Cabo San Lucas. The water temperature was ",
         "distance_offshore_miles": 5,
         "link": "https://fishingbooker.com/reports/view/104759"
+      },
+      {
+        "source": "Pisces",
+        "date": "2025-08-08",
+        "species": [
+          "blue marlin",
+          "marlin",
+          "yellowfin tuna",
+          "tuna",
+          "dorado"
+        ],
+        "notes": "Blue Marlin and Giant Yellowfin Tuna are here! Aug 1st to 7th Catch success rate 86.84%Billfish 32.89%, Dorado 25.00%, Other 10.53%, Tuna 55.26%Pisces Fleet Weekly update from AUGUST 1-August 7, 2025 Pisces Fleet Weekly update from August 1-7, 2025 From exciting Blue Marlin battl",
+        "link": "https://blog.piscessportfishing.com/pisces-sportfishing-report/news/blue-marlin-and-giant-yellowfin-tuna-are-here"
       },
       {
         "source": "FishingBooker",
@@ -5588,6 +4934,15 @@
         ],
         "notes": "Tuna action Tuna is pulling a lot, they are around 20 to 50 lb using sardina calamary bait. Just to 16 millas from the marina July 25, 2025 Tuna action July 25, 2025 Tuna is pulling a lot, they are around 20 to 50 lb using sardina calamary bait. Just to 16 millas from the marina ",
         "link": "https://fishingbooker.com/reports/view/103288"
+      },
+      {
+        "source": "Pisces",
+        "date": "2025-07-25",
+        "species": [
+          "dorado"
+        ],
+        "notes": "Pisces Fleet’s Best Week in 2025…so far Captain Jaime and Mate Silverio were chosen by Jon Williamson, Louis Cardenas, and Michelle Williamson on the \"CALIENTE,\" a 42-foot Cabo Flybridge, found the largest Dorado for the week! Weekly update from July 18 &#8211; July 24, 2025, Cat",
+        "link": "https://blog.piscessportfishing.com/pisces-sportfishing-report/news/12448"
       },
       {
         "source": "FishingBooker",
@@ -10680,34 +10035,10 @@
         "snippet": "<iframe src=\"//www.googletagmanager.com/ns.html?id=GTM-MWTR84\" height=\"0\" width=\"0\" style=\"display:none;visibility:hidden\"></iframe> (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElemen"
       },
       {
-        "source": "Pisces Weekly Reports page 1",
-        "link": "https://www.piscessportfishing.com/fishing-reports/",
-        "error": "HTTP 404",
-        "snippet": ""
-      },
-      {
-        "source": "Pisces Marlin Reports page 1",
-        "link": "https://www.piscessportfishing.com/tag/marlin/",
-        "error": "HTTP 404",
-        "snippet": ""
-      },
-      {
         "source": "Cabo Sportfishing Reports page 1",
         "link": "https://cabosportfishingcrew.com/cabo-fishing-reports/",
         "error": "HTTP 404",
         "snippet": ""
-      },
-      {
-        "source": "FishingBooker",
-        "link": "https://fishingbooker.com/reports/destination/mx/BS/la-paz?page=1&limit=6&offset=9",
-        "error": "No reports matched parser rules",
-        "snippet": "<iframe src=\"//sst.fishingbooker.com/ns.html?id=GTM-NWDQ4W\" height=\"0\" width=\"0\" style=\"display:none;visibility:hidden\"></iframe> (function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0],"
-      },
-      {
-        "source": "FishingBooker",
-        "link": "https://fishingbooker.com/reports/destination/mx/BS/la-paz?page=1&limit=6&offset=10",
-        "error": "No reports matched parser rules",
-        "snippet": "<iframe src=\"//sst.fishingbooker.com/ns.html?id=GTM-NWDQ4W\" height=\"0\" width=\"0\" style=\"display:none;visibility:hidden\"></iframe> (function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0],"
       }
     ],
     "metrics": {
@@ -10715,31 +10046,31 @@
       "weighted_marlin_signal_last_72h": 0.75,
       "trend_last_72h": [
         {
-          "bucket_ts": "2026-02-21T07:00:00.000Z",
+          "bucket_ts": "2026-02-21T08:00:00.000Z",
           "mentions": 0
         },
         {
-          "bucket_ts": "2026-02-21T19:00:00.000Z",
+          "bucket_ts": "2026-02-21T20:00:00.000Z",
           "mentions": 0
         },
         {
-          "bucket_ts": "2026-02-22T07:00:00.000Z",
+          "bucket_ts": "2026-02-22T08:00:00.000Z",
           "mentions": 0
         },
         {
-          "bucket_ts": "2026-02-22T19:00:00.000Z",
+          "bucket_ts": "2026-02-22T20:00:00.000Z",
           "mentions": 0
         },
         {
-          "bucket_ts": "2026-02-23T07:00:00.000Z",
+          "bucket_ts": "2026-02-23T08:00:00.000Z",
           "mentions": 1
         },
         {
-          "bucket_ts": "2026-02-23T19:00:00.000Z",
+          "bucket_ts": "2026-02-23T20:00:00.000Z",
           "mentions": 0
         },
         {
-          "bucket_ts": "2026-02-24T07:00:00.000Z",
+          "bucket_ts": "2026-02-24T08:00:00.000Z",
           "mentions": 0
         }
       ],
@@ -33996,7 +33327,7 @@
         },
         {
           "date": "2025-07-25",
-          "total_reports": 3,
+          "total_reports": 4,
           "marlin_mentions": 0,
           "weighted_marlin_signal": 0
         },
@@ -34080,9 +33411,9 @@
         },
         {
           "date": "2025-08-08",
-          "total_reports": 0,
-          "marlin_mentions": 0,
-          "weighted_marlin_signal": 0
+          "total_reports": 1,
+          "marlin_mentions": 1,
+          "weighted_marlin_signal": 0.9
         },
         {
           "date": "2025-08-09",
@@ -34122,7 +33453,7 @@
         },
         {
           "date": "2025-08-15",
-          "total_reports": 3,
+          "total_reports": 4,
           "marlin_mentions": 0,
           "weighted_marlin_signal": 0
         },
@@ -34164,7 +33495,7 @@
         },
         {
           "date": "2025-08-22",
-          "total_reports": 1,
+          "total_reports": 2,
           "marlin_mentions": 1,
           "weighted_marlin_signal": 0.75
         },
@@ -34206,9 +33537,9 @@
         },
         {
           "date": "2025-08-29",
-          "total_reports": 0,
-          "marlin_mentions": 0,
-          "weighted_marlin_signal": 0
+          "total_reports": 1,
+          "marlin_mentions": 1,
+          "weighted_marlin_signal": 0.9
         },
         {
           "date": "2025-08-30",
@@ -34248,7 +33579,7 @@
         },
         {
           "date": "2025-09-05",
-          "total_reports": 2,
+          "total_reports": 3,
           "marlin_mentions": 0,
           "weighted_marlin_signal": 0
         },
@@ -34290,7 +33621,7 @@
         },
         {
           "date": "2025-09-12",
-          "total_reports": 3,
+          "total_reports": 4,
           "marlin_mentions": 0,
           "weighted_marlin_signal": 0
         },
@@ -34332,9 +33663,9 @@
         },
         {
           "date": "2025-09-19",
-          "total_reports": 3,
-          "marlin_mentions": 2,
-          "weighted_marlin_signal": 1.5
+          "total_reports": 4,
+          "marlin_mentions": 3,
+          "weighted_marlin_signal": 2.4
         },
         {
           "date": "2025-09-20",
@@ -34416,9 +33747,9 @@
         },
         {
           "date": "2025-10-03",
-          "total_reports": 3,
-          "marlin_mentions": 2,
-          "weighted_marlin_signal": 1.5
+          "total_reports": 4,
+          "marlin_mentions": 3,
+          "weighted_marlin_signal": 2.4
         },
         {
           "date": "2025-10-04",
@@ -34458,7 +33789,7 @@
         },
         {
           "date": "2025-10-10",
-          "total_reports": 0,
+          "total_reports": 1,
           "marlin_mentions": 0,
           "weighted_marlin_signal": 0
         },
@@ -34506,7 +33837,7 @@
         },
         {
           "date": "2025-10-18",
-          "total_reports": 2,
+          "total_reports": 3,
           "marlin_mentions": 1,
           "weighted_marlin_signal": 0.75
         },
@@ -34590,7 +33921,7 @@
         },
         {
           "date": "2025-11-01",
-          "total_reports": 0,
+          "total_reports": 1,
           "marlin_mentions": 0,
           "weighted_marlin_signal": 0
         },
@@ -34632,7 +33963,7 @@
         },
         {
           "date": "2025-11-08",
-          "total_reports": 3,
+          "total_reports": 4,
           "marlin_mentions": 0,
           "weighted_marlin_signal": 0
         },
@@ -34668,9 +33999,9 @@
         },
         {
           "date": "2025-11-14",
-          "total_reports": 1,
-          "marlin_mentions": 1,
-          "weighted_marlin_signal": 0.75
+          "total_reports": 2,
+          "marlin_mentions": 2,
+          "weighted_marlin_signal": 1.65
         },
         {
           "date": "2025-11-15",
@@ -34710,7 +34041,7 @@
         },
         {
           "date": "2025-11-21",
-          "total_reports": 3,
+          "total_reports": 4,
           "marlin_mentions": 1,
           "weighted_marlin_signal": 0.75
         },
@@ -34752,7 +34083,7 @@
         },
         {
           "date": "2025-11-28",
-          "total_reports": 2,
+          "total_reports": 3,
           "marlin_mentions": 1,
           "weighted_marlin_signal": 0.75
         },
@@ -34794,7 +34125,7 @@
         },
         {
           "date": "2025-12-05",
-          "total_reports": 2,
+          "total_reports": 3,
           "marlin_mentions": 1,
           "weighted_marlin_signal": 0.75
         },
@@ -34836,9 +34167,9 @@
         },
         {
           "date": "2025-12-12",
-          "total_reports": 5,
-          "marlin_mentions": 2,
-          "weighted_marlin_signal": 1.5
+          "total_reports": 6,
+          "marlin_mentions": 3,
+          "weighted_marlin_signal": 2.4
         },
         {
           "date": "2025-12-13",
@@ -34884,9 +34215,9 @@
         },
         {
           "date": "2025-12-20",
-          "total_reports": 4,
-          "marlin_mentions": 0,
-          "weighted_marlin_signal": 0
+          "total_reports": 5,
+          "marlin_mentions": 1,
+          "weighted_marlin_signal": 0.9
         },
         {
           "date": "2025-12-21",
@@ -34920,9 +34251,9 @@
         },
         {
           "date": "2025-12-26",
-          "total_reports": 4,
-          "marlin_mentions": 1,
-          "weighted_marlin_signal": 0.75
+          "total_reports": 5,
+          "marlin_mentions": 2,
+          "weighted_marlin_signal": 1.65
         },
         {
           "date": "2025-12-27",
@@ -34962,9 +34293,9 @@
         },
         {
           "date": "2026-01-02",
-          "total_reports": 5,
-          "marlin_mentions": 4,
-          "weighted_marlin_signal": 3
+          "total_reports": 6,
+          "marlin_mentions": 5,
+          "weighted_marlin_signal": 3.9
         },
         {
           "date": "2026-01-03",
@@ -35004,7 +34335,7 @@
         },
         {
           "date": "2026-01-09",
-          "total_reports": 4,
+          "total_reports": 5,
           "marlin_mentions": 1,
           "weighted_marlin_signal": 0.75
         },
@@ -35046,9 +34377,9 @@
         },
         {
           "date": "2026-01-16",
-          "total_reports": 5,
-          "marlin_mentions": 1,
-          "weighted_marlin_signal": 0.75
+          "total_reports": 6,
+          "marlin_mentions": 2,
+          "weighted_marlin_signal": 1.65
         },
         {
           "date": "2026-01-17",
@@ -35088,9 +34419,9 @@
         },
         {
           "date": "2026-01-23",
-          "total_reports": 3,
-          "marlin_mentions": 3,
-          "weighted_marlin_signal": 2.25
+          "total_reports": 4,
+          "marlin_mentions": 4,
+          "weighted_marlin_signal": 3.15
         },
         {
           "date": "2026-01-24",
@@ -35136,9 +34467,9 @@
         },
         {
           "date": "2026-01-31",
-          "total_reports": 1,
-          "marlin_mentions": 0,
-          "weighted_marlin_signal": 0
+          "total_reports": 2,
+          "marlin_mentions": 1,
+          "weighted_marlin_signal": 0.9
         },
         {
           "date": "2026-02-01",
@@ -35172,7 +34503,7 @@
         },
         {
           "date": "2026-02-06",
-          "total_reports": 2,
+          "total_reports": 3,
           "marlin_mentions": 2,
           "weighted_marlin_signal": 1.5
         },
@@ -35214,9 +34545,9 @@
         },
         {
           "date": "2026-02-13",
-          "total_reports": 1,
-          "marlin_mentions": 1,
-          "weighted_marlin_signal": 0.75
+          "total_reports": 2,
+          "marlin_mentions": 2,
+          "weighted_marlin_signal": 1.65
         },
         {
           "date": "2026-02-14",
@@ -35256,9 +34587,9 @@
         },
         {
           "date": "2026-02-20",
-          "total_reports": 4,
-          "marlin_mentions": 0,
-          "weighted_marlin_signal": 0
+          "total_reports": 5,
+          "marlin_mentions": 1,
+          "weighted_marlin_signal": 0.9
         },
         {
           "date": "2026-02-21",
@@ -35286,18 +34617,18 @@
         }
       ],
       "season_context": {
-        "sample_days": 495,
+        "sample_days": 499,
         "sample_start": "2014-12-15",
         "sample_end": "2026-02-24",
         "latest_report_date": "2026-02-24",
         "latest_day_total_reports": 1,
         "latest_day_marlin_mentions": 0,
-        "latest_day_percentile": 43.8,
-        "average_daily_marlin_mentions": 0.86,
+        "latest_day_percentile": 43.3,
+        "average_daily_marlin_mentions": 0.89,
         "p90_daily_marlin_mentions": 2,
         "latest_vs_average_ratio": 0,
         "latest_day_weighted_signal": 0,
-        "average_daily_weighted_signal": 0.65
+        "average_daily_weighted_signal": 0.67
       },
       "source_quality": [
         {
@@ -35306,6 +34637,13 @@
           "total_reports": 1003,
           "marlin_reports": 422,
           "weighted_marlin_signal": 316.5
+        },
+        {
+          "source": "Pisces",
+          "confidence": 0.9,
+          "total_reports": 28,
+          "marlin_reports": 14,
+          "weighted_marlin_signal": 12.6
         },
         {
           "source": "FishingBooker Cabo San Lucas",

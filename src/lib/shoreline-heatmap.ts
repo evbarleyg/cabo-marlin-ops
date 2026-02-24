@@ -2,6 +2,8 @@ import type { BiteReport } from "@/lib/schemas";
 
 export type SeasonKey = "all" | "winter" | "spring" | "summer" | "fall";
 
+type ZoneKey = "pacific_bank" | "golden_gate" | "corridor" | "gordo_banks" | "east_cape";
+
 export interface SeasonOption {
   key: SeasonKey;
   label: string;
@@ -33,6 +35,7 @@ export interface SpeciesHeatCell {
   lat: number;
   lng: number;
   bandKey: ShoreDistanceBand["key"];
+  zoneKey?: string;
   intensity: number;
 }
 
@@ -49,6 +52,16 @@ interface HeatGridPoint {
   lat: number;
   lng: number;
   bandKey: ShoreDistanceBand["key"];
+  zoneKey: ZoneKey;
+  zoneDistanceMiles: number;
+}
+
+interface HotspotZone {
+  key: ZoneKey;
+  label: string;
+  center: [number, number];
+  radiusMiles: number;
+  keywords: string[];
 }
 
 const EARTH_RADIUS_M = 6371000;
@@ -60,6 +73,46 @@ const GRID_STEP_LAT = 0.018;
 const GRID_STEP_LNG = 0.022;
 
 const COLOR_PALETTE = ["#06b6d4", "#22c55e", "#f59e0b", "#ef4444", "#8b5cf6", "#14b8a6", "#ec4899", "#3b82f6"] as const;
+
+const HOTSPOT_ZONES: HotspotZone[] = [
+  {
+    key: "pacific_bank",
+    label: "Pacific Banks",
+    center: [22.89, -110.19],
+    radiusMiles: 21,
+    keywords: ["pacific", "san jaime", "todos santos", "cerro", "lighthouse"],
+  },
+  {
+    key: "golden_gate",
+    label: "Golden Gate",
+    center: [22.91, -110.09],
+    radiusMiles: 18,
+    keywords: ["golden gate", "95 spot", "1150", "1150 bank", "gate"],
+  },
+  {
+    key: "corridor",
+    label: "Tourist Corridor",
+    center: [22.88, -109.96],
+    radiusMiles: 17,
+    keywords: ["corridor", "chileno", "santa maria", "medano", "inshore", "shoreline", "beach"],
+  },
+  {
+    key: "gordo_banks",
+    label: "Gordo Banks",
+    center: [23.01, -109.73],
+    radiusMiles: 22,
+    keywords: ["gordo", "vinorama", "la ribera", "east cape", "banks"],
+  },
+  {
+    key: "east_cape",
+    label: "East Cape",
+    center: [23.03, -109.64],
+    radiusMiles: 21,
+    keywords: ["east cape", "buena vista", "los barriles", "la paz"],
+  },
+];
+
+const HOTSPOT_BY_KEY = new Map(HOTSPOT_ZONES.map((zone) => [zone.key, zone]));
 
 export const SEASON_OPTIONS: SeasonOption[] = [
   { key: "all", label: "All Year" },
@@ -160,39 +213,57 @@ export function buildSpeciesHeatLayers({
       report.species.some((species) => isSpeciesMatch(species, speciesLayer.species)),
     );
 
-    const counts = new Map<ShoreDistanceBand["key"], number>(SHORE_DISTANCE_BANDS.map((band) => [band.key, 0]));
+    const distanceCounts = new Map<ShoreDistanceBand["key"], number>(SHORE_DISTANCE_BANDS.map((band) => [band.key, 0]));
+    const zoneCounts = new Map<ZoneKey, number>(HOTSPOT_ZONES.map((zone) => [zone.key, 0]));
     let rangedReports = 0;
 
     for (const report of speciesReports) {
-      if (report.distance_offshore_miles === undefined) continue;
-      const band = bandForDistance(report.distance_offshore_miles);
-      counts.set(band.key, (counts.get(band.key) ?? 0) + 1);
-      rangedReports += 1;
+      const estimatedDistance = report.distance_offshore_miles ?? defaultDistanceForSpecies(speciesLayer.species);
+      const band = bandForDistance(estimatedDistance);
+      distanceCounts.set(band.key, (distanceCounts.get(band.key) ?? 0) + 1);
+      if (report.distance_offshore_miles !== undefined) rangedReports += 1;
+
+      const zoneKey = inferZoneForReport(report, speciesLayer.species);
+      zoneCounts.set(zoneKey, (zoneCounts.get(zoneKey) ?? 0) + 1);
     }
 
-    const maxCount = Math.max(1, ...counts.values());
+    const maxDistanceCount = Math.max(1, ...distanceCounts.values());
     const bands: SpeciesHeatBand[] = SHORE_DISTANCE_BANDS.map((band) => {
-      const reportCount = counts.get(band.key) ?? 0;
+      const reportCount = distanceCounts.get(band.key) ?? 0;
       return {
         key: band.key,
         label: band.label,
         minMiles: band.minMiles,
         maxMiles: band.maxMiles,
         reportCount,
-        intensity: reportCount / maxCount,
+        intensity: reportCount / maxDistanceCount,
       };
     });
 
     const bandIntensity = new Map<ShoreDistanceBand["key"], number>(bands.map((band) => [band.key, band.intensity]));
+    const maxZoneCount = Math.max(1, ...zoneCounts.values());
+    const zoneIntensity = new Map<ZoneKey, number>([...zoneCounts.entries()].map(([key, count]) => [key, count / maxZoneCount]));
+
     const cells = HEAT_GRID_TEMPLATE.flatMap((point) => {
-      const intensity = bandIntensity.get(point.bandKey) ?? 0;
-      if (intensity <= 0.04) return [];
+      const bandScore = bandIntensity.get(point.bandKey) ?? 0;
+      const zoneScore = zoneIntensity.get(point.zoneKey) ?? 0;
+      if (bandScore <= 0.03 || zoneScore <= 0.03) return [];
+
+      const zone = HOTSPOT_BY_KEY.get(point.zoneKey);
+      if (!zone) return [];
+
+      const zoneDistanceFactor = clamp01(1 - point.zoneDistanceMiles / Math.max(1, zone.radiusMiles));
+      const blendedScore = bandScore * 0.42 + zoneScore * 0.38 + zoneDistanceFactor * 0.2;
+      const intensity = clamp01(blendedScore * (0.55 + zoneScore * 0.45));
+
+      if (intensity <= 0.09) return [];
       return [
         {
           lat: point.lat,
           lng: point.lng,
           bandKey: point.bandKey,
-          intensity,
+          zoneKey: point.zoneKey,
+          intensity: Number(intensity.toFixed(4)),
         },
       ];
     });
@@ -217,10 +288,14 @@ function buildGridTemplate(): HeatGridPoint[] {
 
       const shorelineDistance = distanceFromShorelineMiles(lat, lng);
       const band = bandForDistance(shorelineDistance);
+      const nearestZone = nearestZoneForPoint(lat, lng);
+
       points.push({
         lat: Number(lat.toFixed(5)),
         lng: Number(lng.toFixed(5)),
         bandKey: band.key,
+        zoneKey: nearestZone.key,
+        zoneDistanceMiles: nearestZone.distanceMiles,
       });
     }
   }
@@ -229,7 +304,10 @@ function buildGridTemplate(): HeatGridPoint[] {
 }
 
 function bandForDistance(distanceMiles: number): ShoreDistanceBand {
-  return SHORE_DISTANCE_BANDS.find((band) => distanceMiles >= band.minMiles && distanceMiles < band.maxMiles) ?? SHORE_DISTANCE_BANDS[SHORE_DISTANCE_BANDS.length - 1];
+  return (
+    SHORE_DISTANCE_BANDS.find((band) => distanceMiles >= band.minMiles && distanceMiles < band.maxMiles) ??
+    SHORE_DISTANCE_BANDS[SHORE_DISTANCE_BANDS.length - 1]
+  );
 }
 
 function isSpeciesMatch(value: string, target: string): boolean {
@@ -237,6 +315,84 @@ function isSpeciesMatch(value: string, target: string): boolean {
   const normalizedTarget = target.trim().toLowerCase();
   if (normalizedValue === normalizedTarget) return true;
   return normalizedValue.includes(normalizedTarget) || normalizedTarget.includes(normalizedValue);
+}
+
+function defaultDistanceForSpecies(species: string): number {
+  const normalized = species.toLowerCase();
+  if (normalized.includes("striped marlin") || normalized.includes("blue marlin") || normalized.includes("black marlin")) return 28;
+  if (normalized.includes("marlin")) return 24;
+  if (normalized.includes("tuna")) return 22;
+  if (normalized.includes("dorado") || normalized.includes("mahi")) return 16;
+  if (normalized.includes("wahoo") || normalized.includes("sailfish")) return 26;
+  if (normalized.includes("roosterfish") || normalized.includes("snapper") || normalized.includes("amberjack")) return 10;
+  return 20;
+}
+
+function inferZoneForReport(report: BiteReport, speciesLayer: string): ZoneKey {
+  const note = report.notes.toLowerCase();
+
+  for (const zone of HOTSPOT_ZONES) {
+    if (zone.keywords.some((keyword) => note.includes(keyword))) {
+      return zone.key;
+    }
+  }
+
+  const preferredZones = preferredZonesForSpecies(speciesLayer);
+  const hashInput = `${report.link}|${report.date}|${report.notes.slice(0, 96)}|${speciesLayer}`;
+  const seed = hashString(hashInput);
+  return preferredZones[seed % preferredZones.length];
+}
+
+function preferredZonesForSpecies(species: string): ZoneKey[] {
+  const normalized = species.toLowerCase();
+  if (normalized.includes("marlin")) return ["gordo_banks", "golden_gate", "pacific_bank"];
+  if (normalized.includes("tuna")) return ["gordo_banks", "corridor", "east_cape"];
+  if (normalized.includes("dorado") || normalized.includes("mahi")) return ["corridor", "east_cape", "pacific_bank"];
+  if (normalized.includes("wahoo") || normalized.includes("sailfish")) return ["golden_gate", "pacific_bank", "gordo_banks"];
+  if (normalized.includes("roosterfish") || normalized.includes("snapper") || normalized.includes("amberjack")) {
+    return ["corridor", "pacific_bank", "golden_gate"];
+  }
+  return ["corridor", "gordo_banks", "pacific_bank", "golden_gate", "east_cape"];
+}
+
+function hashString(input: string): number {
+  let hash = 0;
+  for (let index = 0; index < input.length; index += 1) {
+    hash = (hash * 31 + input.charCodeAt(index)) >>> 0;
+  }
+  return hash;
+}
+
+function nearestZoneForPoint(lat: number, lng: number): { key: ZoneKey; distanceMiles: number } {
+  let best = HOTSPOT_ZONES[0];
+  let bestDistance = Number.POSITIVE_INFINITY;
+
+  for (const zone of HOTSPOT_ZONES) {
+    const distance = haversineMiles(lat, lng, zone.center[0], zone.center[1]);
+    if (distance < bestDistance) {
+      bestDistance = distance;
+      best = zone;
+    }
+  }
+
+  return { key: best.key, distanceMiles: bestDistance };
+}
+
+function haversineMiles(lat1: number, lng1: number, lat2: number, lng2: number): number {
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLng = ((lng2 - lng1) * Math.PI) / 180;
+  const lat1Rad = (lat1 * Math.PI) / 180;
+  const lat2Rad = (lat2 * Math.PI) / 180;
+
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return (EARTH_RADIUS_M * c) / 1609.34;
+}
+
+function clamp01(value: number): number {
+  return Math.max(0, Math.min(1, value));
 }
 
 function distanceFromShorelineMiles(lat: number, lng: number): number {

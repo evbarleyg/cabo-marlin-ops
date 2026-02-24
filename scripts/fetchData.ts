@@ -451,6 +451,13 @@ function wordpressArchiveUrl(baseUrl: string, page: number): string {
   return page === 1 ? `${normalized}/` : `${normalized}/page/${page}/`;
 }
 
+function piscesJsonFeedUrl(page: number): string {
+  const params = new URLSearchParams({
+    paged: String(page),
+  });
+  return `https://blog.piscessportfishing.com/feed/json/?${params.toString()}`;
+}
+
 function reportIdentityKey(report: BiteReport): string {
   const linkKey = canonicalizeLinkForKey(report.link);
   const noteKey = normalizeNotesForKey(report.notes);
@@ -494,18 +501,10 @@ async function fetchBiteReports(generatedAt: string) {
     },
     {
       kind: "paginated",
-      sourceName: "Pisces Weekly Reports",
+      sourceName: "Pisces JSON Feed",
       sourceLabel: "Pisces",
       maxPages: WORDPRESS_ARCHIVE_MAX_PAGES,
-      buildUrl: (page) => wordpressArchiveUrl("https://www.piscessportfishing.com/fishing-reports/", page),
-      parse: parsePiscesReports,
-    },
-    {
-      kind: "paginated",
-      sourceName: "Pisces Marlin Reports",
-      sourceLabel: "Pisces",
-      maxPages: WORDPRESS_ARCHIVE_MAX_PAGES,
-      buildUrl: (page) => wordpressArchiveUrl("https://www.piscessportfishing.com/tag/marlin/", page),
+      buildUrl: (page) => piscesJsonFeedUrl(page),
       parse: parsePiscesReports,
     },
     {
