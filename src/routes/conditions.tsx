@@ -193,35 +193,32 @@ export function ConditionsRoute() {
       })
     : null;
 
-  const fishingDayPlans = useMemo(() => {
-    const tripDays = conditions.data?.data.day_summaries.filter((summary) => fishingDaySet.has(summary.date)) ?? [];
-    const topZones = marlinTargets.zones.filter((zone) => zone.reportCount > 0);
-    const topBands = marlinTargets.bands.filter((band) => band.reportCount > 0);
+  const tripDays = conditions.data.data.day_summaries.filter((summary) => fishingDaySet.has(summary.date));
+  const topZones = marlinTargets.zones.filter((zone) => zone.reportCount > 0);
+  const topBands = marlinTargets.bands.filter((band) => band.reportCount > 0);
+  const fishingDayPlans = tripDays.map((summary, index) => {
+    const conservativeBand = topBands.find((band) => band.maxMiles <= 35) ?? topBands[0];
+    const primaryBand =
+      summary.rule_inputs.current_velocity_median_m_s > 1.0 && conservativeBand ? conservativeBand : (topBands[0] ?? null);
+    const secondaryBand = topBands.find((band) => band.key !== primaryBand?.key) ?? null;
+    const primaryZone = topZones[0] ?? null;
+    const secondaryZone = topZones[1] ?? topZones[0] ?? null;
+    const easierRun = summary.rule_inputs.current_velocity_median_m_s <= 1.0 && summary.rule_inputs.wave_height_p90_m <= 1.05;
 
-    return tripDays.map((summary, index) => {
-      const conservativeBand = topBands.find((band) => band.maxMiles <= 35) ?? topBands[0];
-      const primaryBand =
-        summary.rule_inputs.current_velocity_median_m_s > 1.0 && conservativeBand ? conservativeBand : (topBands[0] ?? null);
-      const secondaryBand = topBands.find((band) => band.key !== primaryBand?.key) ?? null;
-      const primaryZone = topZones[0] ?? null;
-      const secondaryZone = topZones[1] ?? topZones[0] ?? null;
-      const easierRun = summary.rule_inputs.current_velocity_median_m_s <= 1.0 && summary.rule_inputs.wave_height_p90_m <= 1.05;
-
-      return {
-        date: summary.date,
-        primaryZone,
-        secondaryZone,
-        primaryBand,
-        secondaryBand,
-        recommendation: easierRun
-          ? "Conditions are calm enough to widen the search after the first pass if the primary lane is quiet."
-          : "Start on the shortest high-confidence marlin lane and keep the first run efficient before widening.",
-        why: `Wave p90 ${formatNumber(summary.rule_inputs.wave_height_p90_m)}m, current ${formatNumber(summary.rule_inputs.current_velocity_median_m_s)}m/s, SST ${formatNumber(summary.rule_inputs.sst_median_f)}F.`,
-        easierRun,
-        dayIndex: index,
-      };
-    });
-  }, [conditions.data, fishingDaySet, marlinTargets]);
+    return {
+      date: summary.date,
+      primaryZone,
+      secondaryZone,
+      primaryBand,
+      secondaryBand,
+      recommendation: easierRun
+        ? "Conditions are calm enough to widen the search after the first pass if the primary lane is quiet."
+        : "Start on the shortest high-confidence marlin lane and keep the first run efficient before widening.",
+      why: `Wave p90 ${formatNumber(summary.rule_inputs.wave_height_p90_m)}m, current ${formatNumber(summary.rule_inputs.current_velocity_median_m_s)}m/s, SST ${formatNumber(summary.rule_inputs.sst_median_f)}F.`,
+      easierRun,
+      dayIndex: index,
+    };
+  });
 
   return (
     <div className="space-y-4 pb-4">
@@ -270,8 +267,8 @@ export function ConditionsRoute() {
         ))}
       </div>
 
-      <Card>
-        <CardHeader>
+      <Card className="relative isolate">
+        <CardHeader className="relative z-10">
           <CardTitle className="text-base">Shoreline Distance Heat Map (Season + Species Layers)</CardTitle>
           <div className="mt-2 flex flex-wrap items-center gap-2">
             <Button size="sm" variant={showHeatmap ? "default" : "outline"} onClick={() => setShowHeatmap((value) => !value)}>
@@ -315,8 +312,8 @@ export function ConditionsRoute() {
             })}
           </div>
         </CardHeader>
-        <CardContent>
-          <div className="h-[18rem] overflow-hidden rounded-lg border border-border/50 sm:h-80">
+        <CardContent className="relative z-0">
+          <div className="relative z-0 h-[18rem] overflow-hidden rounded-lg border border-border/50 sm:h-80">
             <MapContainer center={[settings.latitude, settings.longitude]} zoom={10} className="h-full w-full">
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
