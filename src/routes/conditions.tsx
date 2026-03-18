@@ -18,6 +18,7 @@ import {
   type SeasonKey,
 } from "@/lib/shoreline-heatmap";
 import { TRIP_WINDOW } from "@/lib/constants";
+import { summarizeMarlinConditions } from "@/lib/heuristics";
 import { biteReportsEnvelopeSchema, conditionsEnvelopeSchema } from "@/lib/schemas";
 import { formatCompassBearing, formatDate, formatNumber, normalizeBearing, toTitleCase } from "@/lib/utils";
 
@@ -169,6 +170,15 @@ export function ConditionsRoute() {
 
     return [formatNumber(value), name] as const;
   };
+
+  const marlinRead = selectedSummary
+    ? summarizeMarlinConditions({
+        waveHeightP90M: selectedSummary.rule_inputs.wave_height_p90_m,
+        swellPeriodMedianS: selectedSummary.rule_inputs.swell_period_median_s,
+        currentVelocityMedianMS: selectedSummary.rule_inputs.current_velocity_median_m_s,
+        sstFMedian: selectedSummary.rule_inputs.sst_median_f,
+      })
+    : null;
 
   return (
     <div className="space-y-4 pb-4">
@@ -353,7 +363,33 @@ export function ConditionsRoute() {
         </CardContent>
       </Card>
 
-      <section className="grid gap-4 xl:grid-cols-2">
+      <section className="grid gap-4 xl:grid-cols-3">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Optimal Marlin Conditions vs Forecast</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm text-muted-foreground">
+            <p>
+              In this app, the strongest marlin pattern is SST around <strong>74-82F</strong>, wave p90 under about <strong>2m</strong>, moderate
+              current, and swell period of at least <strong>8-9s</strong>.
+            </p>
+            {marlinRead ? (
+              <>
+                <p>{marlinRead.summary}</p>
+                <div className="space-y-1 text-xs">
+                  {marlinRead.details.map((detail) => (
+                    <p key={detail.label}>
+                      <strong className="text-foreground">{detail.label}:</strong> {detail.detail}
+                    </p>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <p>No forecast summary available for this selected date.</p>
+            )}
+          </CardContent>
+        </Card>
+
         <Card>
           <CardHeader>
             <CardTitle className="text-base">Late-March Cabo Marlin Read (Operational)</CardTitle>

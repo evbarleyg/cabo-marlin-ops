@@ -72,6 +72,16 @@ export interface BiteScoreResult {
   };
 }
 
+export interface MarlinConditionsSummary {
+  overall: "Favorable" | "Mixed" | "Marginal";
+  summary: string;
+  details: Array<{
+    label: string;
+    status: "ideal" | "workable" | "weak";
+    detail: string;
+  }>;
+}
+
 const BITE_WEIGHTS = {
   marlinSignal: 0.6,
   sstAlignment: 0.15,
@@ -120,5 +130,90 @@ export function computeBiteScore(inputs: BiteScoreInputs): BiteScoreResult {
     score: Math.round(clamp(weighted, 0, 100)),
     breakdown,
     weights: BITE_WEIGHTS,
+  };
+}
+
+export function summarizeMarlinConditions(inputs: GoNoGoInputs): MarlinConditionsSummary {
+  const details: MarlinConditionsSummary["details"] = [];
+
+  if (inputs.sstFMedian >= 74 && inputs.sstFMedian <= 82) {
+    details.push({ label: "SST", status: "ideal", detail: `SST is in the 74-82F sweet spot at ${inputs.sstFMedian.toFixed(1)}F.` });
+  } else if (inputs.sstFMedian >= 72 && inputs.sstFMedian <= 84) {
+    details.push({ label: "SST", status: "workable", detail: `SST is fishable at ${inputs.sstFMedian.toFixed(1)}F, but not in the strongest historical band.` });
+  } else {
+    details.push({ label: "SST", status: "weak", detail: `SST is outside the preferred range at ${inputs.sstFMedian.toFixed(1)}F.` });
+  }
+
+  if (inputs.waveHeightP90M <= 1.5) {
+    details.push({ label: "Sea state", status: "ideal", detail: `Wave p90 is calm at ${inputs.waveHeightP90M.toFixed(2)}m.` });
+  } else if (inputs.waveHeightP90M <= 2.0) {
+    details.push({ label: "Sea state", status: "workable", detail: `Wave p90 is manageable at ${inputs.waveHeightP90M.toFixed(2)}m.` });
+  } else {
+    details.push({ label: "Sea state", status: "weak", detail: `Wave p90 is elevated at ${inputs.waveHeightP90M.toFixed(2)}m.` });
+  }
+
+  if (inputs.currentVelocityMedianMS >= 0.3 && inputs.currentVelocityMedianMS <= 1.0) {
+    details.push({
+      label: "Current",
+      status: "ideal",
+      detail: `Current is in a comfortable working range at ${inputs.currentVelocityMedianMS.toFixed(2)} m/s.`,
+    });
+  } else if (inputs.currentVelocityMedianMS <= 1.2) {
+    details.push({
+      label: "Current",
+      status: "workable",
+      detail: `Current is slightly strong but still workable at ${inputs.currentVelocityMedianMS.toFixed(2)} m/s.`,
+    });
+  } else {
+    details.push({
+      label: "Current",
+      status: "weak",
+      detail: `Current is strong enough to make spread control harder at ${inputs.currentVelocityMedianMS.toFixed(2)} m/s.`,
+    });
+  }
+
+  if (inputs.swellPeriodMedianS >= 9) {
+    details.push({
+      label: "Swell period",
+      status: "ideal",
+      detail: `Swell period is clean at ${inputs.swellPeriodMedianS.toFixed(1)}s.`,
+    });
+  } else if (inputs.swellPeriodMedianS >= 8) {
+    details.push({
+      label: "Swell period",
+      status: "workable",
+      detail: `Swell period is acceptable at ${inputs.swellPeriodMedianS.toFixed(1)}s.`,
+    });
+  } else {
+    details.push({
+      label: "Swell period",
+      status: "weak",
+      detail: `Short-period swell at ${inputs.swellPeriodMedianS.toFixed(1)}s can make the ride choppy.`,
+    });
+  }
+
+  const idealCount = details.filter((detail) => detail.status === "ideal").length;
+  const weakCount = details.filter((detail) => detail.status === "weak").length;
+
+  if (weakCount === 0 && idealCount >= 3) {
+    return {
+      overall: "Favorable",
+      summary: "This looks like a favorable striped-marlin setup: good temperature, manageable sea state, and clean enough water movement to fish effectively.",
+      details,
+    };
+  }
+
+  if (weakCount <= 1) {
+    return {
+      overall: "Mixed",
+      summary: "This is a workable marlin setup, but one variable is a little off the ideal band and should be monitored when you choose the fishing day.",
+      details,
+    };
+  }
+
+  return {
+    overall: "Marginal",
+    summary: "This setup is fishable only if the crew prioritizes comfort and conditions first; multiple variables are outside the preferred marlin pattern.",
+    details,
   };
 }

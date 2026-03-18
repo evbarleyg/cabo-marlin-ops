@@ -13,6 +13,7 @@ import { useDataFile } from "@/hooks/useDataFile";
 import { useOpsShortlist } from "@/lib/app-context";
 import { TRIP_WINDOW } from "@/lib/constants";
 import { getDashboardDayOptions } from "@/lib/day-options";
+import { summarizeMarlinConditions } from "@/lib/heuristics";
 import { biteReportsEnvelopeSchema, chartersEnvelopeSchema, conditionsEnvelopeSchema } from "@/lib/schemas";
 import { cn, formatDate, formatNumber } from "@/lib/utils";
 
@@ -91,6 +92,16 @@ export function DashboardRoute() {
     };
   }, [tripWindowSummaries]);
 
+  const tripMarlinRead = useMemo(() => {
+    if (!tripOutlook) return null;
+    return summarizeMarlinConditions({
+      waveHeightP90M: tripOutlook.bestDay.rule_inputs.wave_height_p90_m,
+      swellPeriodMedianS: tripOutlook.bestDay.rule_inputs.swell_period_median_s,
+      currentVelocityMedianMS: tripOutlook.bestDay.rule_inputs.current_velocity_median_m_s,
+      sstFMedian: tripOutlook.bestDay.rule_inputs.sst_median_f,
+    });
+  }, [tripOutlook]);
+
   if (conditions.loading || bite.loading || charters.loading) {
     return (
       <div className="space-y-4">
@@ -149,10 +160,21 @@ export function DashboardRoute() {
           </CardHeader>
           <CardContent className="space-y-3">
             {tripOutlook ? (
-              <p className="text-sm text-muted-foreground">
-                {tripOutlook.windowLabel} average readiness: <strong className="text-foreground">{tripOutlook.averageScore}</strong>. Best current setup:{" "}
-                <strong className="text-foreground">{formatDate(tripOutlook.bestDay.date)}</strong> ({tripOutlook.bestDay.go_no_go_label}).
-              </p>
+              <div className="space-y-2">
+                <p className="text-sm text-muted-foreground">
+                  {tripOutlook.windowLabel} average readiness: <strong className="text-foreground">{tripOutlook.averageScore}</strong>. Best current setup:{" "}
+                  <strong className="text-foreground">{formatDate(tripOutlook.bestDay.date)}</strong> ({tripOutlook.bestDay.go_no_go_label}).
+                </p>
+                {tripMarlinRead ? (
+                  <div className="rounded-md border border-border/50 bg-background/70 p-3 text-sm text-muted-foreground">
+                    <p>
+                      <strong className="text-foreground">Optimal marlin pattern in this app:</strong> SST about 74-82F, wave p90 under roughly 2m,
+                      moderate current, and swell period at or above 8-9s.
+                    </p>
+                    <p className="mt-2">{tripMarlinRead.summary}</p>
+                  </div>
+                ) : null}
+              </div>
             ) : (
               <p className="text-sm text-muted-foreground">Trip dates are not yet inside the forecast horizon. The panel will populate as the trip window comes into range.</p>
             )}
