@@ -19,7 +19,9 @@ import {
 } from "@/lib/shoreline-heatmap";
 import { TRIP_WINDOW } from "@/lib/constants";
 import { biteReportsEnvelopeSchema, conditionsEnvelopeSchema } from "@/lib/schemas";
-import { formatDate, formatNumber, toTitleCase } from "@/lib/utils";
+import { formatCompassBearing, formatDate, formatNumber, normalizeBearing, toTitleCase } from "@/lib/utils";
+
+const DIRECTION_AXIS_TICKS = [0, 45, 90, 135, 180, 225, 270, 315, 360];
 
 export function ConditionsRoute() {
   const { settings } = useOpsSettings();
@@ -154,6 +156,19 @@ export function ConditionsRoute() {
       current_display: current,
     };
   });
+
+  const formatMarineTooltipValue = (value: number | string | null | undefined, name: string) => {
+    if (typeof value !== "number") {
+      return ["N/A", name] as const;
+    }
+
+    if (name.toLowerCase().includes("dir")) {
+      const normalized = normalizeBearing(value);
+      return [`${formatCompassBearing(normalized)} (${Math.round(normalized ?? 0)}deg)`, name] as const;
+    }
+
+    return [formatNumber(value), name] as const;
+  };
 
   return (
     <div className="space-y-4 pb-4">
@@ -390,6 +405,7 @@ export function ConditionsRoute() {
         <Card>
           <CardHeader>
             <CardTitle className="text-base">Wave + Swell</CardTitle>
+            <p className="text-xs text-muted-foreground">Right axis is compass bearing for swell direction.</p>
           </CardHeader>
           <CardContent className="h-64 sm:h-80">
             <ResponsiveContainer width="100%" height="100%">
@@ -401,16 +417,23 @@ export function ConditionsRoute() {
                   tick={{ fontSize: 12 }}
                 />
                 <YAxis yAxisId="left" />
-                <YAxis yAxisId="right" orientation="right" domain={[0, 360]} />
+                <YAxis
+                  yAxisId="right"
+                  orientation="right"
+                  domain={[0, 360]}
+                  ticks={DIRECTION_AXIS_TICKS}
+                  width={42}
+                  tickFormatter={(value) => formatCompassBearing(value)}
+                />
                 <Tooltip
                   labelFormatter={(value) => new Date(value as string).toLocaleString()}
-                  formatter={(value) => (typeof value === "number" ? formatNumber(value) : "N/A")}
+                  formatter={(value, name) => formatMarineTooltipValue(value as number | string | null | undefined, String(name))}
                 />
                 <Legend />
                 <Line yAxisId="left" type="monotone" dataKey="wave_display" stroke="#0ea5e9" dot={false} name={`Wave (${settings.waveUnit})`} />
                 <Line yAxisId="left" type="monotone" dataKey="swell_display" stroke="#10b981" dot={false} name={`Swell (${settings.waveUnit})`} />
                 <Line yAxisId="left" type="monotone" dataKey="swell_wave_period_s" stroke="#f59e0b" dot={false} name="Swell period (s)" />
-                <Line yAxisId="right" type="monotone" dataKey="swell_wave_direction_deg" stroke="#a855f7" dot={false} name="Swell dir (deg)" />
+                <Line yAxisId="right" type="linear" dataKey="swell_wave_direction_deg" stroke="#a855f7" dot={false} name="Swell dir" />
               </LineChart>
             </ResponsiveContainer>
           </CardContent>
@@ -419,6 +442,7 @@ export function ConditionsRoute() {
         <Card>
           <CardHeader>
             <CardTitle className="text-base">Current + SST</CardTitle>
+            <p className="text-xs text-muted-foreground">Right axis is compass bearing for current direction.</p>
           </CardHeader>
           <CardContent className="h-64 sm:h-80">
             <ResponsiveContainer width="100%" height="100%">
@@ -430,10 +454,17 @@ export function ConditionsRoute() {
                   tick={{ fontSize: 12 }}
                 />
                 <YAxis yAxisId="left" />
-                <YAxis yAxisId="right" orientation="right" domain={[0, 360]} />
+                <YAxis
+                  yAxisId="right"
+                  orientation="right"
+                  domain={[0, 360]}
+                  ticks={DIRECTION_AXIS_TICKS}
+                  width={42}
+                  tickFormatter={(value) => formatCompassBearing(value)}
+                />
                 <Tooltip
                   labelFormatter={(value) => new Date(value as string).toLocaleString()}
-                  formatter={(value) => (typeof value === "number" ? formatNumber(value) : "N/A")}
+                  formatter={(value, name) => formatMarineTooltipValue(value as number | string | null | undefined, String(name))}
                 />
                 <Legend />
                 <Line
@@ -452,7 +483,7 @@ export function ConditionsRoute() {
                   dot={false}
                   name={`SST (${settings.temperatureUnit.toUpperCase()})`}
                 />
-                <Line yAxisId="right" type="monotone" dataKey="ocean_current_direction_deg" stroke="#8b5cf6" dot={false} name="Current dir (deg)" />
+                <Line yAxisId="right" type="linear" dataKey="ocean_current_direction_deg" stroke="#8b5cf6" dot={false} name="Current dir" />
               </LineChart>
             </ResponsiveContainer>
           </CardContent>

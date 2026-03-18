@@ -5,11 +5,13 @@ import { DayToggle } from "@/components/day-toggle";
 import { MetricCard } from "@/components/metric-card";
 import { ScreenGuide } from "@/components/screen-guide";
 import { SourceStatusList } from "@/components/source-status-list";
+import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDataFile } from "@/hooks/useDataFile";
 import { useOpsShortlist } from "@/lib/app-context";
+import { TRIP_WINDOW } from "@/lib/constants";
 import { getDashboardDayOptions } from "@/lib/day-options";
 import { biteReportsEnvelopeSchema, chartersEnvelopeSchema, conditionsEnvelopeSchema } from "@/lib/schemas";
 import { cn, formatDate, formatNumber } from "@/lib/utils";
@@ -39,6 +41,11 @@ export function DashboardRoute() {
   const seasonContext = bite.data?.data.metrics.season_context;
   const dailyCounts = bite.data?.data.metrics.daily_marlin_counts ?? [];
 
+  const tripWindowSummaries = useMemo(() => {
+    const summaries = conditions.data?.data.day_summaries ?? [];
+    return summaries.filter((summary) => summary.date >= TRIP_WINDOW.start && summary.date <= TRIP_WINDOW.end);
+  }, [conditions.data]);
+
   const historicalBiteData = useMemo(() => {
     const days = Number(historyWindow);
     const cutoff = new Date(Date.now() - (days - 1) * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
@@ -52,6 +59,37 @@ export function DashboardRoute() {
     const label = rounded >= 70 ? "Strong setup" : rounded >= 50 ? "Mixed setup" : "Weak setup";
     return { score: rounded, label };
   }, [selectedSummary, seasonContext]);
+
+  const tripCountdown = useMemo(() => {
+    const today = new Date();
+    const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
+
+    const daysUntil = (isoDate: string) => {
+      const target = new Date(`${isoDate}T12:00:00`).getTime();
+      return Math.ceil((target - todayStart) / (24 * 60 * 60 * 1000));
+    };
+
+    return {
+      departureDays: daysUntil(TRIP_WINDOW.start),
+      fishingDays: daysUntil(TRIP_WINDOW.fishingDays[0]),
+    };
+  }, []);
+
+  const tripOutlook = useMemo(() => {
+    if (tripWindowSummaries.length === 0) return null;
+
+    const fishingDaySet = new Set<string>(TRIP_WINDOW.fishingDays);
+    const fishingDays = tripWindowSummaries.filter((summary) => fishingDaySet.has(summary.date));
+    const primaryDays = fishingDays.length > 0 ? fishingDays : tripWindowSummaries;
+    const averageScore = primaryDays.reduce((sum, summary) => sum + summary.go_no_go_score, 0) / primaryDays.length;
+    const bestDay = [...primaryDays].sort((a, b) => b.go_no_go_score - a.go_no_go_score)[0];
+
+    return {
+      averageScore: Math.round(averageScore),
+      bestDay,
+      windowLabel: fishingDays.length > 0 ? "Fishing days" : "Trip window",
+    };
+  }, [tripWindowSummaries]);
 
   if (conditions.loading || bite.loading || charters.loading) {
     return (
@@ -86,6 +124,66 @@ export function DashboardRoute() {
       </section>
 
       <ScreenGuide text="Start with Conditions Summary, then compare Season Position and Marlin Mentions (72h). The combined posture card blends sea-state readiness with seasonal bite context for a quick go/no-go posture." />
+
+      <section className="grid gap-4 xl:grid-cols-[0.85fr_1.15fr]">
+        <Card className="border-primary/30">
+          <CardHeader>
+            <CardTitle className="text-base">Trip Clock</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm text-muted-foreground">
+            <p>
+              Departing in <strong className="text-foreground">{tripCountdown.departureDays}</strong> days. First fishing day is in{" "}
+              <strong className="text-foreground">{tripCountdown.fishingDays}</strong> days.
+            </p>
+            <p>
+              Window: {formatDate(TRIP_WINDOW.start)} to {formatDate(TRIP_WINDOW.end)}. Fishing focus: {formatDate(TRIP_WINDOW.fishingDays[0])} and{" "}
+              {formatDate(TRIP_WINDOW.fishingDays[1])}.
+            </p>
+            <p className="text-xs">At this point the most useful question is not "will there be fish" but "which day looks easiest to fish cleanly and comfortably?"</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Trip Window Outlook</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {tripOutlook ? (
+              <p className="text-sm text-muted-foreground">
+                {tripOutlook.windowLabel} average readiness: <strong className="text-foreground">{tripOutlook.averageScore}</strong>. Best current setup:{" "}
+                <strong className="text-foreground">{formatDate(tripOutlook.bestDay.date)}</strong> ({tripOutlook.bestDay.go_no_go_label}).
+              </p>
+            ) : (
+              <p className="text-sm text-muted-foreground">Trip dates are not yet inside the forecast horizon. The panel will populate as the trip window comes into range.</p>
+            )}
+
+            <div className="grid gap-2 md:grid-cols-2">
+              {tripWindowSummaries.map((summary) => (
+                <div key={summary.date} className="rounded-md border border-border/50 p-3 text-sm">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="font-medium">{formatDate(summary.date)}</span>
+                    <Badge
+                      variant={
+                        summary.go_no_go_label === "Go"
+                          ? "success"
+                          : summary.go_no_go_label === "Caution"
+                            ? "warning"
+                            : "destructive"
+                      }
+                    >
+                      {summary.go_no_go_label}
+                    </Badge>
+                  </div>
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    Score {summary.go_no_go_score} • wave p90 {formatNumber(summary.rule_inputs.wave_height_p90_m)}m • current{" "}
+                    {formatNumber(summary.rule_inputs.current_velocity_median_m_s)}m/s • SST {formatNumber(summary.rule_inputs.sst_median_f)}F
+                  </p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </section>
 
       {hasError ? (
         <Card className="border-destructive/60">

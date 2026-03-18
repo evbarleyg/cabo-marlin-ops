@@ -53,6 +53,20 @@ export function formatNumber(value: number | null | undefined, digits = 1): stri
   return value.toFixed(digits);
 }
 
+export function normalizeBearing(value: number | null | undefined): number | null {
+  if (value === null || value === undefined || Number.isNaN(value)) return null;
+  return ((value % 360) + 360) % 360;
+}
+
+export function formatCompassBearing(value: number | null | undefined): string {
+  const normalized = normalizeBearing(value);
+  if (normalized === null) return "N/A";
+
+  const directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+  const index = Math.round(normalized / 45) % directions.length;
+  return directions[index];
+}
+
 export function toTitleCase(input: string): string {
   return input
     .toLowerCase()
