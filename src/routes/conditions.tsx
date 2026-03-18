@@ -15,6 +15,7 @@ import {
   buildSpeciesHeatLayers,
   collectSpeciesLayerOptions,
   seasonFromDate,
+  summarizeSpeciesTargets,
   type SeasonKey,
 } from "@/lib/shoreline-heatmap";
 import { TRIP_WINDOW } from "@/lib/constants";
@@ -109,6 +110,18 @@ export function ConditionsRoute() {
     [activeSeason, bite.data],
   );
 
+  const fishingDaySet = useMemo(() => new Set<string>(TRIP_WINDOW.fishingDays), []);
+  const tripSeason = useMemo(() => seasonFromDate(TRIP_WINDOW.fishingDays[0]), []);
+  const marlinTargets = useMemo(
+    () =>
+      summarizeSpeciesTargets({
+        reports: bite.data?.data.reports ?? [],
+        season: tripSeason,
+        speciesQuery: "marlin",
+      }),
+    [bite.data, tripSeason],
+  );
+
   const seasonWindow = useMemo(() => {
     if (seasonReports.length === 0) return null;
     const sorted = [...seasonReports].sort((a, b) => a.date.localeCompare(b.date));
@@ -179,6 +192,36 @@ export function ConditionsRoute() {
         sstFMedian: selectedSummary.rule_inputs.sst_median_f,
       })
     : null;
+
+  const fishingDayPlans = useMemo(() => {
+    const tripDays = conditions.data?.data.day_summaries.filter((summary) => fishingDaySet.has(summary.date)) ?? [];
+    const topZones = marlinTargets.zones.filter((zone) => zone.reportCount > 0);
+    const topBands = marlinTargets.bands.filter((band) => band.reportCount > 0);
+
+    return tripDays.map((summary, index) => {
+      const conservativeBand = topBands.find((band) => band.maxMiles <= 35) ?? topBands[0];
+      const primaryBand =
+        summary.rule_inputs.current_velocity_median_m_s > 1.0 && conservativeBand ? conservativeBand : (topBands[0] ?? null);
+      const secondaryBand = topBands.find((band) => band.key !== primaryBand?.key) ?? null;
+      const primaryZone = topZones[0] ?? null;
+      const secondaryZone = topZones[1] ?? topZones[0] ?? null;
+      const easierRun = summary.rule_inputs.current_velocity_median_m_s <= 1.0 && summary.rule_inputs.wave_height_p90_m <= 1.05;
+
+      return {
+        date: summary.date,
+        primaryZone,
+        secondaryZone,
+        primaryBand,
+        secondaryBand,
+        recommendation: easierRun
+          ? "Conditions are calm enough to widen the search after the first pass if the primary lane is quiet."
+          : "Start on the shortest high-confidence marlin lane and keep the first run efficient before widening.",
+        why: `Wave p90 ${formatNumber(summary.rule_inputs.wave_height_p90_m)}m, current ${formatNumber(summary.rule_inputs.current_velocity_median_m_s)}m/s, SST ${formatNumber(summary.rule_inputs.sst_median_f)}F.`,
+        easierRun,
+        dayIndex: index,
+      };
+    });
+  }, [conditions.data, fishingDaySet, marlinTargets]);
 
   return (
     <div className="space-y-4 pb-4">
@@ -356,12 +399,48 @@ export function ConditionsRoute() {
           <p className="mt-2 text-xs text-muted-foreground">
             Heat is an estimated historical pattern by species and season using report text. Distances are shoreline-based bands from Cabo shoreline geometry, not a harbor-centered circle and not exact GPS catch points.
           </p>
+          {marlinTargets.totalReports > 0 ? (
+            <p className="mt-2 text-xs text-muted-foreground">
+              Read the map as suggested search water, not exact waypoints: for spring marlin, start by checking{" "}
+              <strong>{marlinTargets.zones[0]?.label ?? "the strongest zone"}</strong>
+              {marlinTargets.zones[1]?.reportCount ? `, then ${marlinTargets.zones[1].label}` : ""}, with the best historical weight in{" "}
+              <strong>{marlinTargets.bands[0]?.label ?? "the strongest distance band"}</strong>.
+            </p>
+          ) : null}
           <p className="mt-1 text-xs text-muted-foreground">
             Bands: {SHORE_DISTANCE_BANDS.map((band) => band.label).join(" • ")}
           </p>
           {bite.error ? <p className="mt-2 text-xs text-destructive">Bite overlay warning: {bite.error}</p> : null}
         </CardContent>
       </Card>
+
+      {fishingDayPlans.length > 0 ? (
+        <section className="grid gap-4 xl:grid-cols-2">
+          {fishingDayPlans.map((plan) => (
+            <Card key={plan.date} className="border-primary/30">
+              <CardHeader>
+                <CardTitle className="text-base">Suggested {formatDate(plan.date)} Plan</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2 text-sm text-muted-foreground">
+                <p>
+                  <strong className="text-foreground">Primary look:</strong> {plan.primaryZone?.label ?? "Primary marlin zone"} in{" "}
+                  {plan.primaryBand?.label ?? "the strongest band"}.
+                </p>
+                {plan.secondaryZone && plan.secondaryBand ? (
+                  <p>
+                    <strong className="text-foreground">Second look:</strong> {plan.secondaryZone.label} in {plan.secondaryBand.label}.
+                  </p>
+                ) : null}
+                <p>{plan.recommendation}</p>
+                <p className="text-xs">{plan.why}</p>
+                <p className="text-xs">
+                  This is a planning draft from the heatmap plus marine forecast, not a navigation instruction or exact waypoint recommendation.
+                </p>
+              </CardContent>
+            </Card>
+          ))}
+        </section>
+      ) : null}
 
       <section className="grid gap-4 xl:grid-cols-3">
         <Card>

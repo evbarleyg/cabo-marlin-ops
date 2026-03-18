@@ -3,6 +3,7 @@ import {
   buildSpeciesHeatLayers,
   collectSpeciesLayerOptions,
   seasonFromDate,
+  summarizeSpeciesTargets,
   type SpeciesLayerOption,
 } from "@/lib/shoreline-heatmap";
 import type { BiteReport } from "@/lib/schemas";
@@ -86,5 +87,17 @@ describe("shoreline heatmap helpers", () => {
     const marlinMeanLng = layers[0].cells.reduce((sum, cell) => sum + cell.lng, 0) / layers[0].cells.length;
     const tunaMeanLng = layers[1].cells.reduce((sum, cell) => sum + cell.lng, 0) / layers[1].cells.length;
     expect(Math.abs(marlinMeanLng - tunaMeanLng)).toBeGreaterThan(0.01);
+  });
+
+  it("summarizes target zones and bands for a species", () => {
+    const summary = summarizeSpeciesTargets({
+      reports: SAMPLE_REPORTS,
+      season: "spring",
+      speciesQuery: "marlin",
+    });
+
+    expect(summary.totalReports).toBe(2);
+    expect(summary.zones[0].label).toBe("Golden Gate");
+    expect(summary.bands[0].reportCount).toBeGreaterThan(0);
   });
 });

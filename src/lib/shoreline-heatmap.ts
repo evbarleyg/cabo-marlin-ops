@@ -2,7 +2,7 @@ import type { BiteReport } from "@/lib/schemas";
 
 export type SeasonKey = "all" | "winter" | "spring" | "summer" | "fall";
 
-type ZoneKey = "pacific_bank" | "golden_gate" | "corridor" | "gordo_banks" | "east_cape";
+export type ZoneKey = "pacific_bank" | "golden_gate" | "corridor" | "gordo_banks" | "east_cape";
 
 export interface SeasonOption {
   key: SeasonKey;
@@ -46,6 +46,17 @@ export interface SpeciesHeatLayer {
   rangedReports: number;
   bands: SpeciesHeatBand[];
   cells: SpeciesHeatCell[];
+}
+
+export interface SpeciesTargetSummary {
+  species: string;
+  totalReports: number;
+  zones: Array<{
+    key: ZoneKey;
+    label: string;
+    reportCount: number;
+  }>;
+  bands: SpeciesHeatBand[];
 }
 
 interface HeatGridPoint {
@@ -277,6 +288,60 @@ export function buildSpeciesHeatLayers({
       cells,
     };
   });
+}
+
+export function summarizeSpeciesTargets({
+  reports,
+  season,
+  speciesQuery,
+}: {
+  reports: BiteReport[];
+  season: SeasonKey;
+  speciesQuery: string;
+}): SpeciesTargetSummary {
+  const normalizedSpecies = speciesQuery.trim().toLowerCase();
+  const seasonFiltered = reports.filter((report) => season === "all" || seasonFromDate(report.date) === season);
+  const speciesReports = seasonFiltered.filter((report) =>
+    report.species.some((species) => isSpeciesMatch(species, normalizedSpecies)),
+  );
+
+  const distanceCounts = new Map<ShoreDistanceBand["key"], number>(SHORE_DISTANCE_BANDS.map((band) => [band.key, 0]));
+  const zoneCounts = new Map<ZoneKey, number>(HOTSPOT_ZONES.map((zone) => [zone.key, 0]));
+
+  for (const report of speciesReports) {
+    const estimatedDistance = report.distance_offshore_miles ?? defaultDistanceForSpecies(normalizedSpecies);
+    const band = bandForDistance(estimatedDistance);
+    distanceCounts.set(band.key, (distanceCounts.get(band.key) ?? 0) + 1);
+
+    const zoneKey = inferZoneForReport(report, normalizedSpecies);
+    zoneCounts.set(zoneKey, (zoneCounts.get(zoneKey) ?? 0) + 1);
+  }
+
+  const maxDistanceCount = Math.max(1, ...distanceCounts.values());
+  const bands: SpeciesHeatBand[] = SHORE_DISTANCE_BANDS.map((band) => {
+    const reportCount = distanceCounts.get(band.key) ?? 0;
+    return {
+      key: band.key,
+      label: band.label,
+      minMiles: band.minMiles,
+      maxMiles: band.maxMiles,
+      reportCount,
+      intensity: reportCount / maxDistanceCount,
+    };
+  }).sort((a, b) => b.reportCount - a.reportCount || a.minMiles - b.minMiles);
+
+  const zones = HOTSPOT_ZONES.map((zone) => ({
+    key: zone.key,
+    label: zone.label,
+    reportCount: zoneCounts.get(zone.key) ?? 0,
+  })).sort((a, b) => b.reportCount - a.reportCount || a.label.localeCompare(b.label));
+
+  return {
+    species: normalizedSpecies,
+    totalReports: speciesReports.length,
+    zones,
+    bands,
+  };
 }
 
 function buildGridTemplate(): HeatGridPoint[] {
